@@ -1,0 +1,24 @@
+# Ignore system / editor files
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+*.swp
+*.log
+.Spotlight-V100
+.Trashes
+*.sublime-project
+*.sublime-workspace
+._*
+coverage/
+test_tokens.txt
+
+# Ignore bundler config
+/.bundle
+
+# Ignore application specific files
+.env
+
+# vagrant
+.vagrant/
+vagrant_ansible_inventory_default

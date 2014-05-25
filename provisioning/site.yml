@@ -1,0 +1,12 @@
+---
+- hosts: all
+  vars_files:
+    - vars/defaults.yml
+
+  roles:
+    - webserver
+    - database
+
+  handlers:
+    - name: Restart PostgreSQL
+      service: name=postgresql state=restarted

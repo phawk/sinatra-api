@@ -1,0 +1,19 @@
+box:
+  user: vagrant
+  group: vagrant
+
+application:
+  name: sinatra # Name for the app, all [a-z0-9]
+  deploy_dir: /var/www/sinatra
+  public_dir: /var/www/sinatra/public
+  logs_dir: /var/www/sinatra/log
+
+db:
+  dev:
+    user: sinatra_api
+    password: devpassword
+    name: sinatra_api
+  test:
+    user: sinatra_api_test
+    password: testpassword
+    name: sinatra_api_test

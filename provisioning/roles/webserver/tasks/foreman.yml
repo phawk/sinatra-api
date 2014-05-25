@@ -1,0 +1,5 @@
+- name: install foreman
+  gem: name=foreman state=latest
+
+# - name: export foreman to upstart
+#   shell: cd {{ application.deploy_dir }} && foreman export upstart /etc/init -a {{ application.name }} -u {{ foreman.user }} -l {{ application.logs_dir }}/foreman

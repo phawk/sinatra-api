@@ -1,0 +1,47 @@
+- name: Copy valid pg_hba.conf
+  template: src=pg_hba.conf.j2 dest=/etc/postgresql/9.3/main/pg_hba.conf
+  notify:
+  - Restart PostgreSQL
+
+- name: Copy valid postgresql.conf
+  template: src=postgresql.conf.j2 dest=/etc/postgresql/9.3/main/postgresql.conf
+  notify:
+  - Restart PostgreSQL
+
+- name: create the postgresql user for dev db
+  postgresql_user: name={{ db.dev.user }} password={{ db.dev.password }} state=present
+  sudo: yes
+  sudo_user: postgres
+
+- name: create the postgresql dev database
+  postgresql_db: name={{ db.dev.name }} owner={{ db.dev.user }} state=present
+  sudo: yes
+  sudo_user: postgres
+
+- name: grant all privs on dev db
+  postgresql_privs: >
+    db=postgres
+    privs=ALL
+    type=database
+    obj={{ db.dev.name }}
+    role={{ db.dev.user }}
+  sudo_user: postgres
+
+- name: create the postgresql user for test db
+  postgresql_user: name={{ db.test.user }} password={{ db.test.password }} state=present
+  sudo: yes
+  sudo_user: postgres
+
+- name: create the postgresql test database
+  postgresql_db: name={{ db.test.name }} owner={{ db.test.user }} state=present
+  sudo: yes
+  sudo_user: postgres
+
+- name: grant all privs on test db
+  postgresql_privs: >
+    db=postgres
+    privs=ALL
+    type=database
+    obj={{ db.test.name }}
+    role={{ db.test.user }}
+  sudo_user: postgres
