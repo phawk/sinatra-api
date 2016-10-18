@@ -2,6 +2,8 @@
 
 A starting point for creating REST APIs in sinatra.
 
+[![Build Status](https://travis-ci.org/phawk/sinatra-api.svg?branch=master)](https://travis-ci.org/phawk/sinatra-api)
+
 ## Includes
 
 * Sinatra + sinatra contrib
