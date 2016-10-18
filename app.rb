@@ -1,16 +1,12 @@
-require './config/boot'
+require_relative './config/boot'
 require 'token_failure_app'
 require "base64"
 
 # Prevents a wee deprecation warning show up
-I18n.enforce_available_locales = false
+# I18n.enforce_available_locales = false
 
-# Define app and setup root helper
 module Api
   class Base < ::Sinatra::Base
-    set :root, lambda { |*args| File.join(File.dirname(__FILE__), *args) }
-
-    # Register addons
     register ::Sinatra::ActiveRecordExtension
     register ::Sinatra::Namespace
     register ::Sinatra::ErrorHandling
