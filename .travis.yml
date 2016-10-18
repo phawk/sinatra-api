@@ -1,0 +1,11 @@
+language: ruby
+cache: bundler
+rvm:
+- 2.3.1
+addons:
+  postgresql: '9.4'
+script:
+- bin/rake db:create
+- bin/rake db:migrate
+- bin/rspec
+sudo: false

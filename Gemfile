@@ -1,22 +1,26 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-ruby '2.1.0'
+ruby '2.3.1'
 
 gem 'activesupport', require: 'active_support/core_ext/hash'
 
 # Sinatra microframework
-gem 'rack'
+gem 'rack', '~> 1.6.4'
+gem 'rack-contrib'
 gem 'rake'
-gem 'sinatra', require: 'sinatra/base'
+gem 'sinatra', '~> 1.4.7'
+gem 'sinatra-activerecord', '~> 2.0.10'
 gem 'sinatra-contrib'
 
-# Serve with unicorn
-gem 'unicorn'
+# Load enviornment variables
+gem 'dotenv'
+
+# Serve with puma
+gem 'puma'
 
 # DB
 gem 'pg'
-gem 'activerecord'
-gem 'sinatra-activerecord'
+gem 'activerecord', '~> 5.0'
 
 # Use warden for authentication
 gem 'warden'
@@ -25,22 +29,24 @@ gem 'warden'
 gem 'mail'
 gem 'postmark'
 
+# Useful libs
+gem 'multi_json'
+gem 'jwt'
+gem 'bcrypt'
+
+group :development do
+  gem 'shotgun'
+end
+
 group :development, :test do
-  gem 'dotenv'
-  gem 'minitest'
-  gem 'minitest-rg'
+  gem 'rspec'
 end
 
 group :test do
-  gem 'rack-test', '~> 0.6.1'
-  gem 'mocha', '~> 1.1', require: false
+  gem 'rack-test', '~> 0.6.3'
+  gem 'database_cleaner'
 
   # Factories
   gem 'factory_girl'
   gem 'faker', '~> 1.2.0'
 end
-
-# Useful libs
-gem 'multi_json'
-gem 'jwt'
-gem 'bcrypt'

@@ -18,7 +18,4 @@ test_tokens.txt
 
 # Ignore application specific files
 .env
-
-# vagrant
-.vagrant/
-vagrant_ansible_inventory_default
+credentials.json

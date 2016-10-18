@@ -15,6 +15,10 @@ class ClientApplication < ActiveRecord::Base
     attributes.slice(:id, :name, :client_id, :created_at).merge(user: self.user.public_params)
   end
 
+  def has_elevated_privileges?
+    in_house_app?
+  end
+
 private
 
   def generate_tokens

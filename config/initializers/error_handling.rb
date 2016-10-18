@@ -71,14 +71,20 @@ module Sinatra
         halt_with_400_bad_request("Problems parsing JSON")
       end
 
+      app.error Sinatra::NotFound do
+        status 404
+        json({ error: "not_found", message: "Endpoint '#{request.path_info}' not found" })
+      end
+
       app.error do
         # if ::Exceptional::Config.should_send_to_api?
         #   ::Exceptional::Remote.error(::Exceptional::ExceptionData.new(env['sinatra.error']))
         # end
+        # err_name = env['sinatra.error'].name
         halt_with_500_internal_server_error
       end
     end
-
   end
+
   register ErrorHandling
 end

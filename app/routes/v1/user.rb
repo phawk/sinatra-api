@@ -23,7 +23,7 @@ module Api
       put '/attributes/password' do
         ensure_client_secret!
 
-        user = User.find_by_reset_token(parsed_params[:reset_token])
+        user = User.find_by_token(parsed_params[:reset_token])
         halt_with_404_not_found("No user found for reset token") if user.nil?
 
         if user.update_password(parsed_params[:password])

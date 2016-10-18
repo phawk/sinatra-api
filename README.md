@@ -1,6 +1,8 @@
 # Sinatra API
 
-A simple starting point for creating REST APIs in sinatra.
+A starting point for creating REST APIs in sinatra.
+
+[![Build Status](https://travis-ci.org/phawk/sinatra-api.svg?branch=master)](https://travis-ci.org/phawk/sinatra-api)
 
 ## Includes
 
@@ -8,16 +10,9 @@ A simple starting point for creating REST APIs in sinatra.
 * ActiveRecord (default: postgres)
 * Warden with basic oauth2 resource owner credentials flow
 * Mail (default delivery: postmark)
-* Minitest::Spec with mocha, rack-test, factory_girl and faker
+* RSpec, rack-test, factory_girl and faker
 
 ## Getting started
-
-### Boot up vagrant
-
-```sh
-$ vagrant up
-$ vagrant ssh
-```
 
 ### Configuration
 
@@ -27,32 +22,37 @@ $ cp .env.example .env
 
 # Edit the env vars
 $ vim .env
+
+# Edit the database conf
+$ vim config/database.yml
+
+# Create dev + test databases
+$ bin/rake db:create
+
+# Run initial migrations
+$ bin/rake db:migrate
 ```
 
 ### Running
 
 ```sh
-$ foreman start
-$ open http://localhost:5050
+$ bin/shotgun
+$ open http://localhost:9393
 ```
 
 ### Testing
 
 ```sh
-$ rake spec
-$ rake spec:fast
-$ rake spec:units
-$ rake spec:stories
+$ bin/rspec
 ```
 
 #### Docs on test frameworks
 
-* [Minitest expectations](http://bfts.rubyforge.org/minitest/MiniTest/Expectations.html#method-i-must_include)
-* [Mocha](http://gofreerange.com/mocha/docs/)
+* [RSpec expectations](https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers)
 * [Mail::TestMailer](https://github.com/mikel/mail#using-mail-with-testing-or-specing-libraries)
 
 ### Console
 
 ```sh
-$ rake irb
+$ bin/rake irb
 ```

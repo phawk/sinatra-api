@@ -1,6 +1,14 @@
-module StoryHelpers
+require 'rack/test'
+
+module ApiHelper
+  include Rack::Test::Methods
+  include Warden::Test::Helpers
 
   FakeToken = Struct.new(:user)
+
+  def app
+    Api::Base
+  end
 
   # Request helpers
 
@@ -38,5 +46,13 @@ module StoryHelpers
   def json(hash)
     MultiJson.dump(hash, pretty: true)
   end
+end
 
+RSpec.configure do |config|
+  config.include ApiHelper, type: :api # apply to all specs for apis folder
+  config.around(:each) do |example|
+    Warden.test_mode!
+    example.run
+    Warden.test_reset!
+  end
 end
