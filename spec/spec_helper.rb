@@ -1,6 +1,5 @@
 # TEST ENV VARS
 ENV["RACK_ENV"] = "test"
-ENV["API_SESSION_SECRET"] = "test_session_secret"
 ENV["JWT_SECRET_KEY"] = "a4e4059226487d2585db838c802c4ea5606daad24fe3ff351f66dd860a77a90d"
 
 require 'bundler'
@@ -11,7 +10,6 @@ require 'minitest/spec'
 require 'minitest/rg'
 require 'mocha/mini_test'
 require 'pp'
-
 
 # Load the application
 require_relative '../app'
@@ -31,7 +29,6 @@ require_relative "support/unit_helpers.rb"
 class UnitTest < MiniTest::Spec
   include FactoryGirl::Syntax::Methods
   include UnitHelpers
-
 
   # Run tests in a transaction
   def run( *args, &block )

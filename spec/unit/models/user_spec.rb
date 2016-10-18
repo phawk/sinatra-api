@@ -3,22 +3,22 @@ require_relative "../../spec_helper"
 describe User do
   let(:user) { build(:user) }
 
-  describe ".find_by_reset_token" do
+  describe ".find_by_token" do
     let(:valid_jwt) { get_jwt({ "user_id" => 1, "expires" => 24.hours.from_now }) }
     let(:expired_jwt) { get_jwt({ "user_id" => 1, "expires" => 5.minutes.ago }) }
 
     describe "decode error" do
-      it { User.find_by_reset_token("gibberish").must_be_nil }
+      it { User.find_by_token("gibberish").must_be_nil }
     end
 
     describe "expired" do
-      it { User.find_by_reset_token(expired_jwt).must_be_nil }
+      it { User.find_by_token(expired_jwt).must_be_nil }
     end
 
     describe "valid" do
       it "finds the user" do
         User.expects(:find).with(1).returns(user)
-        User.find_by_reset_token(valid_jwt).must_equal user
+        User.find_by_token(valid_jwt).must_equal user
       end
     end
   end
@@ -74,11 +74,11 @@ describe User do
   end
 
   describe "#reset_password" do
-    subject { User.new(name: "Jimmy") }
+    subject { User.new(name: "Jimmy", email: "jimmy@example.org") }
 
     it "sends a password reset email" do
       subject.reset_password
-      last_email.subject.must_match(/password reset/)
+      last_email.subject.must_match(/Password reset/)
       last_email.to.first.must_equal subject.email
       last_email.body.to_s.must_match(/\/users\/reset_password\//)
     end

@@ -78,7 +78,7 @@ module Sinatra
         halt_with_500_internal_server_error
       end
     end
-
   end
+
   register ErrorHandling
 end

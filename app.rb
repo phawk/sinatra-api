@@ -10,18 +10,18 @@ module Api
   class Base < ::Sinatra::Base
     set :root, lambda { |*args| File.join(File.dirname(__FILE__), *args) }
 
-    set :views, root('app', 'views')
+    # Register addons
+    register ::Sinatra::ActiveRecordExtension
+    register ::Sinatra::Namespace
+    register ::Sinatra::ErrorHandling
 
     helpers ::Api::Helpers::Auth
     helpers ::Api::Helpers::Json
 
-    configure do
-      enable :logging
-      enable :raise_errors, :logging
+    set :database_file, "config/database.yml"
 
-      # Register addons
-      register ::Sinatra::Namespace
-      register ::Sinatra::ErrorHandling
+    configure do
+      enable :raise_errors, :logging
 
       # Set default content type to json
       before do

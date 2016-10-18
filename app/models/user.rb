@@ -5,20 +5,25 @@ class User < ActiveRecord::Base
   include BCrypt
 
   has_many :client_applications
+  has_many :access_tokens
 
   validates_uniqueness_of :email
   validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/
   validates_presence_of :email, :password
   validates :password, length: { minimum: 8 }, on: :create
 
-  def self.find_by_reset_token(token)
-    payload = JWT.decode(token, ENV['JWT_SECRET_KEY'])
+  def self.find_by_token(token)
+    payload = JWT.decode(token, ENV['JWT_SECRET_KEY'])[0]
 
-    return nil unless Time.now < payload["expires"]
+    return nil unless Time.now < Time.parse(payload["expires"])
 
     find(payload["user_id"])
   rescue JWT::DecodeError => e
     nil
+  end
+
+  def self.find_by_token!(token)
+    find_by_token(token) || fail(ActiveRecord::RecordNotFound)
   end
 
   def public_params
@@ -29,15 +34,17 @@ class User < ActiveRecord::Base
     name || email
   end
 
-  def reset_password
+  def signin_token(expires: 24.hours.from_now)
     payload = {
-      "user_id" => self.id,
-      "expires" => 24.hours.from_now
+      "user_id" => id,
+      "expires" => expires
     }
 
-    jwt_token = JWT.encode(payload, ENV['JWT_SECRET_KEY'], "HS512")
+    JWT.encode(payload, ENV['JWT_SECRET_KEY'], "HS512")
+  end
 
-    ::Api::Mailers::User.new.reset_password(self, jwt_token)
+  def reset_password
+    ::Api::Mailers::User.new.reset_password(self, signin_token)
   end
 
   def update_password(password)
