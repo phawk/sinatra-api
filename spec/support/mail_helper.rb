@@ -1,4 +1,4 @@
-module UnitHelpers
+module MailHelper
   # Mail Helpers
   def last_email
     Mail::TestMailer.deliveries.last
@@ -19,4 +19,8 @@ module UnitHelpers
   # def must(matcher, *args)
   #   subject.send("must_#{matcher.to_s}".to_sym, *args)
   # end
+end
+
+RSpec.configure do |config|
+  config.include MailHelper
 end

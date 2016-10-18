@@ -39,13 +39,12 @@ group :development do
 end
 
 group :development, :test do
-  gem 'minitest'
-  gem 'minitest-rg'
+  gem 'rspec'
 end
 
 group :test do
-  gem 'rack-test', '~> 0.6.1'
-  gem 'mocha', '~> 1.1', require: false
+  gem 'rack-test', '~> 0.6.3'
+  gem 'database_cleaner'
 
   # Factories
   gem 'factory_girl'

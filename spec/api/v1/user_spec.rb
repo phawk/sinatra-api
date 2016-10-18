@@ -1,13 +1,13 @@
-require_relative "../../story_helper"
+require "spec_helper"
 
-describe "Api::v1::UserStory" do
+describe "Api::v1::UserStory", type: :api do
   describe "GET /v1/user" do
 
     describe "not authentication" do
       before { get "/v1/user" }
 
       it "responds with a 401" do
-        http_status.must_equal 401
+        expect(http_status).to eq 401
       end
     end
 
@@ -19,12 +19,12 @@ describe "Api::v1::UserStory" do
       end
 
       it "responds successfully" do
-        http_status.must_equal 200
+        expect(http_status).to eq 200
       end
 
       it "shows my details" do
-        json_response[:name].must_equal alfred.name
-        json_response[:email].must_equal alfred.email
+        expect(json_response[:name]).to eq alfred.name
+        expect(json_response[:email]).to eq alfred.email
       end
     end
 
