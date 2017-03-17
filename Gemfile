@@ -36,6 +36,7 @@ gem 'postmark'
 gem 'multi_json'
 gem 'jwt'
 gem 'bcrypt'
+gem 'rack-cors', require: 'rack/cors'
 
 # API Docs
 gem 'swagger-blocks'
