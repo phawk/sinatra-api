@@ -15,7 +15,7 @@ module Api
     set :database_file, "config/database.yml"
 
     configure do
-      enable :raise_errors, :logging
+      enable :logging
 
       before { content_type(:json) }
 
@@ -25,12 +25,8 @@ module Api
       end
     end
 
-    configure :development do
-      enable :show_exceptions
-    end
-
-    configure :production do
-      disable :show_exceptions
+    configure :test do
+      enable :raise_errors
     end
   end
 end
