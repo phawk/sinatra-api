@@ -40,6 +40,10 @@ end
 
 group :development, :test do
   gem 'rspec'
+  gem 'guard'
+  gem 'guard-rspec', require: false
+  gem 'terminal-notifier', '~> 1.7.1'
+  gem 'terminal-notifier-guard', '~> 1.7.0'
 end
 
 group :test do
