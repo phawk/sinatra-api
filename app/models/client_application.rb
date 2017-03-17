@@ -11,10 +11,6 @@ class ClientApplication < ActiveRecord::Base
     self.client_secret == secret
   end
 
-  def public_params
-    attributes.slice(:id, :name, :client_id, :created_at).merge(user: self.user.public_params)
-  end
-
   def has_elevated_privileges?
     in_house_app?
   end

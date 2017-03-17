@@ -12,7 +12,7 @@ module Api
           halt 400, json({ message: "Validation failed", errors: user.errors.full_messages })
         end
 
-        json(user.public_params)
+        json user
       end
 
     end

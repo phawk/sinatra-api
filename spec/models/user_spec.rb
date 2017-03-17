@@ -67,12 +67,6 @@ describe User do
     end
   end
 
-  describe "#public_params" do
-    subject { User.new(id: 121, name: "Jimmy", email: "jim@jim.com", created_at: Time.now) }
-
-    it { expect(subject.public_params.keys).to match_array(["id", "name", "email", "created_at"]) }
-  end
-
   describe "#reset_password" do
     subject { User.new(name: "Jimmy", email: "jimmy@example.org") }
 

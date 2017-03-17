@@ -26,10 +26,6 @@ class User < ActiveRecord::Base
     find_by_token(token) || fail(ActiveRecord::RecordNotFound)
   end
 
-  def public_params
-    attributes.slice("id", "name", "email", "created_at")
-  end
-
   def display_name
     name || email
   end

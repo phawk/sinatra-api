@@ -5,7 +5,7 @@ module Api
       # get the users info
       get '/?' do
         authenticate!
-        json(current_user.public_params)
+        json current_user
       end
 
       post '/reset_password' do

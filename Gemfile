@@ -5,11 +5,11 @@ ruby '2.3.1'
 gem 'activesupport', require: 'active_support/core_ext/hash'
 
 # Sinatra microframework
-gem 'rack', '~> 1.6.4'
+gem 'rack'
 gem 'rack-contrib'
 gem 'rake'
-gem 'sinatra', '~> 1.4.7'
-gem 'sinatra-activerecord', '~> 2.0.10'
+gem 'sinatra', '~> 1.4.8'
+gem 'sinatra-activerecord', '~> 2.0.12'
 gem 'sinatra-contrib'
 
 # Load enviornment variables
@@ -21,6 +21,9 @@ gem 'puma'
 # DB
 gem 'pg'
 gem 'activerecord', '~> 5.0'
+
+# JSON serialization
+gem 'active_model_serializers', '~> 0.10.0'
 
 # Use warden for authentication
 gem 'warden'

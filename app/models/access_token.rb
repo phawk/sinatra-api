@@ -15,14 +15,6 @@ class AccessToken < ActiveRecord::Base
     token
   end
 
-  def public_params
-    {
-      access_token: self.token,
-      client: self.client_application.name,
-      created_at: self.created_at
-    }
-  end
-
 private
 
   def generate_token
