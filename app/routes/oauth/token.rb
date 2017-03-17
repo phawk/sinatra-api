@@ -5,8 +5,11 @@ module Api
       swagger_path '/oauth/token' do
         operation :post do
           key :description, 'Returns an access token'
-          parameter { key :name, :username }
-          parameter { key :name, :password }
+          key :tags, %w(oauth)
+          parameter name: :username, type: :string, required: true
+          parameter name: :password, type: :string, required: true
+          parameter name: :client_id, type: :string, required: true
+          parameter name: :client_secret, type: :string, required: true
           response 401 do
             key :description, 'Unauthorized'
           end

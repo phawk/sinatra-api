@@ -5,9 +5,12 @@ module Api
       swagger_path '/v1/users' do
         operation :post do
           key :description, 'Create user'
-          parameter { key :name, :name }
-          parameter { key :name, :email }
-          parameter { key :name, :password }
+          key :tags, %w(users)
+          parameter name: :name, type: :string, required: true
+          parameter name: :email, type: :string, required: true
+          parameter name: :password, type: :string, required: true
+          parameter name: :client_id, type: :string, required: true
+          parameter name: :client_secret, type: :string, required: true
           response 400 do
             key :description, 'Validation failed'
           end

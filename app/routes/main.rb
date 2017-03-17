@@ -7,6 +7,11 @@ module Api
         key :title, 'Sinatra API'
         key :description, 'Sinatra API with oAuth and user endpoints'
       end
+      security_definition :access_token do
+        key :type, :apiKey
+        key :name, :access_token
+        key :in, :query
+      end
     end
 
     get '/' do
@@ -18,7 +23,7 @@ module Api
       ::Api::Mailers::BaseMailer.new.render_sample
     end
 
-    get '/docs.json' do
+    get '/api-docs.json' do
       docs = Swagger::Blocks.build_root_json([Api::Base])
       MultiJson.dump(docs, pretty: true)
     end

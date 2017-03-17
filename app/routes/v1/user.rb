@@ -5,6 +5,10 @@ module Api
       swagger_path '/v1/user' do
         operation :get do
           key :description, 'Gets the current user'
+          key :tags, ["current user"]
+          security do
+            key :access_token, []
+          end
           response 401 do
             key :description, 'Unauthorized'
           end
@@ -18,7 +22,10 @@ module Api
       swagger_path '/v1/user/reset_password' do
         operation :post do
           key :description, 'Reset password - sends email'
-          parameter { key :name, :email }
+          key :tags, ["current user"]
+          parameter name: :email, type: :string, required: true
+          parameter name: :client_id, type: :string, required: true
+          parameter name: :client_secret, type: :string, required: true
         end
       end
       post '/reset_password' do
@@ -36,8 +43,11 @@ module Api
       swagger_path '/v1/user/attributes/password' do
         operation :put do
           key :description, 'Reset password - updates password'
-          parameter { key :name, :reset_token }
-          parameter { key :name, :password }
+          key :tags, ["current user"]
+          parameter name: :reset_token, type: :string, required: true
+          parameter name: :password, type: :string, required: true
+          parameter name: :client_id, type: :string, required: true
+          parameter name: :client_secret, type: :string, required: true
           response 404 do
             key :description, 'User not found'
           end
