@@ -43,6 +43,9 @@ $ open http://localhost:9393
 ### Testing
 
 ```sh
+# Autorun specs when developing
+$ bin/guard
+# One off test run
 $ bin/rspec
 ```
 
