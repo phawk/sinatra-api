@@ -11,7 +11,7 @@ module Api
       post '/reset_password' do
         ensure_client_secret!
 
-        user = User.find_by(email: parsed_params[:email])
+        user = User.find_by(email: params[:email])
 
         unless user.nil?
           user.reset_password
@@ -23,10 +23,10 @@ module Api
       put '/attributes/password' do
         ensure_client_secret!
 
-        user = User.find_by_token(parsed_params[:reset_token])
+        user = User.find_by_token(params[:reset_token])
         halt_with_404_not_found("No user found for reset token") if user.nil?
 
-        if user.update_password(parsed_params[:password])
+        if user.update_password(params[:password])
           json({ message: "Password has been reset" })
         else
           halt 400, json({ message: "Validation failed", errors: user.errors.full_messages })

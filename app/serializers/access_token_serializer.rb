@@ -1,5 +1,5 @@
 class AccessTokenSerializer < ApplicationSerializer
-  attributes :id, :access_token, :client,
+  attributes :id, :token, :client,
              :created_at, :updated_at
 
   def client
