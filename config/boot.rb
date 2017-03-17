@@ -16,5 +16,6 @@ Dotenv.load if ["development", "test"].include? ENV['RACK_ENV']
 (Dir['./config/initializers/*.rb'].sort +
  Dir['./app/helpers/**/*.rb'].sort +
  Dir['./app/mailers/**/*.rb'].sort +
- Dir['./app/models/**/*.rb'].sort
+ Dir['./app/models/**/*.rb'].sort +
+ Dir['./app/serializers/**/*.rb'].sort
 ).uniq.each { |rb| require rb }

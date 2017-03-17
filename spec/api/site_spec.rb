@@ -12,6 +12,6 @@ describe "Site", type: :api do
     before { get_json '/hahaha' }
 
     it { expect(http_status).to eq 404 }
-    it { expect(json_response[:error]).to eq "not_found" }
+    it { expect(json_response[:data][:error]).to eq "not_found" }
   end
 end
