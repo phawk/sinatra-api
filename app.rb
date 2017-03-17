@@ -48,7 +48,7 @@ module Api
             throw(:warden, message: "Could not find client")
           else
             env['warden.oauth_client'] = client
-            success!(client)
+            success!(AccessToken.for_client(client))
           end
         end
       end
@@ -68,7 +68,7 @@ module Api
             throw(:warden, message: "Could not find client")
           else
             env['warden.oauth_client'] = client
-            success!(client)
+            success!(AccessToken.for_client(client))
           end
         rescue MultiJson::ParseError => e
           throw(:warden, message: "The request body you provide must be a JSON hash")

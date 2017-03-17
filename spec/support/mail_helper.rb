@@ -8,10 +8,6 @@ module MailHelper
     Mail::TestMailer.deliveries.clear
   end
 
-  def get_jwt(payload)
-    jwt_token = JWT.encode(payload, ENV['JWT_SECRET_KEY'], "HS512")
-  end
-
   # Trying things
   #
   # it { must :respond_to, :name }
