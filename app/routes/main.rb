@@ -1,5 +1,14 @@
 module Api
   class Base
+    swagger_root do
+      key :swagger, '2.0'
+      info do
+        key :version, '1.0.0'
+        key :title, 'Sinatra API'
+        key :description, 'Sinatra API with oAuth and user endpoints'
+      end
+    end
+
     get '/' do
       json({ hello: "Api" })
     end
@@ -7,6 +16,11 @@ module Api
     get '/mailer/preview' do
       content_type :html
       ::Api::Mailers::BaseMailer.new.render_sample
+    end
+
+    get '/docs.json' do
+      docs = Swagger::Blocks.build_root_json([Api::Base])
+      MultiJson.dump(docs, pretty: true)
     end
   end
 end

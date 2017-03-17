@@ -37,6 +37,9 @@ gem 'multi_json'
 gem 'jwt'
 gem 'bcrypt'
 
+# API Docs
+gem 'swagger-blocks'
+
 group :development do
   gem 'shotgun'
 end
