@@ -18,6 +18,10 @@ module Api
           resource
         end
       end
+
+      def params
+        super.with_indifferent_access
+      end
     end
   end
 end
