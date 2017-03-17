@@ -10,6 +10,7 @@ module Api
     register ::Sinatra::ActiveRecordExtension
     register ::Sinatra::Namespace
     register ::Sinatra::ErrorHandling
+    use Rack::PostBodyContentTypeParser
 
     helpers ::Api::Helpers::Auth
     helpers ::Api::Helpers::Json
@@ -84,13 +85,9 @@ module Api
         end
 
         def client_from_body
-          request.body.rewind
-          data = MultiJson.load(request.body.read, symbolize_keys: true)
-          return nil unless data[:client_id] && data[:client_secret]
+          return nil unless params["client_id"] && params["client_secret"]
 
-          { client_id: data[:client_id], client_secret: data[:client_secret] }
-        rescue MultiJson::ParseError => e
-          nil
+          { client_id: params["client_id"], client_secret: params["client_secret"] }
         end
       end
 
