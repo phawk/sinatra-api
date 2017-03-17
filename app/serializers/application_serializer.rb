@@ -5,10 +5,6 @@ class ApplicationSerializer < ActiveModel::Serializer
     super(*args)
   end
 
-  def json_key
-    "data"
-  end
-
   def type
     object.class.name.underscore.pluralize
   end
