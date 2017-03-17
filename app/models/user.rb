@@ -58,7 +58,11 @@ class User < ActiveRecord::Base
   end
 
   def password=(new_password)
-    @password = Password.create(new_password)
-    self.password_digest = @password
+    if new_password.nil?
+      @password = nil
+    else
+      @password = Password.create(new_password)
+      self.password_digest = @password
+    end
   end
 end

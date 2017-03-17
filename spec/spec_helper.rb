@@ -7,6 +7,8 @@ Bundler.require :default, :test
 # Load the application
 require_relative '../app'
 
+require 'shoulda/matchers'
+
 # Grab the factories
 FactoryGirl.find_definitions
 
@@ -48,6 +50,8 @@ RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
   config.include FactoryGirl::Syntax::Methods
+  config.include(Shoulda::Matchers::ActiveModel, type: :model)
+  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
 
   config.before(:suite) do
     # Set mail into test mode
