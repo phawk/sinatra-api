@@ -14,12 +14,12 @@ module ApiHelper
 
   def get_json(path)
     get path
-    json_response
+    response_json
   end
 
   def post_json(url, data)
     post(url, json(data), { "CONTENT_TYPE" => "application/json" })
-    json_response
+    response_json
   end
 
   def authenticate_as(user)
@@ -39,7 +39,7 @@ module ApiHelper
     last_response.status
   end
 
-  def json_response
+  def response_json
     parse_json last_response.body
   end
 

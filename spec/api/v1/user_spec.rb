@@ -23,8 +23,8 @@ describe "Api::v1::UserStory", type: :api do
       end
 
       it "shows my details" do
-        expect(json_response[:data][:name]).to eq alfred.name
-        expect(json_response[:data][:email]).to eq alfred.email
+        expect(response_json[:data][:name]).to eq alfred.name
+        expect(response_json[:data][:email]).to eq alfred.email
       end
     end
 
