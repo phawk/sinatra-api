@@ -18,7 +18,7 @@ module Api
       ::Api::Mailers::BaseMailer.new.render_sample
     end
 
-    get '/docs' do
+    get '/docs.json' do
       docs = Swagger::Blocks.build_root_json([Api::Base])
       MultiJson.dump(docs, pretty: true)
     end
