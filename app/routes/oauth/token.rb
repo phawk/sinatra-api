@@ -2,6 +2,16 @@ module Api
   class Base
     namespace '/oauth' do
 
+      swagger_path '/oauth/token' do
+        operation :post do
+          key :description, 'Returns an access token'
+          parameter { key :name, :username }
+          parameter { key :name, :password }
+          response 401 do
+            key :description, 'Unauthorized'
+          end
+        end
+      end
       post '/token' do
         ensure_client_secret!
 

@@ -7,6 +7,7 @@ module Api
     register ::Sinatra::Namespace
     register ::Sinatra::ErrorHandling
     use Rack::PostBodyContentTypeParser
+    include Swagger::Blocks
 
     helpers ::Api::Helpers::Auth
     helpers ::Api::Helpers::Json
