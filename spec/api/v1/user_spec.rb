@@ -33,7 +33,7 @@ describe "Api::v1::UserStory", type: :api do
 
     before do
       authenticate_client
-      post "/v1/user/reset_password", email: alfred.email
+      post_json "/v1/user/reset_password", email: alfred.email
     end
 
     it "responds successfully" do

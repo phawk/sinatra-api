@@ -5,11 +5,11 @@ module Api
       post '/token' do
         ensure_client_secret!
 
-        username = parsed_params[:username] || parsed_params[:email]
+        username = params[:username] || params[:email]
 
         user = User.find_by(email: username)
 
-        if user && user.password == parsed_params[:password]
+        if user && user.password == params[:password]
           token = AccessToken.for_client(current_client)
           token.user = user
           token.save

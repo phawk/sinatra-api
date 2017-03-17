@@ -6,7 +6,7 @@ module Api
       post '/?' do
         ensure_client_secret!
 
-        user = User.new(parsed_params.slice(:name, :email, :password))
+        user = User.new(params.slice(:name, :email, :password))
 
         unless user.save
           halt 400, json({ message: "Validation failed", errors: user.errors.full_messages })
