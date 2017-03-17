@@ -80,7 +80,7 @@ describe User do
       subject.reset_password
       expect(last_email.subject).to match(/Password reset/)
       expect(last_email.to.first).to eq(subject.email)
-      expect(last_email.body.to_s).to match(/\/users\/reset_password\//)
+      expect(last_email.html_part.body.to_s).to match(/\/users\/reset_password\//)
     end
   end
 
