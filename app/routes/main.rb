@@ -14,6 +14,10 @@ module Api
       end
     end
 
+    get '/broken' do
+      fail 'bad.'
+    end
+
     get '/' do
       json({ hello: "Api" })
     end
