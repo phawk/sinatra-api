@@ -5,12 +5,12 @@ ruby '2.3.1'
 gem 'activesupport', require: 'active_support/core_ext/hash'
 
 # Sinatra microframework
-gem 'rack'
+gem 'rack', '>= 2.0'
 gem 'rack-contrib'
 gem 'rake'
-gem 'sinatra', '~> 1.4.8'
+gem 'sinatra', '>= 2.0.0.rc1'
 gem 'sinatra-activerecord', '~> 2.0.12'
-gem 'sinatra-contrib'
+gem 'sinatra-contrib', '>= 2.0.0.rc1'
 
 # Load enviornment variables
 gem 'dotenv'
@@ -52,6 +52,7 @@ end
 group :test do
   gem 'rack-test', '~> 0.6.3'
   gem 'database_cleaner'
+  gem 'shoulda-matchers'
 
   # Factories
   gem 'factory_girl'

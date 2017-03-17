@@ -1,7 +1,14 @@
 require "spec_helper"
 
-describe User do
+describe User, type: :model do
   let(:user) { build(:user) }
+
+  it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to allow_value("pete@example.org").for(:email) }
+  it { is_expected.not_to allow_value("pete.org").for(:email) }
+  it { is_expected.to validate_presence_of(:password) }
+  it { is_expected.to have_many(:client_applications) }
+  it { is_expected.to have_many(:access_tokens) }
 
   describe ".find_by_token" do
     let(:valid_jwt) { get_jwt({ "user_id" => 1, "expires" => 24.hours.from_now }) }
