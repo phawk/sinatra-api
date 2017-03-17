@@ -1,6 +1,10 @@
 require './app'
 
-# logger = ::File.open("log/main.log", "a+")
-# Api::Base.use Rack::CommonLogger, logger
+use Rack::Cors do
+  allow do
+    origins '*'
+    resource '*', headers: :any, methods: :any, max_age: 2592000 # 30 days
+  end
+end
 
 run Api::Base
