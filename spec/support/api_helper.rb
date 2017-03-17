@@ -27,6 +27,12 @@ module ApiHelper
     user
   end
 
+  def authenticate_client(client = nil)
+    client = client || create(:client_application)
+    login_as AccessToken.for_client(client), strategy: :client_secret
+    client
+  end
+
   # Response helpers
 
   def http_status

@@ -29,4 +29,23 @@ describe "Api::v1::UserStory", type: :api do
     end
 
   end
+
+  describe "POST /v1/user/reset_password" do
+    let!(:alfred) { create(:user) }
+
+    before do
+      authenticate_client
+      post "/v1/user/reset_password", email: alfred.email
+    end
+
+    it "responds successfully" do
+      expect(http_status).to eq 200
+    end
+
+    it "delivers a password reset email" do
+      expect(last_email.to.first).to eq(alfred.email)
+      expect(last_email.subject).to eq("Password reset instructions")
+      expect(last_email.html_part.body).to include("reset your password")
+    end
+  end
 end
