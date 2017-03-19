@@ -4,8 +4,8 @@ module Api
 
       swagger_path '/v1/users' do
         operation :post do
-          key :description, 'Create user'
-          key :tags, %w(users)
+          key :title, 'Create user'
+          key :tags, %w(Users)
           parameter name: :name, type: :string, required: true
           parameter name: :email, type: :string, required: true
           parameter name: :password, type: :string, required: true

@@ -4,8 +4,9 @@ module Api
 
       swagger_path '/v1/user' do
         operation :get do
-          key :description, 'Gets the current user'
-          key :tags, ["current user"]
+          key :title, 'Get current user'
+          key :description, 'Fetches the current user by their access token'
+          key :tags, ["Current User"]
           security do
             key :access_token, []
           end
@@ -21,8 +22,9 @@ module Api
 
       swagger_path '/v1/user/reset_password' do
         operation :post do
-          key :description, 'Reset password - sends email'
-          key :tags, ["current user"]
+          key :title, 'Request password reset'
+          key :description, 'Sends an email to the user with a reset token to update their password'
+          key :tags, ["Current User"]
           parameter name: :email, type: :string, required: true
           parameter name: :client_id, type: :string, required: true
           parameter name: :client_secret, type: :string, required: true
@@ -42,8 +44,9 @@ module Api
 
       swagger_path '/v1/user/attributes/password' do
         operation :put do
-          key :description, 'Reset password - updates password'
-          key :tags, ["current user"]
+          key :title, 'Reset password'
+          key :description, 'Resets the users password using a reset token'
+          key :tags, ["Current User"]
           parameter name: :reset_token, type: :string, required: true
           parameter name: :password, type: :string, required: true
           parameter name: :client_id, type: :string, required: true

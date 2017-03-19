@@ -23,13 +23,15 @@
             <% _.each(sections, function(section) { %>
               <li>
                 <a href="#<%= section.slug %>" data-main="true"><%= section.title %></a>
-                <ul>
-                  <% _.each(section.paths, function(path, index) { %>
-                    <li><a href="#<%= section.slug + '-' + index %>">
-                      <span><%= path.method %></span> <%= path.url %>
-                    </a></li>
-                  <% }) %>
-                </ul>
+                <% if (section.slug !== "home") { %>
+                  <ul>
+                    <% _.each(section.paths, function(path, index) { %>
+                      <li><a href="#<%= section.slug + '-' + path.slug %>">
+                        <%= path.title %>
+                      </a></li>
+                    <% }) %>
+                  </ul>
+                <% } %>
               </li>
             <% }) %>
           </ul>
@@ -48,12 +50,19 @@
                 <a class="anchor" href="#<%= section.slug %>" data-main="true"></a>
               </span>
               <% _.each(section.paths, function(path, index) { %>
-                <div class="endpoint" id="<%= section.slug + '-' + index %>">
+                <div class="endpoint" id="<%= section.slug + '-' + path.slug %>">
                   <span class="title">
-                    <%= path.method %> <%= path.url %>
-                    <a class="anchor" href="#<%= section.slug + '-' + index %>"></a>
+                    <%= path.title %>
+                    <a class="anchor" href="#<%= section.slug + '-' + path.slug %>"></a>
                   </span>
-                  <span class="desc"><%= path.description %></span>
+
+                  <% if (path.method || path.url) { %>
+                    <span class="url"><strong><%= path.method %></strong> <%= path.url %></span>
+                  <% } %>
+
+                  <% if (path.description) { %>
+                    <span class="desc"><%= path.description %></span>
+                  <% } %>
 
                   <% if (path.params) { %>
                   <div class="boxed code">
@@ -76,21 +85,23 @@
                     </div>
                   <% } %>
 
-                  <form class="boxed form" action="<%= base_url + path.url %>" method="<%= path.method %>">
-                    <h3>Give it a go</h3>
-                    <% _.each(path.params, function(param) { %>
-                      <div class="form-group">
-                        <label><%= param.name %><%= param.required ? "*" : "" %></label>
-                        <input type="text" name="<%= param.name %>">
+                  <% if (path.method || path.url) { %>
+                    <form class="boxed form" action="<%= base_url + path.url %>" method="<%= path.method %>">
+                      <h3>Give it a go</h3>
+                      <% _.each(path.params, function(param) { %>
+                        <div class="form-group">
+                          <label><%= param.name %><%= param.required ? "*" : "" %></label>
+                          <input type="text" name="<%= param.name %>">
+                        </div>
+                      <% }) %>
+                      <div class="form-actions <%= path.params ? '' : '-no-border' %>">
+                        <button>
+                          <span class="text">Submit</span>
+                          <span class="loading-spinner -white"></span>
+                        </button>
                       </div>
-                    <% }) %>
-                    <div class="form-actions <%= path.params ? '' : '-no-border' %>">
-                      <button>
-                        <span class="text">Submit</span>
-                        <span class="loading-spinner -white"></span>
-                      </button>
-                    </div>
-                  </form>
+                    </form>
+                  <% } %>
 
                   <div class="boxed form-response">
                     <div class="status">
@@ -107,6 +118,10 @@
             </div>
           <% }) %>
         </script>
+
+        <div class="footer">
+          Built with <a href="https://github.com/colinyoung87/swagger-flair">SwaggerFlair</a>
+        </div>
       </div>
     </div>
   </div>

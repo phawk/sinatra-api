@@ -4,8 +4,9 @@ module Api
 
       swagger_path '/oauth/token' do
         operation :post do
-          key :description, 'Returns an access token'
-          key :tags, %w(oauth)
+          key :title, 'Get access token'
+          key :description, 'Returns an access token for the user for a client application'
+          key :tags, %w(oAuth)
           parameter name: :username, type: :string, required: true
           parameter name: :password, type: :string, required: true
           parameter name: :client_id, type: :string, required: true
