@@ -1,9 +1,10 @@
 require "spec_helper"
 
 describe User, type: :model do
-  let(:user) { build(:user) }
+  subject { create(:user) }
 
   it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   it { is_expected.to allow_value("pete@example.org").for(:email) }
   it { is_expected.not_to allow_value("pete.org").for(:email) }
   it { is_expected.to validate_presence_of(:password) }
@@ -24,15 +25,13 @@ describe User, type: :model do
 
     describe "valid" do
       it "finds the user" do
-        allow(User).to receive(:find).and_return(user)
-        expect(User.find_by_token(valid_jwt)).to eq(user)
+        allow(User).to receive(:find).and_return(subject)
+        expect(User.find_by_token(valid_jwt)).to eq(subject)
       end
     end
   end
 
   describe "#fields" do
-    subject { user }
-
     it { expect(subject).to respond_to(:name) }
     it { expect(subject).to respond_to(:email) }
     it { expect(subject).to respond_to(:password) }
@@ -43,19 +42,27 @@ describe User, type: :model do
 
   describe "#email" do
     it "ensures presence" do
-      user.email = nil
-      expect(user.valid?).to be false
+      subject.email = nil
+      expect(subject.valid?).to be false
     end
 
     it "ensures valid" do
-      user.email = "fake"
-      expect(user.valid?).to be false
+      subject.email = "fake"
+      expect(subject.valid?).to be false
     end
 
     it "is unique" do
-      expect(user.save).to be true
-      new_user = build(:user, email: user.email)
+      expect(subject.save).to be true
+      new_user = build(:user, email: subject.email)
       expect(new_user.save).to be false
+    end
+  end
+
+  describe "#authenticate" do
+    it "checks passwords match" do
+      expect(User.new.authenticate("password")).to be(false)
+      expect(User.new(password: "hunter2").authenticate("password")).to be(false)
+      expect(User.new(password: "hunter2").authenticate("hunter2")).to be(true)
     end
   end
 
@@ -67,10 +74,8 @@ describe User, type: :model do
 
     it "uses bcrypt" do
       user = User.new(email: "bob@bob.com", password: "superduper")
-      expect(user.password.to_s).to match(/^\$2a/)
       user.password = "hunter2"
-      expect(user.password.to_s).to match(/^\$2a/)
-      expect(user.password == "hunter2").to be true
+      expect(user.authenticate("hunter2")).to be true
     end
   end
 

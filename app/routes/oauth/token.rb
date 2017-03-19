@@ -22,7 +22,7 @@ module Api
 
         user = User.find_by(email: username)
 
-        if user && user.password == params[:password]
+        if user && user.authenticate(params[:password])
           token = AccessToken.for_client(current_client)
           token.user = user
           token.save

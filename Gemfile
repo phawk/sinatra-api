@@ -2,50 +2,43 @@ source 'https://rubygems.org'
 
 ruby '2.3.1'
 
+# Core framework dependencies
 gem 'activesupport', require: 'active_support/core_ext/hash'
-
-# Sinatra microframework
 gem 'rack', '>= 2.0'
 gem 'rack-contrib'
+gem 'rack-cors', require: 'rack/cors'
+gem 'rack-timeout'
+gem 'rack-canonical-host'
+gem 'rack-ssl'
 gem 'rake'
 gem 'sinatra', '>= 2.0.0.rc1'
 gem 'sinatra-activerecord', '~> 2.0.12'
 gem 'sinatra-contrib', '>= 2.0.0.rc1'
-
-# Load enviornment variables
-gem 'dotenv'
-
-# Serve with puma
-gem 'puma'
-
-# DB
 gem 'pg'
 gem 'activerecord', '~> 5.0'
-
-# JSON serialization
-gem 'active_model_serializers', '~> 0.10.0'
-
-# Use warden for authentication
-gem 'warden'
-
-# Sending emails
+gem 'redis', '~> 3.3.3'
+gem 'redis-namespace'
+gem 'sidekiq'
+gem 'multi_json'
+gem 'puma' # app server
+gem 'bcrypt'
+gem 'warden' # authentication
 gem 'mail'
 gem 'postmark'
-
-# Useful libs
-gem 'multi_json'
 gem 'jwt'
-gem 'bcrypt'
-gem 'rack-cors', require: 'rack/cors'
+gem 'swagger-blocks' # API Docs
+gem 'active_model_serializers', '~> 0.10.0'
 
-# API Docs
-gem 'swagger-blocks'
+# Extra dependencies
+gem 'http'
 
+# Development and test dependencies
 group :development do
-  gem 'shotgun'
+  gem 'shotgun' # dev server
 end
 
 group :development, :test do
+  gem 'dotenv'
   gem 'rspec'
   gem 'guard'
   gem 'guard-rspec', require: false
@@ -57,8 +50,6 @@ group :test do
   gem 'rack-test', '~> 0.6.3'
   gem 'database_cleaner'
   gem 'shoulda-matchers'
-
-  # Factories
   gem 'factory_girl'
   gem 'faker', '~> 1.2.0'
 end
