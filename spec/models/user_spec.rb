@@ -7,7 +7,7 @@ describe User, type: :model do
   it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   it { is_expected.to allow_value("pete@example.org").for(:email) }
   it { is_expected.not_to allow_value("pete.org").for(:email) }
-  it { is_expected.to validate_presence_of(:password) }
+  it { is_expected.to validate_presence_of(:password).on(:create) }
   it { is_expected.to have_many(:client_applications) }
   it { is_expected.to have_many(:access_tokens) }
 

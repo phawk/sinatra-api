@@ -8,8 +8,7 @@ class User < ActiveRecord::Base
   has_many :access_tokens
 
   validates :email, email: true, presence: true, uniqueness: { case_sensitive: false }
-  validates_presence_of :password
-  validates :password, length: { minimum: 8 }, on: :create
+  validates :password, presence: true, length: { minimum: 8 }, on: :create
 
   def self.find_by_token(token)
     payload = JWT.decode(token, ENV['JWT_SECRET_KEY'])[0]
