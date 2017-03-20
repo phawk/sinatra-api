@@ -7,10 +7,8 @@ class User < ActiveRecord::Base
   has_many :client_applications
   has_many :access_tokens
 
-  validates_uniqueness_of :email
-  validates_format_of :email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/
-  validates_presence_of :email, :password
-  validates :password, length: { minimum: 8 }, on: :create
+  validates :email, email: true, presence: true, uniqueness: { case_sensitive: false }
+  validates :password, presence: true, length: { minimum: 8 }, on: :create
 
   def self.find_by_token(token)
     payload = JWT.decode(token, ENV['JWT_SECRET_KEY'])[0]
@@ -53,16 +51,18 @@ class User < ActiveRecord::Base
     save
   end
 
+  def authenticate(password)
+    return false unless password_digest
+    digest = Password.new(password_digest)
+    digest == password
+  end
+
   def password
-    @password ||= Password.new(password_digest) if password_digest
+    @password
   end
 
   def password=(new_password)
-    if new_password.nil?
-      @password = nil
-    else
-      @password = Password.create(new_password)
-      self.password_digest = @password
-    end
+    @password = new_password
+    self.password_digest = Password.create(new_password) if new_password
   end
 end
