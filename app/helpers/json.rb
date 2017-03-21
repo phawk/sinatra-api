@@ -1,19 +1,19 @@
 module Api
   module Helpers
     module Json
-      def json(resource, meta: {}, opts: {})
+      def json(resource, opts = {})
         data = serialize(resource, opts)
 
-        data[:meta] = meta if meta.any?
-
-        MultiJson.dump(data, pretty: true)
+        MultiJson.dump(data)
       end
 
       def serialize(resource, opts = {})
         if resource.is_a?(ActiveRecord::Relation) && resource.respond_to?(:map)
-          JSONAPI::Serializer.serialize(resource, is_collection: true)
+          JSONAPI::Serializer.serialize(resource, opts.merge(is_collection: true))
         elsif resource.is_a?(ActiveRecord::Base)
           JSONAPI::Serializer.serialize(resource, opts)
+        elsif resource.is_a?(Hash)
+          resource.merge(opts)
         else
           resource
         end
