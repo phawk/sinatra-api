@@ -14,8 +14,6 @@ module Api
           JSONAPI::Serializer.serialize(resource, is_collection: true)
         elsif resource.is_a?(ActiveRecord::Base)
           JSONAPI::Serializer.serialize(resource, opts)
-        elsif resource.is_a?(Hash)
-          resource
         else
           resource
         end
