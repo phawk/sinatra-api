@@ -51,5 +51,5 @@ group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers'
   gem 'factory_girl'
-  gem 'faker', '~> 1.2.0'
+  gem 'faker', '~> 1.7.3'
 end
