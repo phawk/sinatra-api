@@ -31,6 +31,7 @@ gem 'jsonapi-serializers'
 
 # Extra dependencies
 gem 'http'
+gem 'kaminari'
 
 # Development and test dependencies
 group :development do
