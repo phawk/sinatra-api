@@ -32,27 +32,11 @@ module Sinatra
       end
 
       def halt_unprocessible_entity(record, status_code: 422)
-        errors = record.errors.map do |attribute, message|
-          code = case message
-          when "can't be blank"
-            "missing_field"
-          when "has already been taken"
-            "already_exists"
-          else
-            "invalid"
-          end
-
-          {
-            resource: record.class.to_s,
-            field: attribute,
-            code: code
-          }
-        end
-        halt status_code, json({
+        errors = JSONAPI::Serializer.serialize_errors(record.errors)
+        halt status_code, json(errors.merge({
           error_code: "validation_failed",
-          message: "Validation failed",
-          errors: errors
-        })
+          message: "Validation failed"
+        }))
       end
 
       def halt_internal_server_error
