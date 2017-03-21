@@ -8,6 +8,7 @@ use Rack::Timeout, service_timeout: 10
 use Rack::SSL if ENV['RACK_ENV'] == 'production'
 use Rack::CloudFlareMiddleware
 use Rack::CanonicalHost, ENV['CANONICAL_HOST'] if ENV['CANONICAL_HOST']
+use Rack::Deflater
 
 use Rack::Cors do
   allow do
