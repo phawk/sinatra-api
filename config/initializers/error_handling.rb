@@ -31,7 +31,7 @@ module Sinatra
         halt 404, json({ error_code: "not_found", message: message })
       end
 
-      def halt_unprocessible_entity(record)
+      def halt_unprocessible_entity(record, status_code: 422)
         errors = record.errors.map do |attribute, message|
           code = case message
           when "can't be blank"
@@ -48,7 +48,7 @@ module Sinatra
             code: code
           }
         end
-        halt 422, json({
+        halt status_code, json({
           error_code: "validation_failed",
           message: "Validation failed",
           errors: errors
