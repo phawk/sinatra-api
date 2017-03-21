@@ -22,7 +22,7 @@ module Api
         user = User.new(params.slice(:name, :email, :password))
 
         unless user.save
-          halt_with_422_unprocessible_entity(user)
+          halt_unprocessible_entity(user)
         end
 
         json user

@@ -29,7 +29,7 @@ module Api
 
           json token
         else
-          halt_with_401_authorization_required("Authentication failed for: #{username}")
+          halt_authorization_required("Authentication failed for: #{username}")
         end
       end
 

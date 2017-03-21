@@ -60,12 +60,12 @@ module Api
         ensure_client_secret!
 
         user = User.find_by_token(params[:reset_token])
-        halt_with_404_not_found("No user found for reset token") if user.nil?
+        halt_not_found("No user found for reset token") if user.nil?
 
         if user.update_password(params[:password])
           json(data: { message: "Password has been reset" })
         else
-          halt_with_422_unprocessible_entity(user)
+          halt_unprocessible_entity(user)
         end
       end
 
