@@ -4,6 +4,7 @@ $: << File.expand_path('../../lib', __FILE__)
 
 # Default ENV to dev if not present
 ENV['RACK_ENV'] ||= 'development'
+ENV['APP_ENV'] = ENV['RACK_ENV']
 
 # Autoload gems from the Gemfile
 require "bundler"
