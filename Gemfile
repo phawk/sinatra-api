@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.4.0'
 
 # Core framework dependencies
 gem 'activesupport', require: 'active_support/core_ext/hash'
