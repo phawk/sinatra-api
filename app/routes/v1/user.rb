@@ -37,7 +37,7 @@ module Api
           user.reset_password
         end
 
-        json({ message: "Password reset email sent" })
+        json(data: { message: "Password reset email sent" })
       end
 
       swagger_path '/v1/user/attributes/password' do
@@ -63,9 +63,9 @@ module Api
         halt_with_404_not_found("No user found for reset token") if user.nil?
 
         if user.update_password(params[:password])
-          json({ message: "Password has been reset" })
+          json(data: { message: "Password has been reset" })
         else
-          halt 400, json({ message: "Validation failed", errors: user.errors.full_messages })
+          halt_with_422_unprocessible_entity(user)
         end
       end
 

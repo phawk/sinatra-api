@@ -1,6 +1,6 @@
-class ClientApplicationSerializer < ApplicationSerializer
+class ClientApplicationSerializer < BaseSerializer
   attributes :id, :name, :client_id,
              :created_at, :updated_at
 
-  belongs_to :user
+  has_one :user
 end

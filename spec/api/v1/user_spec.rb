@@ -22,8 +22,8 @@ describe "Api::v1::UserStory", type: :api do
       end
 
       it "shows my details" do
-        expect(response_json[:data][:name]).to eq alfred.name
-        expect(response_json[:data][:email]).to eq alfred.email
+        expect(response_json[:data][:attributes][:name]).to eq alfred.name
+        expect(response_json[:data][:attributes][:email]).to eq alfred.email
       end
     end
   end
@@ -60,14 +60,14 @@ describe "Api::v1::UserStory", type: :api do
       put "/v1/user/attributes/password", { password: "updated_password" }
 
       expect(http_status).to eq(404)
-      expect(response_json[:data][:message]).to match(/No user found for reset token/)
+      expect(response_json[:message]).to match(/No user found for reset token/)
     end
 
     it "requires the reset token to have not expired" do
       put "/v1/user/attributes/password", { password: "updated_password", reset_token: expired_jwt }
 
       expect(http_status).to eq(404)
-      expect(response_json[:data][:message]).to match(/No user found for reset token/)
+      expect(response_json[:message]).to match(/No user found for reset token/)
     end
 
     it "updates the password" do

@@ -27,7 +27,7 @@ gem 'mail'
 gem 'postmark'
 gem 'jwt'
 gem 'swagger-blocks' # API Docs
-gem 'active_model_serializers', '~> 0.10.0'
+gem 'jsonapi-serializers'
 
 # Extra dependencies
 gem 'http'

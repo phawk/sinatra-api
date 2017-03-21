@@ -6,7 +6,7 @@ FactoryGirl.define do
   factory :user do
     name { Faker::Name.first_name }
     email { Faker::Internet.email }
-    password { Faker::Internet.password }
+    password { "password1" }
     updated_at { 10.days.ago }
     created_at { 10.days.ago }
 

@@ -31,11 +31,8 @@ module Sinatra
         halt 404, json({ error_code: "not_found", message: message })
       end
 
-      def halt_with_422_unprocessible_entity
-        errors = []
-        resource = env['sinatra.error'].record.class.to_s
-        env['sinatra.error'].record.errors.each do |attribute, message|
-
+      def halt_with_422_unprocessible_entity(record)
+        errors = record.errors.map do |attribute, message|
           code = case message
           when "can't be blank"
             "missing_field"
@@ -45,8 +42,8 @@ module Sinatra
             "invalid"
           end
 
-          errors << {
-            resource: resource,
+          {
+            resource: record.class.to_s,
             field: attribute,
             code: code
           }
