@@ -12,7 +12,7 @@ use Rack::Deflater
 
 use Rack::Cors do
   allow do
-    origins '*'
+    origins ENV.fetch('ALLOWED_CORS_ORIGINS', '*')
     resource '*', headers: :any, methods: :any, max_age: 2592000 # 30 days
   end
 end
