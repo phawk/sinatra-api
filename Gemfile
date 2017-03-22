@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.4.0'
 
 # Core framework dependencies
 gem 'activesupport', require: 'active_support/core_ext/hash'
@@ -11,9 +11,9 @@ gem 'rack-timeout'
 gem 'rack-canonical-host'
 gem 'rack-ssl'
 gem 'rake'
-gem 'sinatra', '>= 2.0.0.rc1'
+gem 'sinatra', '>= 2.0.0.rc2'
 gem 'sinatra-activerecord', '~> 2.0.12'
-gem 'sinatra-contrib', '>= 2.0.0.rc1'
+gem 'sinatra-contrib', '>= 2.0.0.rc2'
 gem 'pg'
 gem 'activerecord', '~> 5.0'
 gem 'redis', '~> 3.3.3'
@@ -27,10 +27,11 @@ gem 'mail'
 gem 'postmark'
 gem 'jwt'
 gem 'swagger-blocks' # API Docs
-gem 'active_model_serializers', '~> 0.10.0'
+gem 'jsonapi-serializers'
 
 # Extra dependencies
 gem 'http'
+gem 'kaminari'
 
 # Development and test dependencies
 group :development do
@@ -51,5 +52,5 @@ group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers'
   gem 'factory_girl'
-  gem 'faker', '~> 1.2.0'
+  gem 'faker', '~> 1.7.3'
 end

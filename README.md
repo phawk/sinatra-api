@@ -10,6 +10,7 @@ A starting point for creating REST APIs in sinatra.
 * ActiveRecord (default: postgres)
 * Warden with basic oauth2 resource owner credentials flow
 * Mail (default delivery: postmark)
+* sidekiq for background jobs
 * RSpec, rack-test, factory_girl and faker
 
 ## Getting started

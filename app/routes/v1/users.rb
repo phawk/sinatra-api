@@ -22,7 +22,7 @@ module Api
         user = User.new(params.slice(:name, :email, :password))
 
         unless user.save
-          halt 400, json({ message: "Validation failed", errors: user.errors.full_messages })
+          halt_unprocessible_entity(user)
         end
 
         json user

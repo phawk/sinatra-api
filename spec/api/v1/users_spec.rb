@@ -9,20 +9,20 @@ describe "Api::v1::UsersStory", type: :api do
     it "has validation" do
       post "/v1/users", { name: "Batman" }
 
-      expect(http_status).to eq(400)
-      expect(response_json[:data][:message]).to match(/Validation failed/)
-      expect(response_json[:data][:errors]).not_to be_nil
+      expect(http_status).to eq(422)
+      expect(response_json["error_code"]).to eq("validation_failed")
+      expect(response_json["errors"]).not_to be_nil
     end
 
     it "creates a user" do
       post "/v1/users", { name: "Batman", email: "batman@robin.com", password: "supersecretpassword" }
 
       expect(http_status).to eq(200)
-      expect(response_json[:data][:name]).to eq("Batman")
-      expect(response_json[:data][:email]).to eq("batman@robin.com")
+      expect(json_attrs["name"]).to eq("Batman")
+      expect(json_attrs["email"]).to eq("batman@robin.com")
 
       # Actually created the user
-      expect(User.find(response_json[:data][:id]).email).to eq("batman@robin.com")
+      expect(User.find(response_json["data"]["id"]).email).to eq("batman@robin.com")
     end
   end
 end

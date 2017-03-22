@@ -29,7 +29,7 @@ module Api
 
     get '/api-docs.json' do
       docs = Swagger::Blocks.build_root_json([Api::Base])
-      MultiJson.dump(docs, pretty: true)
+      MultiJson.dump(docs)
     end
   end
 end

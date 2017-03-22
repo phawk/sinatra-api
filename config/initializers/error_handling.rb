@@ -6,12 +6,12 @@ module Sinatra
   module ErrorHandling
 
     module Helpers
-      def halt_with_400_bad_request(message = nil)
+      def halt_bad_request(message = nil)
         message ||= "Bad request"
         halt 400, json({ error_code: "bad_request", message: message })
       end
 
-      def halt_with_401_authorization_required(message = nil, realm = "App Name")
+      def halt_authorization_required(message = nil, realm = "App Name")
         message ||= "Authorization required"
         headers 'WWW-Authenticate' => %(Basic realm="#{realm}")
 
@@ -21,44 +21,25 @@ module Sinatra
         halt 401, json({ error_code: "unauthorized", message: message })
       end
 
-      def halt_with_403_forbidden(message = nil)
+      def halt_forbidden(message = nil)
         message ||= "Forbidden"
         halt 403, json({ error_code: "forbidden", message: message })
       end
 
-      def halt_with_404_not_found(message = nil)
+      def halt_not_found(message = nil)
         message ||= "Resource not found"
         halt 404, json({ error_code: "not_found", message: message })
       end
 
-      def halt_with_422_unprocessible_entity
-        errors = []
-        resource = env['sinatra.error'].record.class.to_s
-        env['sinatra.error'].record.errors.each do |attribute, message|
-
-          code = case message
-          when "can't be blank"
-            "missing_field"
-          when "has already been taken"
-            "already_exists"
-          else
-            "invalid"
-          end
-
-          errors << {
-            resource: resource,
-            field: attribute,
-            code: code
-          }
-        end
-        halt 422, json({
+      def halt_unprocessible_entity(record, status_code: 422)
+        errors = JSONAPI::Serializer.serialize_errors(record.errors)
+        halt status_code, json(errors.merge({
           error_code: "validation_failed",
-          message: "Validation failed",
-          errors: errors
-        })
+          message: "Validation failed"
+        }))
       end
 
-      def halt_with_500_internal_server_error
+      def halt_internal_server_error
         halt 500, json({
           error_code: "internal_error",
           message: "Internal server error: this is a problem on our end and we've been notified of the issue"
@@ -70,16 +51,16 @@ module Sinatra
       app.helpers ErrorHandling::Helpers
 
       app.error MultiJson::DecodeError do
-        halt_with_400_bad_request("Problems parsing JSON")
+        halt_bad_request("Problems parsing JSON")
       end
 
       app.error Sinatra::NotFound do
-        halt_with_404_not_found("Endpoint '#{request.path_info}' not found")
+        halt_not_found("Endpoint '#{request.path_info}' not found")
       end
 
       app.error do
         # err_name = env['sinatra.error'].name
-        halt_with_500_internal_server_error
+        halt_internal_server_error
       end
     end
   end

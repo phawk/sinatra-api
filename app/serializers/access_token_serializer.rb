@@ -1,8 +1,8 @@
-class AccessTokenSerializer < ApplicationSerializer
+class AccessTokenSerializer < BaseSerializer
   attributes :id, :token, :client,
              :created_at, :updated_at
 
-  def client
+  attribute :client do
     object.client_application.name
   end
 end

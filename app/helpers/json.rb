@@ -1,22 +1,32 @@
 module Api
   module Helpers
     module Json
-      def json(resource, meta: {}, opts: {})
-        data = { data: serialize(resource, opts) }
+      def json(resource, opts = {})
+        data = serialize(resource, opts)
 
-        data[:meta] = meta if meta.any?
-
-        MultiJson.dump(data, pretty: true)
+        MultiJson.dump(data)
       end
 
       def serialize(resource, opts = {})
         if resource.is_a?(ActiveRecord::Relation) && resource.respond_to?(:map)
-          resource.map { |r| ActiveModelSerializers::SerializableResource.new(r, opts) }
+          JSONAPI::Serializer.serialize(resource, opts.merge(is_collection: true))
         elsif resource.is_a?(ActiveRecord::Base)
-          ActiveModelSerializers::SerializableResource.new(resource, opts)
+          JSONAPI::Serializer.serialize(resource, opts)
+        elsif resource.is_a?(Hash)
+          resource.merge(opts)
         else
           resource
         end
+      end
+
+      def page_meta(object, extra_meta = {})
+        {
+          current_page: object.current_page,
+          next_page: object.next_page,
+          prev_page: object.prev_page,
+          total_pages: object.total_pages,
+          total_count: object.total_count
+        }.merge(extra_meta)
       end
 
       def params

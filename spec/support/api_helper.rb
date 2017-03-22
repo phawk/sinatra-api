@@ -39,14 +39,14 @@ module ApiHelper
     last_response.status
   end
 
-  def response_json
-    parse_json last_response.body
-  end
-
   # JSON helpers
 
-  def parse_json(body)
-    MultiJson.load(body, symbolize_keys: true)
+  def json_attrs
+    response_json["data"]["attributes"]
+  end
+
+  def response_json
+    MultiJson.load(last_response.body)
   end
 
   def json(hash)

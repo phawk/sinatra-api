@@ -13,15 +13,15 @@ describe "Api::oAuth", type: :api do
       post "/oauth/token", { email: user.email, password: "milkycoffee" }
 
       expect(http_status).to eq(401)
-      expect(response_json[:message]).to match(/Authentication failed/)
+      expect(response_json["message"]).to match(/Authentication failed/)
     end
 
     it "returns an oauth token" do
       post "/oauth/token", { email: user.email, password: "strongcoffee" }
 
       expect(http_status).to eq(200)
-      expect(response_json[:data][:token]).to be_a(String)
-      expect(response_json[:data][:client]).to eq("Tasty Coffee")
+      expect(json_attrs["token"]).to be_a(String)
+      expect(json_attrs["client"]).to eq("Tasty Coffee")
     end
   end
 end
