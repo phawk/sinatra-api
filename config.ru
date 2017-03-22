@@ -1,12 +1,14 @@
 require_relative './lib/rack/cloud_flare_middleware'
+require_relative './lib/rack/health_check'
 require_relative './app'
 require 'sidekiq/web'
 require 'rack/ssl'
 require 'rack-timeout'
 
 use Rack::Timeout, service_timeout: 10
-use Rack::SSL if ENV['RACK_ENV'] == 'production'
+use Rack::HealthCheck
 use Rack::CloudFlareMiddleware
+use Rack::SSL if ENV['RACK_ENV'] == 'production'
 use Rack::CanonicalHost, ENV['CANONICAL_HOST'] if ENV['CANONICAL_HOST']
 use Rack::Deflater
 
