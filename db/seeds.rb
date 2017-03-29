@@ -1,10 +1,12 @@
-admin_user = User.create!(
+require_relative '../config/boot'
+
+admin_user = User.create(
   name: "Admin",
   email: "admin@example.org",
-  password: "hunter2"
+  password: "hunter22"
 )
 
-client_app = ClientApplication.create!(
+client_app = ClientApplication.create(
   name: "In-house Web App",
   user: admin_user,
   in_house_app: true
