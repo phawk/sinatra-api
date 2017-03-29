@@ -3,6 +3,21 @@ namespace :db do
   require "#{@root_dir}/config/boot"
   Sequel.extension :migration
 
+  desc "Create databases"
+  task :create do
+    %w(DATABASE_URL TEST_DATABASE_URL).each do |db_url|
+      db_url = ENV[db_url]
+
+      unless db_url.present?
+        puts "#{db_url} not set!"
+        next
+      end
+
+      dbname = URI.parse(db_url).path[1..-1]
+      system("createdb #{dbname}")
+    end
+  end
+
   desc "Run migrations"
   task :migrate, [:version] do |t, args|
     if args[:version]
