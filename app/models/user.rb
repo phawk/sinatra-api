@@ -5,7 +5,7 @@ class User < Sequel::Model
   include BCrypt
 
   one_to_many :client_applications
-  many_to_one :access_tokens
+  one_to_many :access_tokens
 
   def validate
     super
