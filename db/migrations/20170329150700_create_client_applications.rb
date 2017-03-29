@@ -12,7 +12,8 @@ Sequel.migration do
       DateTime :updated_at, null: false
 
       index :user_id
-      index :client_id
+      index :client_id, unique: true
+      unique :client_secret
     end
   end
 

@@ -8,7 +8,7 @@ Sequel.migration do
       DateTime :created_at, null: false
       DateTime :updated_at, null: false
 
-      index :email
+      index :email, unique: true
     end
   end
 

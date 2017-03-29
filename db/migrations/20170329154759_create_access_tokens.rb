@@ -11,6 +11,7 @@ Sequel.migration do
 
       index :client_application_id
       index :user_id
+      index :token, unique: true
     end
   end
 
