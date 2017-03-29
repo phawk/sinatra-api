@@ -31,7 +31,7 @@ module Api
       post '/reset_password' do
         ensure_client_secret!
 
-        user = User.where(email: params[:email]).first
+        user = User.find(email: params[:email])
 
         unless user.nil?
           user.reset_password
