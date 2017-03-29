@@ -7,6 +7,8 @@ Sequel.migration do
       String :password_digest, null: false
       DateTime :created_at, null: false
       DateTime :updated_at, null: false
+
+      index :email
     end
   end
 

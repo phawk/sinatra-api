@@ -1,5 +1,5 @@
 namespace :db do
-  @root_dir = File.expand_path(File.dirname(File.dirname(File.dirname(__FILE__))))
+  @root_dir = File.expand_path(File.join(__dir__, "..", ".."))
   require "#{@root_dir}/config/boot"
   Sequel.extension :migration
 
