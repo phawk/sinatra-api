@@ -20,8 +20,8 @@ describe "Api::oAuth", type: :api do
       post "/oauth/token", { email: user.email, password: "strongcoffee" }
 
       expect(http_status).to eq(200)
-      expect(json_attrs["token"]).to be_a(String)
-      expect(json_attrs["client"]).to eq("Tasty Coffee")
+      expect(response_json["access_token"]).to be_a(String)
+      expect(response_json["client"]).to eq("Tasty Coffee")
     end
   end
 end

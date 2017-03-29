@@ -25,8 +25,9 @@ module Api
         if user && user.authenticate(params[:password])
           token = AccessToken.for_client(current_client)
           token.user = user
+          token.save
 
-          json token.save
+          json(access_token: token.token, client: token.client_application.name, created_at: token.created_at)
         else
           halt_authorization_required("Authentication failed for: #{username}")
         end
