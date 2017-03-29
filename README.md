@@ -7,7 +7,7 @@ A starting point for creating REST APIs in sinatra.
 ## Includes
 
 * Sinatra + sinatra contrib
-* ActiveRecord (default: postgres)
+* Sequel (default: postgres)
 * Warden with basic oauth2 resource owner credentials flow
 * Mail (default delivery: postmark)
 * sidekiq for background jobs
@@ -24,14 +24,12 @@ $ cp .env.example .env
 # Edit the env vars
 $ vim .env
 
-# Edit the database conf
-$ vim config/database.yml
-
 # Create dev + test databases
 $ bin/rake db:create
 
 # Run initial migrations
 $ bin/rake db:migrate
+$ bin/rake db:migrate RACK_ENV=test
 ```
 
 ### Running
