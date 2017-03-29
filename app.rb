@@ -3,7 +3,6 @@ require 'token_failure_app'
 
 module Api
   class Base < ::Sinatra::Base
-    register ::Sinatra::ActiveRecordExtension
     register ::Sinatra::Namespace
     register ::Sinatra::ErrorHandling
     use Rack::PostBodyContentTypeParser
@@ -13,7 +12,6 @@ module Api
     helpers ::Api::Helpers::Json
 
     set :app_file, __FILE__
-    set :database_file, "config/database.yml"
 
     configure do
       enable :logging

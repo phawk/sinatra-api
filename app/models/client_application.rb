@@ -1,11 +1,17 @@
-class ClientApplication < ActiveRecord::Base
-  belongs_to :user
-  has_many :access_tokens
+class ClientApplication < Sequel::Model
+  many_to_one :user
+  one_to_many :access_tokens
 
-  validates_uniqueness_of :client_id, on: :create
-  validates_presence_of :name, :user_id
+  def validate
+    super
+    validates_presence [:name, :user_id]
+    validates_unique :client_id
+  end
 
-  before_create :generate_tokens
+  def before_create
+    self.generate_tokens
+    super
+  end
 
   def authorize(secret)
     self.client_secret == secret
@@ -14,8 +20,6 @@ class ClientApplication < ActiveRecord::Base
   def has_elevated_privileges?
     in_house_app?
   end
-
-private
 
   def generate_tokens
     self.client_id = SecureRandom.hex(32)

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Api::v1::UsersStory", type: :api do
+describe "Api::v1::Users", type: :api do
   describe "POST /v1/users" do
     before do
       authenticate_client
@@ -22,7 +22,7 @@ describe "Api::v1::UsersStory", type: :api do
       expect(json_attrs["email"]).to eq("batman@robin.com")
 
       # Actually created the user
-      expect(User.find(response_json["data"]["id"]).email).to eq("batman@robin.com")
+      expect(User.find(id: response_json["data"]["id"]).email).to eq("batman@robin.com")
     end
   end
 end

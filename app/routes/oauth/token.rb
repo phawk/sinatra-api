@@ -20,14 +20,13 @@ module Api
 
         username = params[:username] || params[:email]
 
-        user = User.find_by(email: username)
+        user = User.find(email: username)
 
         if user && user.authenticate(params[:password])
           token = AccessToken.for_client(current_client)
           token.user = user
-          token.save
 
-          json token
+          json token.save
         else
           halt_authorization_required("Authentication failed for: #{username}")
         end

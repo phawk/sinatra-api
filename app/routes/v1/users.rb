@@ -21,11 +21,11 @@ module Api
 
         user = User.new(params.slice(:name, :email, :password))
 
-        unless user.save
+        begin
+          json user.save
+        rescue Sequel::ValidationFailed
           halt_unprocessible_entity(user)
         end
-
-        json user
       end
 
     end

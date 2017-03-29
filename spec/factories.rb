@@ -2,6 +2,7 @@ require 'faker'
 require 'securerandom'
 
 FactoryGirl.define do
+  to_create { |i| i.save }
 
   factory :user do
     name { Faker::Name.first_name }
@@ -19,7 +20,7 @@ FactoryGirl.define do
 
 
   factory :client_application do
-    name  { Faker::Name.title }
+    name { Faker::Name.title }
     client_id { SecureRandom.hex(32) }
     client_secret { SecureRandom.hex(32) }
     user

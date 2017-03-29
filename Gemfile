@@ -12,10 +12,9 @@ gem 'rack-canonical-host'
 gem 'rack-ssl'
 gem 'rake'
 gem 'sinatra', '>= 2.0.0.rc2', require: 'sinatra/base'
-gem 'sinatra-activerecord', '~> 2.0.12'
 gem 'sinatra-contrib', '>= 2.0.0.rc2'
 gem 'pg'
-gem 'activerecord', '~> 5.0'
+gem 'sequel', '~> 4.44.0'
 gem 'redis', '~> 3.3.3'
 gem 'redis-namespace'
 gem 'sidekiq'
@@ -31,7 +30,6 @@ gem 'jsonapi-serializers'
 
 # Extra dependencies
 gem 'http'
-gem 'kaminari'
 
 # Development and test dependencies
 group :development do
@@ -49,8 +47,6 @@ end
 
 group :test do
   gem 'rack-test', '~> 0.6.3'
-  gem 'database_cleaner'
-  gem 'shoulda-matchers'
   gem 'factory_girl'
   gem 'faker', '~> 1.7.3'
 end

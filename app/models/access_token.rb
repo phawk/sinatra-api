@@ -1,21 +1,25 @@
 require 'securerandom'
 
-class AccessToken < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :client_application
+class AccessToken < Sequel::Model
+  many_to_one :user
+  many_to_one :client_application
 
-  validates_uniqueness_of :token, on: :create
-  validates_presence_of :client_application_id, :user_id
+  def validate
+    super
+    validates_presence [:client_application_id, :user_id]
+    validates_unique :token
+  end
 
-  before_create :generate_token
+  def before_create
+    self.generate_token
+    super
+  end
 
   def self.for_client(client)
     token = new
     token.client_application = client
     token
   end
-
-private
 
   def generate_token
     self.token = SecureRandom.hex(32)
