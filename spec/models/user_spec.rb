@@ -94,7 +94,6 @@ describe User, type: :model do
 
     describe "when password is valid" do
       it "resets password" do
-        puts "SUBJECT: #{subject.inspect}"
         subject.update_password("testpassword")
         expect(subject.password == "testpassword").to be true
       end
