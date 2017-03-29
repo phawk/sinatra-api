@@ -58,6 +58,10 @@ module Sinatra
         halt_not_found("Endpoint '#{request.path_info}' not found")
       end
 
+      app.error Sequel::ValidationFailed do |e|
+        halt_unprocessible_entity(e)
+      end
+
       app.error do
         # err_name = env['sinatra.error'].name
         halt_internal_server_error
