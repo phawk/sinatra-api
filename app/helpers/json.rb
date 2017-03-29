@@ -8,8 +8,8 @@ module Api
       end
 
       def serialize(resource, opts = {})
-        if resource.is_a?(Array) && resource[0].is_at?(Sequel::Model)
-          JSONAPI::Serializer.serialize(resource, collection: true)
+        if resource.is_a?(Array) && resource[0].is_a?(Sequel::Model)
+          JSONAPI::Serializer.serialize(resource, is_collection: true)
         elsif resource.is_a?(Sequel::Model)
           JSONAPI::Serializer.serialize(resource, skip_collection_check: true)
         elsif resource.is_a?(Hash)
