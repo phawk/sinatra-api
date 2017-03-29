@@ -13,7 +13,7 @@ Warden::Strategies.add(:client_id) do
   end
 
   def authenticate!
-    client = ClientApplication.find_by(client_id: params['client_id'])
+    client = ClientApplication.find(client_id: params['client_id'])
     if client.nil?
       throw(:warden, message: "Could not find client")
     else
@@ -32,7 +32,7 @@ Warden::Strategies.add(:client_secret) do
   def authenticate!
     credentials = client_from_header || client_from_body
 
-    client = ClientApplication.where(client_id: credentials[:client_id], client_secret: credentials[:client_secret]).first
+    client = ClientApplication.find(client_id: credentials[:client_id], client_secret: credentials[:client_secret])
 
     if client.nil?
       throw(:warden, message: "Could not find client")
@@ -72,7 +72,7 @@ Warden::Strategies.add(:access_token) do
       token_str = env['HTTP_AUTHORIZATION'].sub(/^Bearer/, "").strip
     end
 
-    token = AccessToken.find_by(token: token_str)
+    token = AccessToken.find(token: token_str)
 
     if token.nil?
       throw(:warden, message: "Access token is invalid or expired")

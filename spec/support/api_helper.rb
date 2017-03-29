@@ -1,3 +1,4 @@
+require 'base64'
 require 'rack/test'
 
 module ApiHelper
@@ -31,6 +32,16 @@ module ApiHelper
     client = client || create(:client_application)
     login_as AccessToken.for_client(client), strategy: :client_secret
     client
+  end
+
+  def token_header(user)
+    access_token = create(:access_token, user: user)
+    { "HTTP_AUTHORIZATION" => "Bearer #{access_token.token}" }
+  end
+
+  def basic_header(username, password)
+    auth = Base64.strict_encode64("#{username}:#{password}")
+    { "HTTP_AUTHORIZATION" => "Basic #{auth}" }
   end
 
   # Response helpers
