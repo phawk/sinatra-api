@@ -7,8 +7,6 @@ Bundler.require :default, :test
 # Load the application
 require_relative '../app'
 
-require 'shoulda/matchers'
-
 # Grab the factories
 FactoryGirl.find_definitions
 
@@ -50,31 +48,16 @@ RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
   config.include FactoryGirl::Syntax::Methods
-  config.include(Shoulda::Matchers::ActiveModel, type: :model)
-  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
 
   config.before(:suite) do
     # Set mail into test mode
     Mail.defaults do
       delivery_method :test
     end
-
-    DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with(:truncation)
   end
 
-  # config.around(:each) do |example|
-  #   begin
-  #     ActiveRecord::Base.connection.transaction do
-  #       example.run
-  #       raise ActiveRecord::Rollback
-  #     end
-  #   rescue ActiveRecord::Rollback
-  #   end
-  # end
-
   config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
+    DB.transaction(rollback: :always, auto_savepoint: true) do
       example.run
     end
   end

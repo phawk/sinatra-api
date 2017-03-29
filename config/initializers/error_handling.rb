@@ -32,11 +32,11 @@ module Sinatra
       end
 
       def halt_unprocessible_entity(record, status_code: 422)
-        errors = JSONAPI::Serializer.serialize_errors(record.errors)
-        halt status_code, json(errors.merge({
+        halt status_code, json({
+          errors: record.errors,
           error_code: "validation_failed",
           message: "Validation failed"
-        }))
+        })
       end
 
       def halt_internal_server_error

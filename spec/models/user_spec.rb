@@ -3,14 +3,6 @@ require "spec_helper"
 describe User, type: :model do
   subject { create(:user) }
 
-  it { is_expected.to validate_presence_of(:email) }
-  it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
-  it { is_expected.to allow_value("pete@example.org").for(:email) }
-  it { is_expected.not_to allow_value("pete.org").for(:email) }
-  it { is_expected.to validate_presence_of(:password).on(:create) }
-  it { is_expected.to have_many(:client_applications) }
-  it { is_expected.to have_many(:access_tokens) }
-
   describe ".find_by_token" do
     let(:valid_jwt) { get_jwt({ "user_id" => 1, "expires" => 24.hours.from_now }) }
     let(:expired_jwt) { get_jwt({ "user_id" => 1, "expires" => 5.minutes.ago }) }
@@ -52,9 +44,9 @@ describe User, type: :model do
     end
 
     it "is unique" do
-      expect(subject.save).to be true
+      expect(subject.valid?).to be true
       new_user = build(:user, email: subject.email)
-      expect(new_user.save).to be false
+      expect(new_user.valid?).to be false
     end
   end
 
@@ -91,7 +83,7 @@ describe User, type: :model do
   end
 
   describe "#update_password" do
-    subject { User.new(name: "Jimmy") }
+    subject { User.new(name: "Jimmy", email: "jimmy@eatsworld.com") }
 
     describe "when password is too short" do
       it "has errors" do
@@ -102,6 +94,7 @@ describe User, type: :model do
 
     describe "when password is valid" do
       it "resets password" do
+        puts "SUBJECT: #{subject.inspect}"
         subject.update_password("testpassword")
         expect(subject.password == "testpassword").to be true
       end

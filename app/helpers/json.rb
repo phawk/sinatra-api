@@ -8,12 +8,17 @@ module Api
       end
 
       def serialize(resource, opts = {})
-        if resource.is_a?(ActiveRecord::Relation) && resource.respond_to?(:map)
-          JSONAPI::Serializer.serialize(resource, opts.merge(is_collection: true))
-        elsif resource.is_a?(ActiveRecord::Base)
-          JSONAPI::Serializer.serialize(resource, opts)
-        elsif resource.is_a?(Hash)
-          resource.merge(opts)
+        # if resource.is_a?(Sequel::Model) && resource.respond_to?(:map)
+        #   JSONAPI::Serializer.serialize(resource, opts.merge(is_collection: true))
+        # elsif resource.is_a?(Sequel::Model)
+        #   JSONAPI::Serializer.serialize(resource, opts)
+        # elsif resource.is_a?(Hash)
+        #   resource.merge(opts)
+        # else
+        #   resource
+        # end
+        if resource.is_a?(Sequel::Model)
+          JSONAPI::Serializer.serialize(resource, skip_collection_check: true)
         else
           resource
         end

@@ -1,21 +1,26 @@
 require 'securerandom'
 require 'jwt'
 
-class User < ActiveRecord::Base
+class User < Sequel::Model
   include BCrypt
 
-  has_many :client_applications
-  has_many :access_tokens
+  one_to_many :client_applications
+  many_to_one :access_tokens
 
-  validates :email, email: true, presence: true, uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { minimum: 8 }, on: :create
+  def validate
+    super
+    validates_presence [:email, :password]
+    validates_unique :email
+    validates_format /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :email, message: 'is not a valid email address'
+    validates_min_length 8, :password
+  end
 
   def self.find_by_token(token)
     payload = JWT.decode(token, ENV['JWT_SECRET_KEY'])[0]
 
     return nil unless Time.now < Time.parse(payload["expires"])
 
-    find(payload["user_id"])
+    find(id: payload["user_id"])
   rescue JWT::DecodeError => e
     nil
   end
@@ -48,7 +53,7 @@ class User < ActiveRecord::Base
     end
 
     self.password = password
-    save
+    save(validate: false)
   end
 
   def authenticate(password)
@@ -64,5 +69,9 @@ class User < ActiveRecord::Base
   def password=(new_password)
     @password = new_password
     self.password_digest = Password.create(new_password) if new_password
+  end
+
+  def email=(email)
+    super(email.try(:downcase))
   end
 end

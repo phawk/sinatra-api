@@ -18,6 +18,7 @@ Dotenv.load if ["development", "test"].include? ENV['RACK_ENV']
  Dir['./app/helpers/**/*.rb'].sort +
  Dir['./app/mailers/**/*.rb'].sort +
  Dir['./app/validators/**/*.rb'].sort +
+ Dir['./app/models/base_model.rb'].sort +
  Dir['./app/models/**/*.rb'].sort +
  Dir['./app/jobs/**/*.rb'].sort +
  Dir['./app/serializers/base_serializer.rb'].sort +
