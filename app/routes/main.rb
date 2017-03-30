@@ -15,7 +15,7 @@ module Api
     end
 
     get '/broken' do
-      $log.info "Visiting broken endpoint"
+      $logger.info "Visiting broken endpoint"
       fail 'bad.'
     end
 

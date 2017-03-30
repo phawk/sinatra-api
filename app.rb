@@ -14,7 +14,7 @@ module Api
     set :app_file, __FILE__
 
     configure do
-      use Rack::CommonLogger, $log
+      use Rack::CommonLogger, $logger
 
       before { content_type(:json) }
 

@@ -63,7 +63,6 @@ module Sinatra
       end
 
       app.error do
-        # $log.error(env['sinatra.error'])
         halt_internal_server_error
       end
     end
