@@ -2,9 +2,9 @@ Sequel.migration do
   up do
     create_table :users do
       primary_key :id
-      String :name
-      String :email, null: false
-      String :password_digest, null: false
+      String :name, size: 50
+      String :email, null: false, size: 255
+      String :password_digest, null: false, size: 255
       DateTime :created_at, null: false
       DateTime :updated_at, null: false
 

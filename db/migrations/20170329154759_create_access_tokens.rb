@@ -4,7 +4,7 @@ Sequel.migration do
       primary_key :id
       foreign_key :user_id, :users, null: false
 
-      String :token, null: false
+      String :token, null: false, size: 64
       Integer :client_application_id, null: false
       DateTime :created_at, null: false
       DateTime :updated_at, null: false
