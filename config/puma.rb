@@ -23,15 +23,6 @@ environment ENV.fetch("RACK_ENV") { "development" }
 #
 workers ENV.fetch("WEB_CONCURRENCY") { 1 }
 
-# Use the `preload_app!` method when specifying a `workers` number.
-# This directive tells Puma to first boot the application and load code
-# before forking the application. This takes advantage of Copy On Write
-# process behavior so workers use less memory. If you use this option
-# you need to make sure to reconnect any threads in the `on_worker_boot`
-# block.
-#
-preload_app!
-
 # The code in the `on_worker_boot` will be called if you are using
 # clustered mode by specifying a number of `workers`. After each worker
 # process is booted this block will be run, if you are using `preload_app!`
