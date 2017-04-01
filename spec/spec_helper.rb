@@ -7,6 +7,8 @@ Bundler.require :default, :test
 # Load the application
 require_relative '../app'
 
+require 'sidekiq/testing'
+
 # Grab the factories
 FactoryGirl.find_definitions
 
@@ -54,6 +56,10 @@ RSpec.configure do |config|
     Mail.defaults do
       delivery_method :test
     end
+  end
+
+  config.before(:each) do
+    Sidekiq::Worker.clear_all
   end
 
   config.around(:each) do |example|
