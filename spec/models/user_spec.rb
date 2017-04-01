@@ -87,8 +87,9 @@ describe User, type: :model do
 
     describe "when password is too short" do
       it "has errors" do
-        subject.update_password("test")
-        expect(subject.errors).not_to be(:empty)
+        expect {
+          subject.update_password("test")
+        }.to raise_error(Sequel::ValidationFailed)
       end
     end
 
