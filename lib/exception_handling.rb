@@ -1,4 +1,11 @@
 require 'json'
+require 'raven'
+
+Raven.configure do |config|
+  config.tags = { environment: ENV['RACK_ENV'] }
+  config.environments = %w(staging production)
+  # config.excluded_exceptions = %w(Sequel::Error)
+end
 
 class ExceptionHandling
   def initialize(app)
@@ -9,6 +16,9 @@ class ExceptionHandling
     begin
       @app.call env
     rescue => ex
+      # Send errors to sentry.io
+      Raven.capture_exception(ex)
+
       env['rack.errors'].puts ex
       env['rack.errors'].puts ex.backtrace.join("\n")
       env['rack.errors'].flush

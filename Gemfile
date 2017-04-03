@@ -30,6 +30,7 @@ gem 'jsonapi-serializers'
 
 # Extra dependencies
 gem 'http'
+gem 'sentry-raven'
 
 # Development and test dependencies
 group :development do
