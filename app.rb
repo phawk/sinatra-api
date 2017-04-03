@@ -7,7 +7,7 @@ module Api
     use Rack::PostBodyContentTypeParser
     include Swagger::Blocks
 
-    helpers ::Api::Helpers::ErrorHandling
+    helpers ::Api::Helpers::Errors
     helpers ::Api::Helpers::Auth
     helpers ::Api::Helpers::Json
 
@@ -24,10 +24,6 @@ module Api
         manager.default_strategies :access_token
         manager.failure_app = ::TokenFailureApp # lib/token_failure_app.rb
       end
-    end
-
-    configure :test do
-      enable :raise_errors
     end
   end
 end

@@ -1,6 +1,6 @@
 module Api
   module Helpers
-    module ErrorHandling
+    module Errors
       def halt_bad_request(message = nil)
         message ||= "Bad request"
         halt 400, json({ error_code: "bad_request", message: message })
