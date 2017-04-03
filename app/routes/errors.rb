@@ -8,8 +8,8 @@ module Api
       halt_unprocessible_entity(e)
     end
 
-    error 500 do
-      halt_internal_server_error
-    end
+    # error 500 do
+    #   halt_internal_server_error
+    # end
   end
 end
