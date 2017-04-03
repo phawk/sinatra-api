@@ -21,6 +21,8 @@ describe "Api::v1::Users", type: :api do
       expect(json_attrs["name"]).to eq("Batman")
       expect(json_attrs["email"]).to eq("batman@robin.com")
 
+      expect(response_json["meta"]["access_token"]).to be_a(String)
+
       # Actually created the user
       expect(User.find(id: response_json["data"]["id"]).email).to eq("batman@robin.com")
     end

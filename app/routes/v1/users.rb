@@ -20,8 +20,13 @@ module Api
         ensure_client_secret!
 
         user = User.new(params.slice(:name, :email, :password))
+        user.save
 
-        json user.save
+        token = AccessToken.for_client(current_client)
+        token.user = user
+        token.save
+
+        json(user, meta: { access_token: token.token })
       end
 
     end
