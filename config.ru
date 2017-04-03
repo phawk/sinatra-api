@@ -1,10 +1,12 @@
 require_relative './lib/rack/cloud_flare_middleware'
 require_relative './lib/rack/health_check'
+require_relative './lib/exception_handling'
 require_relative './app'
 require 'sidekiq/web'
 require 'rack/ssl'
 require 'rack-timeout'
 
+use ExceptionHandling
 use Rack::Timeout, service_timeout: 10
 use Rack::HealthCheck
 use Rack::CloudFlareMiddleware

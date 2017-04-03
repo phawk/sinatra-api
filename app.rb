@@ -4,10 +4,10 @@ require 'token_failure_app'
 module Api
   class Base < ::Sinatra::Base
     register ::Sinatra::Namespace
-    register ::Sinatra::ErrorHandling
     use Rack::PostBodyContentTypeParser
     include Swagger::Blocks
 
+    helpers ::Api::Helpers::ErrorHandling
     helpers ::Api::Helpers::Auth
     helpers ::Api::Helpers::Json
 

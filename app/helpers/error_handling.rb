@@ -1,11 +1,6 @@
-require "sinatra/base"
-
-# From: https://gist.github.com/bensie/4226520
-
-module Sinatra
-  module ErrorHandling
-
-    module Helpers
+module Api
+  module Helpers
+    module ErrorHandling
       def halt_bad_request(message = nil)
         message ||= "Bad request"
         halt 400, json({ error_code: "bad_request", message: message })
@@ -46,27 +41,5 @@ module Sinatra
         })
       end
     end
-
-    def self.registered(app)
-      app.helpers ErrorHandling::Helpers
-
-      app.error MultiJson::DecodeError do
-        halt_bad_request("Problems parsing JSON")
-      end
-
-      app.error Sinatra::NotFound do
-        halt_not_found("Endpoint '#{request.path_info}' not found")
-      end
-
-      app.error Sequel::ValidationFailed do |e|
-        halt_unprocessible_entity(e)
-      end
-
-      app.error do
-        halt_internal_server_error
-      end
-    end
   end
-
-  register ErrorHandling
 end
