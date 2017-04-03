@@ -13,10 +13,14 @@ class ExceptionHandling
       env['rack.errors'].puts ex.backtrace.join("\n")
       env['rack.errors'].flush
 
+      hash = {
+        error_code: "internal_error",
+        message: "Internal server error: this is a problem on our end and we've been notified of the issue"
+      }
+
       if ENV['RACK_ENV'] == 'development'
-        hash = { :message => ex.to_s, :backtrace => ex.backtrace }
-      else
-        hash = { :message => "Internal server error" }
+        hash[:message] = ex.to_s
+        hash[:backtrace] = ex.backtrace
       end
 
       [500, {'Content-Type' => 'application/json'}, [JSON.dump(hash)]]
