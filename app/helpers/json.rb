@@ -21,11 +21,11 @@ module Api
 
       def page_meta(object, extra_meta = {})
         {
-          current_page: object.current_page,
-          next_page: object.next_page,
-          prev_page: object.prev_page,
-          total_pages: object.page_count,
-          total_count: object.pagination_record_count
+          "current-page" => object.current_page,
+          "next-page" => object.next_page,
+          "prev-page" => object.prev_page,
+          "total-pages" => object.page_count,
+          "total-count" => object.pagination_record_count
         }.merge(extra_meta)
       end
 
