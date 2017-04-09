@@ -12,3 +12,16 @@ $logger = begin
     Logger.new(STDOUT)
   end
 end
+
+$logger.level = begin
+  case String(ENV["LOG_LEVEL"]).downcase
+  when "info"
+    Logger::INFO
+  when "warn"
+    Logger::WARN
+  when "error"
+    Logger::ERROR
+  else
+    Logger::DEBUG
+  end
+end
