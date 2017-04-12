@@ -14,6 +14,7 @@ namespace :db do
 
   task :connect_db => :environment do
     @root_dir = File.expand_path(File.join(__dir__, "..", ".."))
+    require "#{@root_dir}/config/initializers/logger"
     require "#{@root_dir}/config/initializers/sequel"
 
     Sequel.extension :migration
