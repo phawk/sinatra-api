@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Site", type: :api do
+RSpec.describe "Site", type: :api do
   describe "the homepage" do
     it "hello world" do
       get '/'

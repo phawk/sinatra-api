@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Api Authentication", type: :api do
+RSpec.describe "Api Authentication", type: :api do
   describe "Using access token" do
     let!(:alfred) { create(:user) }
     let!(:token) { create(:access_token, user: alfred) }

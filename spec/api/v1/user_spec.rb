@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Api::v1::UserStory", type: :api do
+RSpec.describe "Api::v1::UserStory", type: :api do
   describe "GET /v1/user" do
     context "not authentication" do
       before { get "/v1/user" }
