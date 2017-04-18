@@ -26,7 +26,7 @@ namespace :db do
       db_url = ENV[db_url]
       puts "CREATE: #{db_url}"
 
-      unless db_url.present?
+      if db_url.nil?
         puts "#{db_url} not set!"
         next
       end
