@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Api::v1::Users", type: :api do
+RSpec.describe "Api::v1::Users", type: :api do
   describe "POST /v1/users" do
     before do
       authenticate_client

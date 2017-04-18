@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe User, type: :model do
+RSpec.describe User, type: :model do
   subject { create(:user) }
 
   describe ".find_by_token" do

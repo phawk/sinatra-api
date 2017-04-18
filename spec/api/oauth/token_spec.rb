@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "Api::oAuth", type: :api do
+RSpec.describe "Api::oAuth", type: :api do
   describe "POST /oauth/token" do
     let!(:client_application) { create(:client_application, name: "Tasty Coffee") }
     let!(:user) { create(:user, password: "strongcoffee") }
