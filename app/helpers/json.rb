@@ -1,3 +1,5 @@
+require "active_support/core_ext/hash/indifferent_access"
+
 module Api
   module Helpers
     module Json

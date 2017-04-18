@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.4.0'
 
 # Core framework dependencies
-gem 'activesupport', require: 'active_support/core_ext/hash'
+gem 'activesupport', require: 'active_support'
 gem 'rack', '>= 2.0'
 gem 'rack-contrib'
 gem 'rack-cors', require: 'rack/cors'
