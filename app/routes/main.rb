@@ -1,5 +1,3 @@
-require 'json'
-
 module Api
   module Routes
     class Main < Base
