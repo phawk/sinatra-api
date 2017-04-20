@@ -40,8 +40,6 @@ Warden::Strategies.add(:client_secret) do
       env['warden.oauth_client'] = client
       success!(AccessToken.for_client(client))
     end
-  rescue MultiJson::ParseError => e
-    throw(:warden, message: "The request body you provide must be a JSON hash")
   end
 
   def client_from_header

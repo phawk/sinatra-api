@@ -18,7 +18,6 @@ gem 'sequel', '~> 4.44.0'
 gem 'redis', '~> 3.3.3'
 gem 'redis-namespace'
 gem 'sidekiq'
-gem 'multi_json'
 gem 'puma' # app server
 gem 'bcrypt'
 gem 'warden' # authentication

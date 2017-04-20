@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe "Site", type: :api do
+RSpec.describe Api::Routes::Main, type: :api do
   describe "the homepage" do
     it "hello world" do
       get '/'

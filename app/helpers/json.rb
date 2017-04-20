@@ -1,4 +1,5 @@
 require "active_support/core_ext/hash/indifferent_access"
+require "json"
 
 module Api
   module Helpers
@@ -6,7 +7,7 @@ module Api
       def json(resource, opts = {})
         data = serialize(resource, opts)
 
-        MultiJson.dump(data)
+        JSON.dump(data)
       end
 
       def serialize(resource, opts = {})

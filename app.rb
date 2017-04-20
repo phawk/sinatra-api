@@ -1,32 +1,21 @@
 require_relative './config/boot'
 require 'token_failure_app'
+require 'json'
 
 module Api
-  class Base < ::Sinatra::Base
-    register ::Sinatra::Namespace
-    use Rack::PostBodyContentTypeParser
-    include Swagger::Blocks
-
-    helpers ::Api::Helpers::Errors
-    helpers ::Api::Helpers::Auth
-    helpers ::Api::Helpers::Json
-
-    set :app_file, __FILE__
-
-    configure do
-      enable :raise_errors
-      disable :dump_errors, :show_exceptions
-      use Rack::CommonLogger, $logger
-
-      before { content_type(:json) }
-
-      use Warden::Manager do |manager|
-        manager.default_strategies :access_token
-        manager.failure_app = ::TokenFailureApp # lib/token_failure_app.rb
-      end
+  class Application < ::Sinatra::Base
+    # JSON 404's
+    error Sinatra::NotFound do
+      content_type :json
+      halt 404, JSON.dump({
+        error_code: "not_found",
+        message: "Endpoint '#{request.path_info}' not found"
+      })
     end
+
+    use Api::Routes::Main
+    use Api::Routes::OAuth::Token
+    use Api::Routes::V1::User
+    use Api::Routes::V1::Users
   end
 end
-
-# Autoload all routes
-Dir['./app/routes/**/*.rb'].sort.uniq.each { |rb| require rb }

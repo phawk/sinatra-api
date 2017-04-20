@@ -1,3 +1,4 @@
+require 'json'
 require 'base64'
 require 'rack/test'
 
@@ -8,7 +9,7 @@ module ApiHelper
   FakeToken = Struct.new(:user)
 
   def app
-    Api::Base
+    Api::Application
   end
 
   # Request helpers
@@ -57,11 +58,11 @@ module ApiHelper
   end
 
   def response_json
-    MultiJson.load(last_response.body)
+    JSON.load(last_response.body)
   end
 
   def json(hash)
-    MultiJson.dump(hash, pretty: true)
+    JSON.dump(hash)
   end
 end
 
