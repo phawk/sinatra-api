@@ -9,7 +9,6 @@ module Api
       helpers ::Api::Helpers::Auth
       helpers ::Api::Helpers::Json
 
-      puts File.expand_path('../../../', __FILE__)
       set :root, File.expand_path('../../../', __FILE__)
 
       configure do
