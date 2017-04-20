@@ -6,6 +6,9 @@ $: << File.expand_path('../../lib', __FILE__)
 ENV['RACK_ENV'] ||= 'development'
 ENV['APP_ENV'] ||= ENV['RACK_ENV']
 
+# Autoload common standard library features
+require "json"
+
 # Autoload gems from the Gemfile
 require "bundler"
 Bundler.require :default, ENV['RACK_ENV'].to_sym
