@@ -9,7 +9,13 @@ module ApiHelper
   FakeToken = Struct.new(:user)
 
   def app
-    Api::Application
+    # If described class is a sinatra app only test against it directly
+    # and not the entire application
+    if !described_class.nil? && described_class <= Sinatra::Base
+      described_class
+    else
+      Api::Application
+    end
   end
 
   # Request helpers
