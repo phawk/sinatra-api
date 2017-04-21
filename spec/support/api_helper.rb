@@ -1,3 +1,4 @@
+require 'json'
 require 'base64'
 require 'rack/test'
 
@@ -8,7 +9,13 @@ module ApiHelper
   FakeToken = Struct.new(:user)
 
   def app
-    Api::Base
+    # If described class is a sinatra app only test against it directly
+    # and not the entire application
+    if !described_class.nil? && described_class <= Sinatra::Base
+      described_class
+    else
+      Api::Application
+    end
   end
 
   # Request helpers
@@ -57,11 +64,11 @@ module ApiHelper
   end
 
   def response_json
-    MultiJson.load(last_response.body)
+    JSON.load(last_response.body)
   end
 
   def json(hash)
-    MultiJson.dump(hash, pretty: true)
+    JSON.dump(hash)
   end
 end
 

@@ -6,6 +6,9 @@ $: << File.expand_path('../../lib', __FILE__)
 ENV['RACK_ENV'] ||= 'development'
 ENV['APP_ENV'] ||= ENV['RACK_ENV']
 
+# Autoload common standard library features
+require "json"
+
 # Autoload gems from the Gemfile
 require "bundler"
 Bundler.require :default, ENV['RACK_ENV'].to_sym
@@ -20,5 +23,7 @@ Dotenv.load if ["development", "test"].include? ENV['RACK_ENV']
  Dir['./app/models/**/*.rb'].sort +
  Dir['./app/jobs/**/*.rb'].sort +
  Dir['./app/serializers/base_serializer.rb'].sort +
- Dir['./app/serializers/**/*.rb'].sort
+ Dir['./app/serializers/**/*.rb'].sort +
+ Dir['./app/routes/base.rb'].sort +
+ Dir['./app/routes/**/*.rb'].sort
 ).uniq.each { |rb| require rb }

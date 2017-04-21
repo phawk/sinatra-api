@@ -21,4 +21,4 @@ use Rack::Cors do
   end
 end
 
-run Rack::URLMap.new('/' => Api::Base, '/sidekiq' => Sidekiq::Web)
+run Rack::URLMap.new('/' => Api::Application, '/sidekiq' => Sidekiq::Web)

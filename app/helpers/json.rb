@@ -6,7 +6,7 @@ module Api
       def json(resource, opts = {})
         data = serialize(resource, opts)
 
-        MultiJson.dump(data)
+        JSON.dump(data)
       end
 
       def serialize(resource, opts = {})

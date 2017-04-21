@@ -170,7 +170,6 @@ DEPENDENCIES
   jsonapi-serializers
   jwt
   mail
-  multi_json
   pg
   postmark
   puma
