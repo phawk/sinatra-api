@@ -3,6 +3,16 @@ require "spec_helper"
 RSpec.describe User, type: :model do
   subject { create(:user) }
 
+  describe ".first_or_initialize" do
+    it "tries to load a model before initializing" do
+      expect(User.first_or_initialize(email: subject.email).new?).to be(false)
+
+      non_existant = User.first_or_initialize(email: "bad_email101")
+      expect(non_existant.new?).to be(true)
+      expect(non_existant.email).to eq("bad_email101")
+    end
+  end
+
   describe ".find_by_token" do
     let(:valid_jwt) { get_jwt({ "user_id" => 1, "expires" => 24.hours.from_now }) }
     let(:expired_jwt) { get_jwt({ "user_id" => 1, "expires" => 5.minutes.ago }) }
