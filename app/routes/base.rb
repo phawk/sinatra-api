@@ -1,3 +1,5 @@
+require 'token_failure_app'
+
 module Api
   module Routes
     class Base < ::Sinatra::Base
