@@ -28,7 +28,7 @@ module Api
         JSON.dump(Swagger::Blocks.build_root_json([
           Api::Routes::Main,
           Api::Routes::OAuth::Token,
-          Api::Routes::V1::User,
+          Api::Routes::V1::CurrentUser,
           Api::Routes::V1::Users,
         ]))
       end

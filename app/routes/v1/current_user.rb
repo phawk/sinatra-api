@@ -1,7 +1,7 @@
 module Api
   module Routes
     module V1
-      class User < Base
+      class CurrentUser < Base
         namespace '/v1/user' do
 
           swagger_path '/v1/user' do
@@ -33,7 +33,7 @@ module Api
           post '/reset_password' do
             ensure_client_secret!
 
-            user = ::User.find(email: params[:email])
+            user = User.find(email: params[:email])
 
             unless user.nil?
               user.reset_password
@@ -61,7 +61,7 @@ module Api
           put '/attributes/password' do
             ensure_client_secret!
 
-            user = ::User.find_by_token(params[:reset_token])
+            user = User.find_by_token(params[:reset_token])
             halt_not_found("No user found for reset token") if user.nil?
 
             if user.update_password(params[:password])

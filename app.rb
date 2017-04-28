@@ -13,7 +13,7 @@ module Api
 
     use Api::Routes::Main
     use Api::Routes::OAuth::Token
-    use Api::Routes::V1::User
+    use Api::Routes::V1::CurrentUser
     use Api::Routes::V1::Users
   end
 end

@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Api::Routes::V1::User, type: :api do
+RSpec.describe Api::Routes::V1::CurrentUser, type: :api do
   describe "GET /v1/user" do
     context "not authentication" do
       before { get "/v1/user" }
