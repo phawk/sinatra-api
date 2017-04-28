@@ -4,7 +4,7 @@ require 'raven'
 Raven.configure do |config|
   config.tags = { environment: ENV['RACK_ENV'] }
   config.environments = %w(staging production)
-  # config.excluded_exceptions = %w(Sequel::Error)
+  config.excluded_exceptions = %w(Sequel::NoMatchingRow) # Sequel::Error - ignore all sequel errors
 end
 
 class ExceptionHandling
