@@ -14,30 +14,38 @@ class ExceptionHandling
 
   def call(env)
     @app.call env
-  rescue => ex
-    log_exception(ex)
+  rescue => exception
+    log_exception(exception)
 
+    rack_response(build_exception_hash(exception))
+  end
+
+  private
+
+  def rack_response(hash)
+    [500, { 'Content-Type' => 'application/json' }, [JSON.dump(hash)]]
+  end
+
+  def build_exception_hash(exception)
     hash = {
       error_code: "internal_error",
       message: "Internal server error: this is a problem on our end and we've been notified of the issue"
     }
 
     if ENV['RACK_ENV'] == 'development'
-      hash[:message] = ex.to_s
-      hash[:backtrace] = ex.backtrace
+      hash[:message] = exception.to_s
+      hash[:backtrace] = exception.backtrace
     end
 
-    [500, { 'Content-Type' => 'application/json' }, [JSON.dump(hash)]]
+    hash
   end
 
-  private
-
-  def log_exception(ex)
+  def log_exception(exception)
     # Send errors to sentry.io
-    Raven.capture_exception(ex)
+    Raven.capture_exception(exception)
 
-    env['rack.errors'].puts ex
-    env['rack.errors'].puts ex.backtrace.join("\n")
+    env['rack.errors'].puts exception
+    env['rack.errors'].puts exception.backtrace.join("\n")
     env['rack.errors'].flush
   end
 end

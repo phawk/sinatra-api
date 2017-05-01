@@ -13,10 +13,14 @@ module Api
         current_mailer_method = caller_locations(1, 1)[0].label
         html = template(current_mailer_method)
 
+        deliver_html_email(html, to: opts.fetch(:to), subject: opts.fetch(:subject))
+      end
+
+      def deliver_html_email(html, to:, subject:)
         mail = Mail.new
-        mail.to = opts.fetch(:to)
+        mail.to = to
         mail.from = DEFAULT_FROM
-        mail.subject = opts.fetch(:subject)
+        mail.subject = subject
         mail.html_part = Mail::Part.new do
           content_type 'text/html; charset=UTF-8'
           body(html)
