@@ -13,6 +13,14 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe ".basic_search" do
+    it "finds things" do
+      results = User.basic_search(subject.name, cols: [:name]).to_a
+      expect(results.size).to eq(1)
+      expect(results.first.id).to eq(subject.id)
+    end
+  end
+
   describe ".find_by_token" do
     let(:valid_jwt) { get_jwt({ "user_id" => 1, "expires" => 24.hours.from_now }) }
     let(:expired_jwt) { get_jwt({ "user_id" => 1, "expires" => 5.minutes.ago }) }
