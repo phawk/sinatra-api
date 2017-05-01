@@ -6,5 +6,5 @@ guard :rspec, cmd: "bin/rspec" do
   watch(%r{^lib/(.+)\.rb$}) { |m| "spec/lib/#{m[1]}_spec.rb" }
 
   # Notifications
-  notification :terminal_notifier, app_name: "SinatraApp ::", activate: 'com.googlecode.iTerm2' if `uname` =~ /Darwin/
+  notification :terminal_notifier, app_name: "SinatraApp ::", activate: 'com.googlecode.iTerm2' if `uname`.match?(/Darwin/)
 end

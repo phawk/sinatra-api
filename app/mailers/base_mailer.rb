@@ -3,14 +3,14 @@ require 'erb'
 module Api
   module Mailers
     class BaseMailer
-      DEFAULT_FROM = "no-reply@example.org"
+      DEFAULT_FROM = "no-reply@example.org".freeze
 
       def render_sample
         template("sample")
       end
 
       def send(opts)
-        current_mailer_method = caller_locations(1,1)[0].label
+        current_mailer_method = caller_locations(1, 1)[0].label
         html = template(current_mailer_method)
 
         mail = Mail.new
@@ -24,10 +24,6 @@ module Api
         mail.deliver
       end
 
-      def get_binding
-        binding
-      end
-
       def help_page_url
         "#{frontend_url}/help"
       end
@@ -36,7 +32,7 @@ module Api
         "https://sinatra-api.herokuapp.com"
       end
 
-    private
+      private
 
       def template(path)
         current_dir   = File.expand_path(File.dirname(__FILE__))
@@ -44,15 +40,14 @@ module Api
         template_file = File.new(current_dir + "/templates/#{path}.erb").read
 
         templates = [template_file, layout_file]
-        templates.inject(nil) do | prev, temp |
+        templates.inject(nil) do |prev, temp|
           _render(temp) { prev }
         end
       end
 
-      def _render temp
-        ERB.new(temp, nil, "%").result( binding )
+      def _render(temp)
+        ERB.new(temp, nil, "%").result(binding)
       end
-
     end
   end
 end

@@ -1,2 +1,4 @@
-class Sequel::Model
+module Sequel
+  class Model
+  end
 end

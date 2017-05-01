@@ -1,11 +1,11 @@
-require 'json'
-require 'sinatra/base'
+require "json"
+require "sinatra/base"
 
 class TokenFailureApp < ::Sinatra::Base
   post '/unauthenticated' do
     status 401
     content_type :json
-    JSON.dump({ error: "authentication_failed", message: error_message })
+    JSON.dump(error: "authentication_failed", message: error_message)
   end
 
   def error_message

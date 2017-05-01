@@ -1,0 +1,30 @@
+inherit_from: .rubocop_todo.yml
+AllCops:
+  DisplayCopNames: true
+  Include:
+    - 'app/**/*.rb'
+    - 'lib/**/*.rb'
+    - 'lib/**/*.rake'
+  Exclude:
+    - 'Gemfile'
+    - 'Guardfile'
+    - 'Rakefile'
+    - 'bin/*'
+    - 'config/**/*'
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'db/**/*'
+    - 'vendor/**/*'
+Metrics/MethodLength:
+  Max: 20
+Style/Documentation:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false
+  EnforcedStyle: double_quotes
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/IndentArray:
+  EnforcedStyle: consistent
+Style/GlobalVars:
+  Enabled: false

@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 namespace :db do
   task :environment do
     # Default ENV to dev if not present
@@ -9,10 +10,10 @@ namespace :db do
     Bundler.require :default, ENV['RACK_ENV'].to_sym
 
     # Load dev env vars
-    Dotenv.load if ["development", "test"].include? ENV['RACK_ENV']
+    Dotenv.load if %w[development test].include? ENV['RACK_ENV']
   end
 
-  task :connect_db => :environment do
+  task connect_db: :environment do
     @root_dir = File.expand_path(File.join(__dir__, "..", ".."))
     require "#{@root_dir}/config/initializers/logger"
     require "#{@root_dir}/config/initializers/sequel"
@@ -21,8 +22,8 @@ namespace :db do
   end
 
   desc "Create databases"
-  task :create => :environment do
-    %w(DATABASE_URL TEST_DATABASE_URL).each do |db_url|
+  task create: :environment do
+    %w[DATABASE_URL TEST_DATABASE_URL].each do |db_url|
       db_url = ENV[db_url]
       puts "CREATE: #{db_url}"
 
@@ -37,7 +38,7 @@ namespace :db do
   end
 
   desc "Run migrations"
-  task :migrate, [:version] => :connect_db do |t, args|
+  task :migrate, [:version] => :connect_db do |_, args|
     if args[:version]
       Sequel::Migrator.run(DB, "db/migrations", target: args[:version].to_i)
     else
@@ -52,11 +53,11 @@ namespace :db do
   end
 
   desc "Rollback to migration"
-  task :rollback => :connect_db do |t, args|
+  task rollback: :connect_db do
     version = if DB.tables.include?(:schema_migrations)
-      previous = DB[:schema_migrations].order(Sequel.desc(:filename)).limit(2).all[1]
-      previous ? previous[:filename].split("_").first : nil
-    end || 0
+                previous = DB[:schema_migrations].order(Sequel.desc(:filename)).limit(2).all[1]
+                previous ? previous[:filename].split("_").first : nil
+              end || 0
 
     Sequel::Migrator.run(DB, "db/migrations", target: version.to_i)
 
@@ -64,7 +65,7 @@ namespace :db do
   end
 
   desc "Create a migration"
-  task :create_migration, [:name] => :connect_db do |t, args|
+  task :create_migration, [:name] => :connect_db do |_, args|
     require "date"
     raise("Name required") unless args[:name]
 
@@ -79,11 +80,11 @@ namespace :db do
   end
 
   desc "Prints current schema version"
-  task :version => :connect_db do
+  task version: :connect_db do
     version = if DB.tables.include?(:schema_migrations)
-      latest = DB[:schema_migrations].order(:filename).last
-      latest ? latest[:filename] : nil
-    end || 0
+                latest = DB[:schema_migrations].order(:filename).last
+                latest ? latest[:filename] : nil
+              end || 0
 
     puts "Schema Version: #{version}"
   end

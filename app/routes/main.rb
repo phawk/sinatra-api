@@ -16,7 +16,7 @@ module Api
       end
 
       get '/' do
-        json({ hello: "Api" })
+        json(hello: "Api")
       end
 
       get '/mailer/preview' do
@@ -29,7 +29,7 @@ module Api
           Api::Routes::Main,
           Api::Routes::OAuth::Token,
           Api::Routes::V1::CurrentUser,
-          Api::Routes::V1::Users,
+          Api::Routes::V1::Users
         ]))
       end
     end
