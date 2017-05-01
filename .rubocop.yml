@@ -1,0 +1,28 @@
+AllCops:
+  DisplayCopNames: true
+  Include:
+    - 'app/**/*.rb'
+    - 'lib/**/*.rb'
+    - 'lib/**/*.rake'
+  Exclude:
+    - 'Gemfile'
+    - 'Guardfile'
+    - 'Rakefile'
+    - 'bin/*'
+    - 'config/**/*'
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'db/**/*'
+    - 'vendor/**/*'
+Metrics/LineLength:
+  Max: 120
+Style/Documentation:
+  Enabled: false
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/IndentArray:
+  EnforcedStyle: consistent
+Style/GlobalVars:
+  Enabled: false

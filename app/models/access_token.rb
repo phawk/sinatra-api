@@ -1,4 +1,4 @@
-require 'securerandom'
+require "securerandom"
 
 class AccessToken < Sequel::Model
   many_to_one :user
@@ -6,12 +6,12 @@ class AccessToken < Sequel::Model
 
   def validate
     super
-    validates_presence [:client_application_id, :user_id]
+    validates_presence %i[client_application_id user_id]
     validates_unique :token
   end
 
   def before_create
-    self.generate_token
+    generate_token
     super
   end
 
@@ -24,5 +24,4 @@ class AccessToken < Sequel::Model
   def generate_token
     self.token = SecureRandom.hex(32)
   end
-
 end

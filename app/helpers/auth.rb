@@ -2,21 +2,21 @@ module Api
   module Helpers
     module Auth
       def warden
-        env['warden']
+        env["warden"]
       end
 
       def ensure_client!
         warden.authenticate! :access_token, :client_id
 
         # If we use client_id auth we need to set the current client manually
-        @oauth_client = env['warden.oauth_client'] if env['warden.oauth_client']
+        @oauth_client = env["warden.oauth_client"] if env["warden.oauth_client"]
       end
 
       def ensure_client_secret!
         warden.authenticate! :client_secret
 
         # If we use client_secret auth we need to set the current client manually
-        @oauth_client = env['warden.oauth_client'] if env['warden.oauth_client']
+        @oauth_client = env["warden.oauth_client"] if env["warden.oauth_client"]
       end
 
       def authenticate!

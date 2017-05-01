@@ -43,6 +43,8 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'terminal-notifier', '~> 1.7.1'
   gem 'terminal-notifier-guard', '~> 1.7.0'
+  gem 'rubocop', require: false
+  gem 'bundler-audit'
 end
 
 group :test do

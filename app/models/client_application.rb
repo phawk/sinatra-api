@@ -4,20 +4,20 @@ class ClientApplication < Sequel::Model
 
   def validate
     super
-    validates_presence [:name, :user_id]
+    validates_presence %i[name user_id]
     validates_unique :client_id
   end
 
   def before_create
-    self.generate_tokens
+    generate_tokens
     super
   end
 
   def authorize(secret)
-    self.client_secret == secret
+    client_secret == secret
   end
 
-  def has_elevated_privileges?
+  def elevated_privileges?
     in_house_app?
   end
 
@@ -25,5 +25,4 @@ class ClientApplication < Sequel::Model
     self.client_id = SecureRandom.hex(32)
     self.client_secret = SecureRandom.hex(32)
   end
-
 end

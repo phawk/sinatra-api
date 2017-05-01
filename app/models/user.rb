@@ -1,8 +1,9 @@
-require 'active_support/core_ext/integer/time'
-require 'securerandom'
-require 'jwt'
+require "active_support/core_ext/integer/time"
+require "securerandom"
+require "jwt"
 
 class User < Sequel::Model
+  attr_reader :password
   attr_accessor :password_changing
 
   include BCrypt
@@ -14,23 +15,23 @@ class User < Sequel::Model
     super
     validates_presence :email
     validates_unique :email
-    validates_format /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :email, message: 'is not a valid email address'
+    validates_format(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :email, message: "is not a valid email address")
     validates_presence :password if new? || password_changing
     validates_min_length 8, :password if new? || password_changing
   end
 
   def self.find_by_token(token)
-    payload = JWT.decode(token, ENV['JWT_SECRET_KEY'])[0]
+    payload = JWT.decode(token, ENV["JWT_SECRET_KEY"])[0]
 
     return nil unless Time.now < Time.parse(payload["expires"])
 
     find(id: payload["user_id"])
-  rescue JWT::DecodeError => e
+  rescue JWT::DecodeError
     nil
   end
 
   def self.find_by_token!(token)
-    find_by_token(token) || fail(ActiveRecord::RecordNotFound)
+    find_by_token(token) || raise(ActiveRecord::RecordNotFound)
   end
 
   def display_name
@@ -43,7 +44,7 @@ class User < Sequel::Model
       "expires" => expires
     }
 
-    JWT.encode(payload, ENV['JWT_SECRET_KEY'], "HS512")
+    JWT.encode(payload, ENV["JWT_SECRET_KEY"], "HS512")
   end
 
   def reset_password
@@ -60,10 +61,6 @@ class User < Sequel::Model
     return false unless password_digest
     digest = Password.new(password_digest)
     digest == password
-  end
-
-  def password
-    @password
   end
 
   def password=(new_password)
