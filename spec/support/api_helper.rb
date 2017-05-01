@@ -7,6 +7,7 @@ module ApiHelper
   include Warden::Test::Helpers
 
   FakeToken = Struct.new(:user)
+  FakeClientToken = Struct.new(:client_application)
 
   def app
     # If described class is a sinatra app only test against it directly
@@ -36,8 +37,8 @@ module ApiHelper
   end
 
   def authenticate_client(client = nil)
-    client = client || create(:client_application)
-    login_as AccessToken.for_client(client), strategy: :client_secret
+    client ||= build_stubbed(:client_application)
+    login_as FakeClientToken.new(client), strategy: :client_secret
     client
   end
 

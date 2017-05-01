@@ -1,11 +1,13 @@
 require "spec_helper"
 
 RSpec.describe User, type: :model do
-  subject { create(:user) }
+  subject { build_stubbed(:user) }
 
   describe ".first_or_initialize" do
+    let(:user) { create(:user) }
+
     it "tries to load a model before initializing" do
-      expect(User.first_or_initialize(email: subject.email).new?).to be(false)
+      expect(User.first_or_initialize(email: user.email).new?).to be(false)
 
       non_existant = User.first_or_initialize(email: "bad_email101")
       expect(non_existant.new?).to be(true)
@@ -14,10 +16,12 @@ RSpec.describe User, type: :model do
   end
 
   describe ".basic_search" do
+    let(:user) { create(:user) }
+
     it "finds things" do
-      results = User.basic_search(subject.name, cols: [:name]).to_a
+      results = User.basic_search(user.name, cols: [:name]).to_a
       expect(results.size).to eq(1)
-      expect(results.first.id).to eq(subject.id)
+      expect(results.first.id).to eq(user.id)
     end
   end
 
@@ -62,9 +66,9 @@ RSpec.describe User, type: :model do
     end
 
     it "is unique" do
-      expect(subject.valid?).to be true
-      new_user = build(:user, email: subject.email)
-      expect(new_user.valid?).to be false
+      new_user = create(:user, email: subject.email)
+      expect(new_user.valid?).to be true
+      expect(subject.valid?).to be false
     end
   end
 

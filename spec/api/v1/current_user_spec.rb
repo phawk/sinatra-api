@@ -3,25 +3,18 @@ require "spec_helper"
 RSpec.describe Api::Routes::V1::CurrentUser, type: :api do
   describe "GET /v1/user" do
     context "not authentication" do
-      before { get "/v1/user" }
-
       it "responds with a 401" do
+        get "/v1/user"
         expect(http_status).to eq 401
       end
     end
 
     context "authenticated" do
-      let(:alfred) { create(:user) }
-      before do
-        authenticate_as alfred
+      let!(:alfred) { authenticate_as(create(:user)) }
+
+      it "returns my details" do
         get "/v1/user"
-      end
-
-      it "responds successfully" do
         expect(http_status).to eq 200
-      end
-
-      it "shows my details" do
         expect(json_attrs["name"]).to eq alfred.name
         expect(json_attrs["email"]).to eq alfred.email
       end
@@ -31,16 +24,10 @@ RSpec.describe Api::Routes::V1::CurrentUser, type: :api do
   describe "POST /v1/user/reset_password" do
     let!(:alfred) { create(:user) }
 
-    before do
+    it "delivers a password reset email" do
       authenticate_client
       post_json "/v1/user/reset_password", email: alfred.email
-    end
-
-    it "responds successfully" do
       expect(http_status).to eq 200
-    end
-
-    it "delivers a password reset email" do
       expect(last_email.to.first).to eq(alfred.email)
       expect(last_email.subject).to eq("Password reset instructions")
       expect(last_email.html_part.body).to include("reset your password")

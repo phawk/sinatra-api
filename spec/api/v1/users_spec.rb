@@ -2,9 +2,7 @@ require "spec_helper"
 
 RSpec.describe Api::Routes::V1::Users, type: :api do
   describe "POST /v1/users" do
-    before do
-      authenticate_client
-    end
+    before { authenticate_client }
 
     it "has validation" do
       post "/v1/users", { name: "Batman" }

@@ -17,7 +17,7 @@ RSpec.describe "Api Authentication", type: :api do
 
   describe "authenticate_client" do
     let!(:alfred) { create(:user) }
-    let!(:client) { create(:client_application) }
+    let!(:client) { create(:client_application, user: alfred) }
 
     it "responds successfully" do
       post_json "/v1/user/reset_password", email: alfred.email, client_id: client.client_id, client_secret: client.client_secret
