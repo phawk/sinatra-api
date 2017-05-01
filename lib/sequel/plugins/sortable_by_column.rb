@@ -10,7 +10,10 @@ module Sequel
           return order(:created_at) if column.blank?
 
           unless allowed_cols.include?(column.to_sym)
-            raise BadRequest.new("Sort by column `#{column}` not permitted. Permitted columns #{allowed_cols.to_sentence}")
+            raise(
+              BadRequest,
+              "Sort by column `#{column}` not permitted. Permitted columns #{allowed_cols.to_sentence}"
+            )
           end
 
           if String(sort_order).casecmp("desc")

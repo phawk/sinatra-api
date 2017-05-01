@@ -15,12 +15,7 @@ class ExceptionHandling
   def call(env)
     @app.call env
   rescue => ex
-    # Send errors to sentry.io
-    Raven.capture_exception(ex)
-
-    env['rack.errors'].puts ex
-    env['rack.errors'].puts ex.backtrace.join("\n")
-    env['rack.errors'].flush
+    log_exception(ex)
 
     hash = {
       error_code: "internal_error",
@@ -33,5 +28,16 @@ class ExceptionHandling
     end
 
     [500, { 'Content-Type' => 'application/json' }, [JSON.dump(hash)]]
+  end
+
+  private
+
+  def log_exception(ex)
+    # Send errors to sentry.io
+    Raven.capture_exception(ex)
+
+    env['rack.errors'].puts ex
+    env['rack.errors'].puts ex.backtrace.join("\n")
+    env['rack.errors'].flush
   end
 end

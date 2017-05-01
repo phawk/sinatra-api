@@ -1,4 +1,3 @@
-inherit_from: .rubocop_todo.yml
 AllCops:
   DisplayCopNames: true
   Include:
@@ -15,6 +14,8 @@ AllCops:
     - 'test/**/*'
     - 'db/**/*'
     - 'vendor/**/*'
+Metrics/LineLength:
+  Max: 120
 Metrics/MethodLength:
   Max: 20
 Style/Documentation:
