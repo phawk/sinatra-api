@@ -2,20 +2,20 @@ module Api
   module Routes
     module OAuth
       class Token < Base
-        swagger_path '/oauth/token' do
+        swagger_path "/oauth/token" do
           operation :post do
-            key :description, 'Returns an access token'
+            key :description, "Returns an access token"
             key :tags, %w[oauth]
             parameter name: :username, type: :string, required: true
             parameter name: :password, type: :string, required: true
             parameter name: :client_id, type: :string, required: true
             parameter name: :client_secret, type: :string, required: true
             response 401 do
-              key :description, 'Unauthorized'
+              key :description, "Unauthorized"
             end
           end
         end
-        post '/oauth/token' do
+        post "/oauth/token" do
           ensure_client_secret!
 
           username = params[:username] || params[:email]

@@ -1,4 +1,4 @@
-require 'erb'
+require "erb"
 
 module Api
   module Mailers
@@ -22,7 +22,7 @@ module Api
         mail.from = DEFAULT_FROM
         mail.subject = subject
         mail.html_part = Mail::Part.new do
-          content_type 'text/html; charset=UTF-8'
+          content_type "text/html; charset=UTF-8"
           body(html)
         end
         mail.deliver

@@ -8,11 +8,11 @@ module Api
 
       def halt_authorization_required(message = nil, realm = "App Name")
         message ||= "Authorization required"
-        headers 'WWW-Authenticate' => %(Basic realm="#{realm}")
+        headers "WWW-Authenticate" => %(Basic realm="#{realm}")
 
         # Warden steps on 401s, set this message so wardens failure
         # app will use it and proxy it on to the end user
-        request.env['warden.api.error'] = message
+        request.env["warden.api.error"] = message
         halt 401, json(error_code: "unauthorized", message: message)
       end
 

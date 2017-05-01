@@ -19,7 +19,6 @@ Metrics/LineLength:
 Style/Documentation:
   Enabled: false
 Style/StringLiterals:
-  Enabled: false
   EnforcedStyle: double_quotes
 Style/FrozenStringLiteralComment:
   Enabled: false
