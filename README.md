@@ -48,6 +48,12 @@ $ bin/guard
 $ bin/rspec
 ```
 
+#### Setup git pre-push hook
+
+```sh
+$ echo "bin/rake ci:all" > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+```
+
 #### Docs on test frameworks
 
 * [RSpec expectations](https://www.relishapp.com/rspec/rspec-expectations/docs/built-in-matchers)
