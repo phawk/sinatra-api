@@ -3,7 +3,7 @@ require "securerandom"
 require "active_support/core_ext/integer/time"
 
 FactoryGirl.define do
-  to_create(&:create)
+  to_create(&:save)
 
   factory :user do
     name { Faker::Name.first_name }
