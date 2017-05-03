@@ -1,14 +1,14 @@
 # TEST ENV VARS
 ENV["RACK_ENV"] = "test"
 
-require 'fast_helper'
-require 'bundler'
+require "fast_helper"
+require "bundler"
 Bundler.require :default, :test
 
 # Load the application
-require_relative '../app'
+require_relative "../app"
 
-require 'sidekiq/testing'
+require "sidekiq/testing"
 
 # Grab the factories
 FactoryGirl.find_definitions

@@ -5,7 +5,7 @@ RSpec.describe Api::Routes::V1::Users, type: :api do
     before { authenticate_client }
 
     it "has validation" do
-      post "/v1/users", { name: "Batman" }
+      post "/v1/users", name: "Batman"
 
       expect(http_status).to eq(422)
       expect(response_json["error_code"]).to eq("validation_failed")
@@ -13,7 +13,7 @@ RSpec.describe Api::Routes::V1::Users, type: :api do
     end
 
     it "creates a user" do
-      post "/v1/users", { name: "Batman", email: "batman@robin.com", password: "supersecretpassword" }
+      post "/v1/users", name: "Batman", email: "batman@robin.com", password: "supersecretpassword"
 
       expect(http_status).to eq(200)
       expect(json_attrs["name"]).to eq("Batman")

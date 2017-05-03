@@ -36,29 +36,29 @@ RSpec.describe Api::Routes::V1::CurrentUser, type: :api do
 
   describe "PUT /v1/user/attributes/password" do
     let(:alfred) { create(:user) }
-    let(:valid_jwt) { get_jwt({ "user_id" => alfred.id, "expires" => 24.hours.from_now }) }
-    let(:expired_jwt) { get_jwt({ "user_id" => alfred.id, "expires" => 5.minutes.ago }) }
+    let(:valid_jwt) { get_jwt("user_id" => alfred.id, "expires" => 24.hours.from_now) }
+    let(:expired_jwt) { get_jwt("user_id" => alfred.id, "expires" => 5.minutes.ago) }
 
     before do
       authenticate_client
     end
 
     it "requires a reset token" do
-      put "/v1/user/attributes/password", { password: "updated_password" }
+      put "/v1/user/attributes/password", password: "updated_password"
 
       expect(http_status).to eq(404)
       expect(response_json["message"]).to match(/No user found for reset token/)
     end
 
     it "requires the reset token to have not expired" do
-      put "/v1/user/attributes/password", { password: "updated_password", reset_token: expired_jwt }
+      put "/v1/user/attributes/password", password: "updated_password", reset_token: expired_jwt
 
       expect(http_status).to eq(404)
       expect(response_json["message"]).to match(/No user found for reset token/)
     end
 
     it "updates the password" do
-      put "/v1/user/attributes/password", { password: "updated_password", reset_token: valid_jwt }
+      put "/v1/user/attributes/password", password: "updated_password", reset_token: valid_jwt
 
       expect(http_status).to eq(200)
       expect(response_json["data"]["message"]).to match(/Password has been reset/)

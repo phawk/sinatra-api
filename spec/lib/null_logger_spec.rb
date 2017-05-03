@@ -1,5 +1,5 @@
-require 'fast_helper'
-require 'null_logger'
+require "fast_helper"
+require "null_logger"
 
 RSpec.describe NullLogger do
   it "behaves like a logger" do
