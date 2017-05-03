@@ -3,10 +3,20 @@ module Sequel
     module BasicPgSearch
       module ClassMethods
         Sequel::Plugins.def_dataset_methods(self, :basic_search)
+
+        def searchable_columns(*arr)
+          class_variable_set(:@@allowed_searchable_columns, arr.map(&:to_sym))
+        end
       end
 
       module DatasetMethods
-        def basic_search(keyword, cols:)
+        def basic_search(keyword)
+          begin
+            cols = model.class_variable_get(:@@allowed_searchable_columns)
+          rescue NameError
+            raise "searchable_columns not set on model #{model.name}"
+          end
+
           if keyword
             full_text_search(cols, fts_param(keyword), language: "english")
           else

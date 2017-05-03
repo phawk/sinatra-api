@@ -8,6 +8,8 @@ class User < Sequel::Model
 
   include BCrypt
 
+  searchable_columns :name, :email
+
   one_to_many :client_applications
   one_to_many :access_tokens
 
