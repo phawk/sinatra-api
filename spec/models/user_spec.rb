@@ -19,7 +19,7 @@ RSpec.describe User, type: :model do
     let(:user) { create(:user) }
 
     it "finds things" do
-      results = User.basic_search(user.name, cols: [:name]).to_a
+      results = User.basic_search(user.name).to_a
       expect(results.size).to eq(1)
       expect(results.first.id).to eq(user.id)
     end

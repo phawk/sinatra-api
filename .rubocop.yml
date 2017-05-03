@@ -26,3 +26,5 @@ Style/IndentArray:
   EnforcedStyle: consistent
 Style/GlobalVars:
   Enabled: false
+Style/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
