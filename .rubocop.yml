@@ -1,5 +1,6 @@
 AllCops:
   DisplayCopNames: true
+  TargetRubyVersion: 2.4
   Include:
     - 'app/**/*.rb'
     - 'lib/**/*.rb'
@@ -26,6 +27,8 @@ Style/GlobalVars:
   Enabled: false
 Style/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
