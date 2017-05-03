@@ -13,7 +13,7 @@ module Sequel
         def basic_search(keyword)
           begin
             cols = model.class_variable_get(:@@allowed_searchable_columns)
-          rescue NameError => e
+          rescue NameError
             raise "searchable_columns not set on model #{model.name}"
           end
 
