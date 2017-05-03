@@ -8,12 +8,12 @@ RSpec.describe Api::Routes::OAuth::Token, type: :api do
       user = create(:user, password: "strongcoffee")
 
       authenticate_client(client_application)
-      post "/oauth/token", { email: user.email, password: "milkycoffee" }
+      post "/oauth/token", email: user.email, password: "milkycoffee"
       expect(http_status).to eq(401)
       expect(response_json["message"]).to match(/Authentication failed/)
 
       authenticate_client(client_application)
-      post "/oauth/token", { email: user.email, password: "strongcoffee" }
+      post "/oauth/token", email: user.email, password: "strongcoffee"
       expect(http_status).to eq(200)
       expect(response_json["access_token"]).to be_a(String)
       expect(response_json["client"]).to eq("Tasty Coffee")

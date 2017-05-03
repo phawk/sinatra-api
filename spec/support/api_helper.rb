@@ -1,6 +1,6 @@
-require 'json'
-require 'base64'
-require 'rack/test'
+require "json"
+require "base64"
+require "rack/test"
 
 module ApiHelper
   include Rack::Test::Methods
@@ -27,7 +27,7 @@ module ApiHelper
   end
 
   def post_json(url, data)
-    post(url, json(data), { "CONTENT_TYPE" => "application/json" })
+    post(url, json(data), "CONTENT_TYPE" => "application/json")
     response_json
   end
 
@@ -65,7 +65,7 @@ module ApiHelper
   end
 
   def response_json
-    JSON.load(last_response.body)
+    JSON.parse(last_response.body)
   end
 
   def json(hash)

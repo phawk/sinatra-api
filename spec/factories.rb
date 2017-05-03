@@ -1,9 +1,9 @@
-require 'faker'
-require 'securerandom'
+require "faker"
+require "securerandom"
 require "active_support/core_ext/integer/time"
 
 FactoryGirl.define do
-  to_create { |i| i.save }
+  to_create(&:create)
 
   factory :user do
     name { Faker::Name.first_name }
@@ -19,7 +19,6 @@ FactoryGirl.define do
     end
   end
 
-
   factory :client_application do
     name { Faker::Name.title }
     client_id { SecureRandom.hex(32) }
@@ -29,7 +28,6 @@ FactoryGirl.define do
     created_at { 10.days.ago }
   end
 
-
   factory :access_token do
     token { SecureRandom.hex(32) }
     user
@@ -37,5 +35,4 @@ FactoryGirl.define do
     updated_at { 10.days.ago }
     created_at { 10.days.ago }
   end
-
 end

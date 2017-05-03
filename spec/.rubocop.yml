@@ -1,0 +1,3 @@
+inherit_from: ../.rubocop.yml
+Metrics/BlockLength:
+  Enabled: false

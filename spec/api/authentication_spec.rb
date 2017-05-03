@@ -20,7 +20,8 @@ RSpec.describe "Api Authentication", type: :api do
     let!(:client) { create(:client_application, user: alfred) }
 
     it "responds successfully" do
-      post_json "/v1/user/reset_password", email: alfred.email, client_id: client.client_id, client_secret: client.client_secret
+      params = { email: alfred.email, client_id: client.client_id, client_secret: client.client_secret }
+      post_json "/v1/user/reset_password", params
       expect(http_status).to eq 200
 
       post "/v1/user/reset_password", { email: alfred.email }, basic_header(client.client_id, client.client_secret)

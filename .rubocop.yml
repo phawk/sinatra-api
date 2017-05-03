@@ -10,8 +10,6 @@ AllCops:
     - 'Rakefile'
     - 'bin/*'
     - 'config/**/*'
-    - 'spec/**/*'
-    - 'test/**/*'
     - 'db/**/*'
     - 'vendor/**/*'
 Metrics/LineLength:

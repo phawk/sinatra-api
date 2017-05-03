@@ -26,8 +26,8 @@ RSpec.describe User, type: :model do
   end
 
   describe ".find_by_token" do
-    let(:valid_jwt) { get_jwt({ "user_id" => 1, "expires" => 24.hours.from_now }) }
-    let(:expired_jwt) { get_jwt({ "user_id" => 1, "expires" => 5.minutes.ago }) }
+    let(:valid_jwt) { get_jwt("user_id" => 1, "expires" => 24.hours.from_now) }
+    let(:expired_jwt) { get_jwt("user_id" => 1, "expires" => 5.minutes.ago) }
 
     describe "decode error" do
       it { expect(User.find_by_token("gibberish")).to be_nil }
@@ -100,7 +100,7 @@ RSpec.describe User, type: :model do
       subject.reset_password
       expect(last_email.subject).to match(/Password reset/)
       expect(last_email.to.first).to eq(subject.email)
-      expect(last_email.html_part.body.to_s).to match(/\/users\/reset_password\//)
+      expect(last_email.html_part.body.to_s).to match(%r{\/users\/reset_password\/})
     end
   end
 
@@ -109,9 +109,9 @@ RSpec.describe User, type: :model do
 
     describe "when password is too short" do
       it "has errors" do
-        expect {
+        expect do
           subject.update_password("test")
-        }.to raise_error(Sequel::ValidationFailed)
+        end.to raise_error(Sequel::ValidationFailed)
       end
     end
 
@@ -122,5 +122,4 @@ RSpec.describe User, type: :model do
       end
     end
   end
-
 end
