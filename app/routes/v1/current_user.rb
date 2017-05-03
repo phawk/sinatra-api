@@ -31,7 +31,7 @@ module Api
         post "/v1/user/reset_password" do
           ensure_client_secret!
 
-          User.find(email: params[:email])&.reset_password
+          User.first(email: params[:email])&.reset_password
 
           json(data: { message: "Password reset email sent" })
         end
