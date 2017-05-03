@@ -11,7 +11,7 @@ module Sequel
 
           ensure_supported_column!(column, allowed_cols)
 
-          if String(sort_order).casecmp("desc")
+          if String(sort_order).casecmp("desc").zero?
             order(Sequel.desc(column.to_sym))
           else
             order(column.to_sym)
