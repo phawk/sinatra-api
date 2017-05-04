@@ -15,7 +15,7 @@ class ExceptionHandling
   def call(env)
     @app.call env
   rescue => exception
-    log_exception(exception)
+    log_exception(env, exception)
 
     rack_response(build_exception_hash(exception))
   end
@@ -40,7 +40,7 @@ class ExceptionHandling
     hash
   end
 
-  def log_exception(exception)
+  def log_exception(env, exception)
     # Send errors to sentry.io
     Raven.capture_exception(exception)
 
