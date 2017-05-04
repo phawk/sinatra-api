@@ -4,11 +4,15 @@ require "json"
 
 class FakeErrorRackApp
   def call(env)
-    if env["blow_up"] == true
-      raise RuntimeError, "Bad things happened"
-    else
-      [200, { "Content-Type" => "text/plain" }, StringIO.new("All good!")]
-    end
+    blow_up! if env["blow_up"] == true
+
+    [200, { "Content-Type" => "text/plain" }, StringIO.new("All good!")]
+  end
+
+  private
+
+  def blow_up!
+    raise "Bad things happened"
   end
 end
 
@@ -43,10 +47,10 @@ RSpec.describe ExceptionHandling do
 
       expect(status).to eq(500)
       expect(headers["Content-Type"]).to eq("application/json")
-      expect(json).to eq({
+      expect(json).to eq(
         "error_code" => "internal_error",
         "message" => "Internal server error: this is a problem on our end and we've been notified of the issue"
-      })
+      )
     end
 
     it "sends errors to sentry"
