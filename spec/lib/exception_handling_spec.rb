@@ -16,6 +16,12 @@ class FakeErrorRackApp
   end
 end
 
+RSpec::Matchers.define :an_error_matching do |ex|
+  match do |actual|
+    actual.class == ex.class && actual.message == ex.message
+  end
+end
+
 RSpec.describe ExceptionHandling do
   subject { described_class.new(FakeErrorRackApp.new) }
 
@@ -33,7 +39,10 @@ RSpec.describe ExceptionHandling do
     let(:env) { { "blow_up" => true, "rack.errors" => rack_errors } }
     let(:exception) { RuntimeError.new("Bad things happened") }
 
-    before { @resp = subject.call(env) }
+    before do
+      allow(Raven).to receive(:capture_exception)
+      @resp = subject.call(env)
+    end
 
     it "logs errors to env" do
       expect(rack_errors).to have_received(:puts).twice
@@ -53,10 +62,8 @@ RSpec.describe ExceptionHandling do
       )
     end
 
-    it "sends errors to sentry"
-
-    context "when developing" do
-      it "returns a backtrace"
+    it "sends errors to sentry" do
+      expect(Raven).to have_received(:capture_exception).with(an_error_matching(exception))
     end
   end
 end
