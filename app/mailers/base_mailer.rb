@@ -1,3 +1,4 @@
+require "active_support/core_ext/string/inflections"
 require "erb"
 
 module Api
@@ -39,14 +40,18 @@ module Api
       private
 
       def template(path)
-        current_dir   = File.expand_path(File.dirname(__FILE__))
-        layout_file   = File.new(current_dir + "/templates/layout.erb").read
-        template_file = File.new(current_dir + "/templates/#{path}.erb").read
+        views_dir   = File.expand_path(File.join(__dir__, "..", "views"))
+        layout_file   = File.new(views_dir + "/mailers/layout.erb").read
+        template_file = File.new(views_dir + "/mailers/#{folder_name}/#{path}.erb").read
 
         templates = [template_file, layout_file]
         templates.inject(nil) do |prev, temp|
           _render(temp) { prev }
         end
+      end
+
+      def folder_name
+        self.class.name.split("::").last.underscore
       end
 
       def _render(temp)
