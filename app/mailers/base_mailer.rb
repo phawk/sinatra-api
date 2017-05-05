@@ -40,7 +40,7 @@ module Api
       private
 
       def template(path)
-        views_dir   = File.expand_path(File.join(__dir__, "..", "views"))
+        views_dir     = File.expand_path(File.join(__dir__, "..", "views"))
         layout_file   = File.new(views_dir + "/mailers/layout.erb").read
         template_file = File.new(views_dir + "/mailers/#{folder_name}/#{path}.erb").read
 
