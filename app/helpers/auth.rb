@@ -28,11 +28,11 @@ module Api
       end
 
       def current_user
-        @current_user ||= current_token.user
+        @current_user ||= current_token&.user
       end
 
       def current_client
-        @oauth_client ||= current_token.client_application
+        @oauth_client ||= current_token&.client_application
       end
     end
   end
