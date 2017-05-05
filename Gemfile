@@ -34,6 +34,7 @@ gem 'sentry-raven'
 # Development and test dependencies
 group :development do
   gem 'shotgun' # dev server
+  gem 'letter_opener'
 end
 
 group :development, :test do
