@@ -19,4 +19,5 @@ end
 
 RSpec.configure do |config|
   config.include MailHelper
+  config.before(:each) { clear_email }
 end
