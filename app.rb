@@ -11,6 +11,12 @@ module Api
       )
     end
 
+    configure do
+      enable :raise_errors
+      disable :dump_errors, :show_exceptions
+      use Rack::CommonLogger, $logger
+    end
+
     use Api::Routes::Main
     use Api::Routes::OAuth::Token
     use Api::Routes::V1::CurrentUser
