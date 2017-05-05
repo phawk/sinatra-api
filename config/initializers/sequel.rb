@@ -3,6 +3,7 @@ DB.extension :pg_array, :pg_json, :pagination
 
 Sequel::Model.plugin :timestamps, update_on_create: true
 Sequel::Model.plugin :validation_helpers
+Sequel::Model.plugin :defaults_setter
 Sequel::Model.plugin :basic_pg_search
 Sequel::Model.plugin :first_or_initialize
 Sequel::Model.plugin :sortable_by_column
