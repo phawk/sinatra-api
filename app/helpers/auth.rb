@@ -19,6 +19,14 @@ module Api
         @oauth_client = env["warden.oauth_client"] if env["warden.oauth_client"]
       end
 
+      # Soft authenticate - sets warden.user if strategy passes
+      #                   - does nothing if strategy fails
+      def authenticate(strategy: :access_token)
+        warden.authenticate(strategy)
+      end
+
+      # Hard authenticate - sets warden.user if strategy passes
+      #                   - returns 401 if strategy fails
       def authenticate!
         warden.authenticate!
       end
