@@ -1,4 +1,5 @@
 require_relative "./config/boot"
+require "token_failure_app"
 
 module Api
   class Application < ::Sinatra::Base
