@@ -10,13 +10,8 @@ module ApiHelper
   FakeClientToken = Struct.new(:client_application)
 
   def app
-    # If described class is a sinatra app only test against it directly
-    # and not the entire application
-    if !described_class.nil? && described_class <= Sinatra::Base
-      described_class
-    else
-      Api::Application
-    end
+    # Load entire Rack application stack
+    Rack::Builder.parse_file(File.expand_path(File.join(__dir__, "..", "..", "config.ru"))).first
   end
 
   # Request helpers

@@ -6,7 +6,7 @@ require "bundler"
 Bundler.require :default, :test
 
 # Load the application
-require_relative "../app"
+require_relative "../config/boot"
 
 require "sidekiq/testing"
 
