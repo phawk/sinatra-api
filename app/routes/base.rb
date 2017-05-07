@@ -14,8 +14,7 @@ module Api
 
       configure do
         enable :raise_errors
-        disable :dump_errors, :show_exceptions
-        use Rack::CommonLogger, $logger
+        disable :dump_errors, :show_exceptions, :logging
 
         before { content_type(:json) }
 
