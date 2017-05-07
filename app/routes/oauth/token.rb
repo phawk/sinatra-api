@@ -1,7 +1,10 @@
 module Api
   module Routes
     module OAuth
-      class Token < Base
+      module Token
+        extend Sinatra::Extension
+        include Api::Helpers::Routes
+
         swagger_path "/oauth/token" do
           operation :post do
             key :description, "Returns an access token"

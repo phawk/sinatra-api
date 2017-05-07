@@ -1,7 +1,10 @@
 module Api
   module Routes
     module V1
-      class Users < Base
+      module Users
+        extend Sinatra::Extension
+        include Api::Helpers::Routes
+
         swagger_path "/v1/users" do
           operation :post do
             key :description, "Create user"

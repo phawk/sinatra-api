@@ -1,6 +1,9 @@
 module Api
   module Routes
-    class Main < Base
+    module Main
+      extend Sinatra::Extension
+      include Api::Helpers::Routes
+
       swagger_root do
         key :swagger, "2.0"
         info do
