@@ -24,7 +24,11 @@ module Api
         end
       end
 
-      error Sinatra::NotFound do
+      error Sequel::Plugins::SortableByColumn::BadRequest do |e|
+        halt_bad_request(e.message)
+      end
+
+      error Sinatra::NotFound, Sequel::NoMatchingRow do
         content_type :json
         halt 404, JSON.dump(
           error_code: "not_found",

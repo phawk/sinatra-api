@@ -32,7 +32,7 @@ class ExceptionHandling
       message: "Internal server error: this is a problem on our end and we've been notified of the issue"
     }
 
-    if ENV["RACK_ENV"] == "development"
+    if %w[development test].include? ENV["RACK_ENV"]
       hash[:message] = exception.to_s
       hash[:backtrace] = exception.backtrace
     end

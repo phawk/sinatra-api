@@ -56,9 +56,11 @@ RSpec.describe ExceptionHandling do
 
       expect(status).to eq(500)
       expect(headers["Content-Type"]).to eq("application/json")
-      expect(json).to eq(
-        "error_code" => "internal_error",
-        "message" => "Internal server error: this is a problem on our end and we've been notified of the issue"
+      expect(json).to match(
+        a_hash_including(
+          "error_code" => "internal_error",
+          "message" => "Bad things happened"
+        )
       )
     end
 
