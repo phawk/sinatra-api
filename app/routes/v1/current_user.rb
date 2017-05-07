@@ -1,7 +1,10 @@
 module Api
   module Routes
     module V1
-      class CurrentUser < Base
+      module CurrentUser
+        extend Sinatra::Extension
+        include Api::Helpers::Routes
+
         swagger_path "/v1/user" do
           operation :get do
             key :description, "Gets the current user"
