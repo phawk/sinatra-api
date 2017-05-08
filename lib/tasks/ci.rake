@@ -9,6 +9,9 @@ begin
 
   namespace :ci do
     task :all do
+      # Run rubocop on the current branches commit diff with master:
+      # rubocop:disable Metrics/LineLength
+      # system!("git diff-tree -r --no-commit-id --name-only master@\{u\} head | xargs ls -1 2>/dev/null | grep '\.rb$' | xargs rubocop")
       Rake::Task["rubocop"].invoke
       Rake::Task["spec"].invoke
       Rake::Task["bundle:audit"].invoke

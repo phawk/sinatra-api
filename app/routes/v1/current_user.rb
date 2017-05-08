@@ -14,7 +14,7 @@ module Api
             end
           end
         end
-        get "/v1/user/?" do
+        get "/" do
           authenticate!
           json current_user
         end
@@ -28,7 +28,7 @@ module Api
             parameter name: :client_secret, type: :string, required: true
           end
         end
-        post "/v1/user/reset_password" do
+        post "/reset_password" do
           ensure_client_secret!
 
           User.first(email: params[:email])&.reset_password
@@ -52,7 +52,7 @@ module Api
             end
           end
         end
-        put "/v1/user/attributes/password" do
+        put "/attributes/password" do
           ensure_client_secret!
 
           user = User.find_by_token(params[:reset_token])

@@ -6,7 +6,7 @@ require "bundler"
 Bundler.require :default, :test
 
 # Load the application
-require_relative "../app"
+require_relative "../config/boot"
 
 require "sidekiq/testing"
 
@@ -17,6 +17,7 @@ FactoryGirl.find_definitions
 require_relative "support/api_helper"
 require_relative "support/mail_helper"
 require_relative "support/token_helper"
+require_relative "support/file_helper"
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

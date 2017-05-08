@@ -1,7 +1,7 @@
 require_relative "./lib/rack/cloud_flare_middleware"
 require_relative "./lib/rack/health_check"
 require_relative "./lib/exception_handling"
-require_relative "./app"
+require_relative "./config/boot"
 require "sidekiq/web"
 require "rack/ssl"
 require "rack-timeout"
@@ -13,7 +13,6 @@ use Rack::CloudFlareMiddleware
 use Rack::SSL if ENV["RACK_ENV"] == "production"
 use Rack::CanonicalHost, ENV["CANONICAL_HOST"] if ENV["CANONICAL_HOST"]
 use Rack::Deflater
-
 use Rack::Cors do
   allow do
     origins ENV.fetch("ALLOWED_CORS_ORIGINS", "*")
@@ -21,4 +20,8 @@ use Rack::Cors do
   end
 end
 
-run Rack::URLMap.new("/" => Api::Application, "/sidekiq" => Sidekiq::Web)
+map("/sidekiq") { run Sidekiq::Web }
+map("/oauth/token") { run Api::Routes::OAuth::Token }
+map("/v1/user") { run Api::Routes::V1::CurrentUser }
+map("/v1/users") { run Api::Routes::V1::Users }
+map("/") { run Api::Routes::Main }

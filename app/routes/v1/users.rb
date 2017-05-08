@@ -16,7 +16,7 @@ module Api
             end
           end
         end
-        post "/v1/users/?" do
+        post "/" do
           ensure_client_secret!
 
           user = User.new(params.slice(:name, :email, :password))

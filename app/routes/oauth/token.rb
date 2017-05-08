@@ -15,7 +15,7 @@ module Api
             end
           end
         end
-        post "/oauth/token" do
+        post "/" do
           ensure_client_secret!
 
           username = params[:username] || params[:email]

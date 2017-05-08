@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Api::Application, type: :api do
+RSpec.describe Api::Routes::Main, type: :api do
   describe "when a route doesn't exist" do
     it "returns a 404" do
       get_json "/hahaha"
