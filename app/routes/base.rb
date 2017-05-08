@@ -29,11 +29,7 @@ module Api
       end
 
       error Sinatra::NotFound, Sequel::NoMatchingRow do
-        content_type :json
-        halt 404, JSON.dump(
-          error_code: "not_found",
-          message: "Endpoint '#{request.path_info}' not found"
-        )
+        halt_not_found("Endpoint '#{request.path_info}' not found")
       end
 
       error Sequel::ValidationFailed do |e|
