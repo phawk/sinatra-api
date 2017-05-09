@@ -20,7 +20,7 @@ module Api
 
           username = params[:username] || params[:email]
 
-          user = User.find(email: username)
+          user = User.first(email: username)
 
           if user && user.authenticate(params[:password])
             token = AccessToken.for_client(current_client)
