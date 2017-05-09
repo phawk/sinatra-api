@@ -13,6 +13,7 @@ AllCops:
     - 'config/**/*'
     - 'db/**/*'
     - 'vendor/**/*'
+    - 'node_modules/**/*'
 Metrics/LineLength:
   Max: 120
 Style/Documentation:
@@ -29,6 +30,12 @@ Style/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
 Style/Alias:
   EnforcedStyle: prefer_alias_method
+Style/Lambda:
+  EnforcedStyle: lambda
+Style/IfUnlessModifier:
+  Enabled: false
+Style/GuardClause:
+  MinBodyLength: 3
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
