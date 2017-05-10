@@ -16,6 +16,8 @@ AllCops:
     - 'node_modules/**/*'
 Metrics/LineLength:
   Max: 120
+  Exclude:
+    - spec/**/*
 Style/Documentation:
   Enabled: false
 Style/StringLiterals:
