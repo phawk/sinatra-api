@@ -29,7 +29,7 @@ Style/IndentArray:
 Style/GlobalVars:
   Enabled: false
 Style/MultilineMethodCallIndentation:
-  EnforcedStyle: indented_relative_to_receiver
+  EnforcedStyle: aligned
 Style/Alias:
   EnforcedStyle: prefer_alias_method
 Style/Lambda:
@@ -38,6 +38,8 @@ Style/IfUnlessModifier:
   Enabled: false
 Style/GuardClause:
   MinBodyLength: 3
+Style/RaiseArgs:
+  EnforcedStyle: compact
 Metrics/BlockLength:
   Exclude:
     - spec/**/*

@@ -22,7 +22,7 @@ module Sequel
           return true if allowed_cols.include?(column.to_sym)
 
           error_message = "Sort by column `#{column}` not permitted. Permitted columns #{allowed_cols.to_sentence}"
-          raise BadRequest, error_message
+          raise BadRequest.new(error_message)
         end
       end
 
