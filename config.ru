@@ -6,6 +6,12 @@ require "sidekiq/web"
 require "rack/ssl"
 require "rack-timeout"
 
+STATIC_PATHS ||= %w[/favicon.ico /robots.txt /docs].map(&:freeze)
+
+use Rack::Static, root: File.expand_path(__dir__ + "/public"),
+                  urls: STATIC_PATHS,
+                  cache_control: "public, max-age=31536000"
+
 use ExceptionHandling
 use Rack::Timeout, service_timeout: 10
 use Rack::HealthCheck

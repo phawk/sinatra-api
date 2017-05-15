@@ -14,7 +14,7 @@ module Api
 
       configure do
         enable :raise_errors
-        disable :dump_errors, :show_exceptions, :logging
+        disable :dump_errors, :show_exceptions, :logging, :static
 
         before { content_type(:json) }
 
