@@ -15,12 +15,10 @@ class ExceptionHandling
   def call(env)
     @app.call env
   rescue => exception
-    if ENV["RACK_ENV"] == "test"
-      raise exception
-    else
-      log_exception(env, exception)
-      rack_response(build_exception_hash(exception))
-    end
+    raise exception if ENV["RACK_ENV"] == "test"
+
+    log_exception(env, exception)
+    rack_response(build_exception_hash(exception))
   end
 
   private
