@@ -23,7 +23,15 @@ RSpec::Matchers.define :an_error_matching do |ex|
 end
 
 RSpec.describe ExceptionHandling do
+  let(:rack_errors) { spy }
+  let(:env) { { "blow_up" => true, "rack.errors" => rack_errors } }
+  let(:exception) { RuntimeError.new("Bad things happened") }
+
   subject { described_class.new(FakeErrorRackApp.new) }
+
+  before do
+    allow(Raven).to receive(:capture_exception)
+  end
 
   context "when app doesn't error" do
     it "returns apps response" do
@@ -35,12 +43,8 @@ RSpec.describe ExceptionHandling do
   end
 
   context "when app errors" do
-    let(:rack_errors) { spy }
-    let(:env) { { "blow_up" => true, "rack.errors" => rack_errors } }
-    let(:exception) { RuntimeError.new("Bad things happened") }
-
     before do
-      allow(Raven).to receive(:capture_exception)
+      allow(ENV).to receive(:[]).with("RACK_ENV").and_return("development")
       @resp = subject.call(env)
     end
 
@@ -66,6 +70,29 @@ RSpec.describe ExceptionHandling do
 
     it "sends errors to sentry" do
       expect(Raven).to have_received(:capture_exception).with(an_error_matching(exception))
+    end
+  end
+
+  context "when RACK_ENV == 'test'" do
+    it "raises errors" do
+      expect do
+        subject.call(env)
+      end.to raise_error(RuntimeError, "Bad things happened")
+    end
+  end
+
+  context "when RACK_ENV == 'production'" do
+    it "omits the stack trace" do
+      allow(ENV).to receive(:[]).with("RACK_ENV").and_return("production")
+
+      status, headers, body = subject.call(env)
+
+      json = JSON.parse(body.each.next)
+
+      expect(status).to eq(500)
+      expect(headers["Content-Type"]).to eq("application/json")
+      expect(json["message"]).not_to include("Bad things happened")
+      expect(json["backtrace"]).to be_nil
     end
   end
 end

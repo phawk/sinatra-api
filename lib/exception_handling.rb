@@ -15,9 +15,12 @@ class ExceptionHandling
   def call(env)
     @app.call env
   rescue => exception
-    log_exception(env, exception)
-
-    rack_response(build_exception_hash(exception))
+    if ENV["RACK_ENV"] == "test"
+      raise exception
+    else
+      log_exception(env, exception)
+      rack_response(build_exception_hash(exception))
+    end
   end
 
   private
@@ -32,7 +35,7 @@ class ExceptionHandling
       message: "Internal server error: this is a problem on our end and we've been notified of the issue"
     }
 
-    if %w[development test].include? ENV["RACK_ENV"]
+    if ENV["RACK_ENV"] == "development"
       hash[:message] = exception.to_s
       hash[:backtrace] = exception.backtrace
     end
