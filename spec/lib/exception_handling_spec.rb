@@ -44,7 +44,7 @@ RSpec.describe ExceptionHandling do
 
   context "when app errors" do
     before do
-      allow(ENV).to receive(:[]).with("RACK_ENV").and_return("development")
+      allow(ENV).to receive(:[]).with("APP_ENV").and_return("development")
       @resp = subject.call(env)
     end
 
@@ -73,7 +73,7 @@ RSpec.describe ExceptionHandling do
     end
   end
 
-  context "when RACK_ENV == 'test'" do
+  context "when APP_ENV == 'test'" do
     it "raises errors" do
       expect do
         subject.call(env)
@@ -81,9 +81,9 @@ RSpec.describe ExceptionHandling do
     end
   end
 
-  context "when RACK_ENV == 'production'" do
+  context "when APP_ENV == 'production'" do
     it "omits the stack trace" do
-      allow(ENV).to receive(:[]).with("RACK_ENV").and_return("production")
+      allow(ENV).to receive(:[]).with("APP_ENV").and_return("production")
 
       status, headers, body = subject.call(env)
 

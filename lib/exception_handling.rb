@@ -2,7 +2,7 @@ require "json"
 require "raven"
 
 Raven.configure do |config|
-  config.tags = { environment: ENV["RACK_ENV"] }
+  config.tags = { environment: ENV["APP_ENV"] }
   config.environments = %w[staging production]
   config.excluded_exceptions = %w[Sequel::NoMatchingRow] # Sequel::Error - ignore all sequel errors
 end
@@ -15,7 +15,7 @@ class ExceptionHandling
   def call(env)
     @app.call env
   rescue => exception
-    raise exception if ENV["RACK_ENV"] == "test"
+    raise exception if ENV["APP_ENV"] == "test"
 
     log_exception(env, exception)
     rack_response(build_exception_hash(exception))
@@ -33,7 +33,7 @@ class ExceptionHandling
       message: "Internal server error: this is a problem on our end and we've been notified of the issue"
     }
 
-    if ENV["RACK_ENV"] == "development"
+    if ENV["APP_ENV"] == "development"
       hash[:message] = exception.to_s
       hash[:backtrace] = exception.backtrace
     end

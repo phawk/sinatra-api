@@ -1,5 +1,5 @@
 # TEST ENV VARS
-ENV["RACK_ENV"] = "test"
+ENV["APP_ENV"] = "test"
 
 require "fast_helper"
 require "bundler"

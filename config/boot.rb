@@ -1,20 +1,19 @@
 # Add current path and lib to the load path
-$: << File.expand_path('../../', __FILE__)
-$: << File.expand_path('../../lib', __FILE__)
+$: << File.expand_path("../../", __FILE__)
+$: << File.expand_path("../../lib", __FILE__)
 
 # Default ENV to dev if not present
-ENV['RACK_ENV'] ||= 'development'
-ENV['APP_ENV'] ||= ENV['RACK_ENV']
+ENV["APP_ENV"] ||= "development"
 
 # Autoload common standard library features
 require "json"
 
 # Autoload gems from the Gemfile
 require "bundler"
-Bundler.require :default, ENV['RACK_ENV'].to_sym
+Bundler.require :default, ENV["APP_ENV"].to_sym
 
 # Load dev env vars
-Dotenv.load if ["development", "test"].include? ENV['RACK_ENV']
+Dotenv.load if %w[development test].include? ENV["APP_ENV"]
 
 # Autoload app dependencies
 (Dir['./config/initializers/*.rb'].sort +

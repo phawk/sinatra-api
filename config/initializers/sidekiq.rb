@@ -1,10 +1,10 @@
 require 'sidekiq/web'
 
-rack_env  = ENV["RACK_ENV"]
+app_env  = ENV["APP_ENV"]
 redis_url = ENV.fetch("REDIS_URL", "redis://127.0.0.1:6379")
 
 redis_settings = {
-  namespace: "sinatraapi_#{rack_env}_sidekiq",
+  namespace: "sinatraapi_#{app_env}_sidekiq",
   url: redis_url,
   network_timeout: 3
 }
@@ -18,7 +18,7 @@ Sidekiq.configure_client do |config|
 end
 
 # Password protect sidekiq web
-if rack_env != "development"
+if app_env != "development"
   Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
     [user, password] == ["admin", "example"]
   end

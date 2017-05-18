@@ -1,4 +1,4 @@
-ENV["RACK_ENV"] = "test"
+ENV["APP_ENV"] = "test"
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
