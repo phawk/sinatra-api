@@ -3,7 +3,7 @@ require "sinatra/base"
 
 class TokenFailureApp < ::Sinatra::Base
   post "/unauthenticated" do
-    status 401
+    status :unauthorized
     content_type :json
     JSON.dump(error: "authentication_failed", message: error_message)
   end
