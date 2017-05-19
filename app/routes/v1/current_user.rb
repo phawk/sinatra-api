@@ -55,15 +55,12 @@ module Api
         put "/attributes/password" do
           ensure_client_secret!
 
+          password_params = validate!(PasswordValidator)
+
           user = User.find_by_token(params[:reset_token])
           halt_not_found("No user found for reset token") if user.nil?
 
-          validator = PasswordValidator.call(params)
-
-          halt_unprocessible_entity(validator) if validator.failure?
-
-          user.update_password(params[:password])
-
+          user.update_password(password_params)
           json(data: { message: "Password has been reset" })
         end
       end

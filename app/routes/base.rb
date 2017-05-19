@@ -35,6 +35,14 @@ module Api
       error Sequel::ValidationFailed do |e|
         halt_unprocessible_entity(e)
       end
+
+      def validate!(schema)
+        validator = schema.call(params)
+
+        halt_unprocessible_entity(validator) if validator.failure?
+
+        validator.to_h
+      end
     end
   end
 end
