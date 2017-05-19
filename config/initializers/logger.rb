@@ -1,8 +1,8 @@
-require 'logger'
-require 'null_logger'
+require "logger"
+require "null_logger"
 
 $logger = begin
-  case ENV['RACK_ENV']
+  case ENV["APP_ENV"]
   when "test"
     NullLogger.new
   else

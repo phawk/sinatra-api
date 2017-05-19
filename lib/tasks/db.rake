@@ -2,15 +2,14 @@
 namespace :db do
   task :environment do
     # Default ENV to dev if not present
-    ENV["RACK_ENV"] ||= "development"
-    ENV["APP_ENV"] ||= ENV["RACK_ENV"]
+    ENV["APP_ENV"] ||= "development"
 
     # Autoload gems from the Gemfile
     require "bundler"
-    Bundler.require :default, ENV["RACK_ENV"].to_sym
+    Bundler.require :default, ENV["APP_ENV"].to_sym
 
     # Load dev env vars
-    Dotenv.load if %w[development test].include? ENV["RACK_ENV"]
+    Dotenv.load if %w[development test].include? ENV["APP_ENV"]
   end
 
   task connect_db: :environment do
@@ -45,7 +44,7 @@ namespace :db do
       Sequel::Migrator.run(DB, "db/migrations")
     end
 
-    if ENV["RACK_ENV"] == "development"
+    if ENV["APP_ENV"] == "development"
       system("sequel -d #{ENV['DATABASE_URL']} > #{@root_dir}/db/schema.rb")
     end
 

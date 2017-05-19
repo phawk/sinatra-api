@@ -29,7 +29,7 @@ $ bin/rake db:create
 
 # Run initial migrations
 $ bin/rake db:migrate
-$ bin/rake db:migrate RACK_ENV=test
+$ bin/rake db:migrate APP_ENV=test
 ```
 
 ### Running

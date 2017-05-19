@@ -1,4 +1,4 @@
-DB = Sequel.connect(ENV["RACK_ENV"] == "test" ? ENV["TEST_DATABASE_URL"] : ENV["DATABASE_URL"], max_connections: Integer(ENV.fetch('MAX_THREADS', 5)) + 1)
+DB = Sequel.connect(ENV["APP_ENV"] == "test" ? ENV["TEST_DATABASE_URL"] : ENV["DATABASE_URL"], max_connections: Integer(ENV.fetch('MAX_THREADS', 5)) + 1)
 DB.extension :pg_array, :pg_json, :pagination
 DB.loggers << $logger
 DB.sql_log_level = :debug
