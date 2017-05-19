@@ -58,7 +58,7 @@ module Api
           user = User.find_by_token(params[:reset_token])
           halt_not_found("No user found for reset token") if user.nil?
 
-          validator = PasswordValidator.(params)
+          validator = PasswordValidator.call(params)
 
           halt_unprocessible_entity(validator) if validator.failure?
 

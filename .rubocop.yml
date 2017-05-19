@@ -40,6 +40,8 @@ Style/GuardClause:
   MinBodyLength: 3
 Style/RaiseArgs:
   EnforcedStyle: compact
+Style/SpecialGlobalVars:
+  EnforcedStyle: use_perl_names
 Metrics/BlockLength:
   Exclude:
     - spec/**/*
