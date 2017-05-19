@@ -58,11 +58,13 @@ module Api
           user = User.find_by_token(params[:reset_token])
           halt_not_found("No user found for reset token") if user.nil?
 
-          if user.update_password(params[:password])
-            json(data: { message: "Password has been reset" })
-          else
-            halt_unprocessible_entity(user)
-          end
+          validator = PasswordValidator.(params)
+
+          halt_unprocessible_entity(validator) if validator.failure?
+
+          user.update_password(params[:password])
+
+          json(data: { message: "Password has been reset" })
         end
       end
     end

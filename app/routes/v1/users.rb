@@ -19,7 +19,10 @@ module Api
         post "/" do
           ensure_client_secret!
 
-          user = User.new(params.slice(:name, :email, :password))
+          validator = UserCreateValidator.(params.slice(:name, :email, :password))
+          halt_unprocessible_entity(validator) unless validator.success?
+
+          user = User.new(validator.to_h)
           user.save
 
           token = AccessToken.for_client(current_client)

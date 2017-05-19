@@ -4,7 +4,6 @@ require "jwt"
 
 class User < Sequel::Model
   attr_reader :password
-  attr_accessor :password_changing
 
   include BCrypt
 
@@ -12,15 +11,6 @@ class User < Sequel::Model
 
   one_to_many :client_applications
   one_to_many :access_tokens
-
-  def validate
-    super
-    validates_presence :email
-    validates_unique :email
-    validates_format(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, :email, message: "is not a valid email address")
-    validates_presence :password if new? || password_changing
-    validates_min_length 8, :password if new? || password_changing
-  end
 
   def self.find_by_token(token)
     payload = JWT.decode(token, ENV["JWT_SECRET_KEY"])[0]
@@ -54,7 +44,6 @@ class User < Sequel::Model
   end
 
   def update_password(password)
-    self.password_changing = true
     self.password = password
     save
   end

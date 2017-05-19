@@ -1,5 +1,9 @@
 ENV["APP_ENV"] = "test"
 
+# Add current path and lib to the load path
+$: << File.expand_path("../../", __FILE__)
+$: << File.expand_path("../../lib", __FILE__)
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

@@ -54,24 +54,6 @@ RSpec.describe User, type: :model do
     it { expect(subject).to respond_to(:updated_at) }
   end
 
-  describe "#email" do
-    it "ensures presence" do
-      subject.email = nil
-      expect(subject.valid?).to be false
-    end
-
-    it "ensures valid" do
-      subject.email = "fake"
-      expect(subject.valid?).to be false
-    end
-
-    it "is unique" do
-      new_user = create(:user, email: subject.email)
-      expect(new_user.valid?).to be true
-      expect(subject.valid?).to be false
-    end
-  end
-
   describe "#authenticate" do
     it "checks passwords match" do
       expect(User.new.authenticate("password")).to be(false)
@@ -81,11 +63,6 @@ RSpec.describe User, type: :model do
   end
 
   describe "#password" do
-    it "ensures presence" do
-      user = User.new(email: "bob@bob.com")
-      expect(user.valid?).to be false
-    end
-
     it "uses bcrypt" do
       user = User.new(email: "bob@bob.com", password: "superduper")
       user.password = "hunter2"
@@ -106,14 +83,6 @@ RSpec.describe User, type: :model do
 
   describe "#update_password" do
     subject { User.new(name: "Jimmy", email: "jimmy@eatsworld.com") }
-
-    describe "when password is too short" do
-      it "has errors" do
-        expect do
-          subject.update_password("test")
-        end.to raise_error(Sequel::ValidationFailed)
-      end
-    end
 
     describe "when password is valid" do
       it "resets password" do
