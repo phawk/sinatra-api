@@ -7,6 +7,6 @@ env:
 before_script:
 - psql -c 'create database travis_ci_test;' -U postgres
 script:
-- bin/rake db:migrate
+- bin/rake db:migrate APP_ENV=test
 - bin/rake ci:all
 sudo: false
