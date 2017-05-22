@@ -25,12 +25,11 @@ RSpec.describe Api::Routes::V1::CurrentUser, type: :api do
     let!(:alfred) { create(:user) }
 
     it "delivers a password reset email" do
+      expect_any_instance_of(DeliverPasswordResetToken).to receive(:call).with(alfred.email) { true }
+
       authenticate_client
       post_json "/v1/user/reset_password", email: alfred.email
       expect(http_status).to eq 200
-      expect(last_email.to.first).to eq(alfred.email)
-      expect(last_email.subject).to eq("Password reset instructions")
-      expect(last_email.html_part.body).to include("reset your password")
     end
   end
 
