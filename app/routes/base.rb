@@ -36,6 +36,10 @@ module Api
         halt_unprocessible_entity(e)
       end
 
+      error SigninToken::ParseError do |e|
+        halt_bad_request(e.message)
+      end
+
       def validate!(schema)
         validator = schema.call(params)
 

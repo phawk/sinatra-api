@@ -1,3 +1,4 @@
+require "app/models/signin_token"
 require "active_support/core_ext/integer/time"
 require "securerandom"
 require "jwt"
@@ -11,20 +12,6 @@ class User < Sequel::Model
 
   one_to_many :client_applications
   one_to_many :access_tokens
-
-  def self.find_by_token(token)
-    payload = JWT.decode(token, ENV["JWT_SECRET_KEY"])[0]
-
-    return nil unless Time.now < Time.parse(payload["expires"])
-
-    find(id: payload["user_id"])
-  rescue JWT::DecodeError
-    nil
-  end
-
-  def self.find_by_token!(token)
-    find_by_token(token) || raise(ActiveRecord::RecordNotFound)
-  end
 
   def display_name
     name || email

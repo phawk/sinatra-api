@@ -25,26 +25,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe ".find_by_token" do
-    let(:valid_jwt) { get_jwt("user_id" => 1, "expires" => 24.hours.from_now) }
-    let(:expired_jwt) { get_jwt("user_id" => 1, "expires" => 5.minutes.ago) }
-
-    describe "decode error" do
-      it { expect(User.find_by_token("gibberish")).to be_nil }
-    end
-
-    describe "expired" do
-      it { expect(User.find_by_token(expired_jwt)).to be_nil }
-    end
-
-    describe "valid" do
-      it "finds the user" do
-        allow(User).to receive(:find).and_return(subject)
-        expect(User.find_by_token(valid_jwt)).to eq(subject)
-      end
-    end
-  end
-
   describe "#fields" do
     it { expect(subject).to respond_to(:name) }
     it { expect(subject).to respond_to(:email) }

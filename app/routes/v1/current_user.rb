@@ -57,8 +57,9 @@ module Api
 
           password_params = validate!(PasswordValidator)
 
-          user = User.find_by_token(params[:reset_token])
-          halt_not_found("No user found for reset token") if user.nil?
+          payload = SigninToken.new.parse(params[:reset_token])
+
+          user = User.with_pk!(payload["user_id"])
 
           user.update_password(password_params)
           json(data: { message: "Password has been reset" })

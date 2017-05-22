@@ -36,8 +36,8 @@ RSpec.describe Api::Routes::V1::CurrentUser, type: :api do
 
   describe "PUT /v1/user/attributes/password" do
     let(:alfred) { create(:user) }
-    let(:valid_jwt) { get_jwt("user_id" => alfred.id, "expires" => 24.hours.from_now) }
-    let(:expired_jwt) { get_jwt("user_id" => alfred.id, "expires" => 5.minutes.ago) }
+    let(:valid_jwt) { SigninToken.new.create(user_id: alfred.id, exp: 24.hours.from_now.to_i) }
+    let(:expired_jwt) { SigninToken.new.create(user_id: alfred.id, exp: 5.minutes.ago.to_i) }
 
     before do
       authenticate_client
@@ -46,15 +46,15 @@ RSpec.describe Api::Routes::V1::CurrentUser, type: :api do
     it "requires a reset token" do
       put "/v1/user/attributes/password", password: "updated_password"
 
-      expect(http_status).to eq(404)
-      expect(response_json["message"]).to match(/No user found for reset token/)
+      expect(http_status).to eq(400)
+      expect(response_json["message"]).to match(/Invalid token/)
     end
 
     it "requires the reset token to have not expired" do
       put "/v1/user/attributes/password", password: "updated_password", reset_token: expired_jwt
 
-      expect(http_status).to eq(404)
-      expect(response_json["message"]).to match(/No user found for reset token/)
+      expect(http_status).to eq(400)
+      expect(response_json["message"]).to match(/Token expired/)
     end
 
     it "requires the password to be gt 8 chars" do
