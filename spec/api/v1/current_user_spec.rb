@@ -57,6 +57,13 @@ RSpec.describe Api::Routes::V1::CurrentUser, type: :api do
       expect(response_json["message"]).to match(/No user found for reset token/)
     end
 
+    it "requires the password to be gt 8 chars" do
+      put "/v1/user/attributes/password", password: "upd", reset_token: valid_jwt
+
+      expect(http_status).to eq(422)
+      expect(response_json["errors"]["password"]).to eq(["size cannot be less than 8"])
+    end
+
     it "updates the password" do
       put "/v1/user/attributes/password", password: "updated_password", reset_token: valid_jwt
 

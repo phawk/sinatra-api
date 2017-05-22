@@ -19,6 +19,7 @@ Dotenv.load if %w[development test].include? ENV["APP_ENV"]
 (Dir['./config/initializers/*.rb'].sort +
  Dir['./app/helpers/**/*.rb'].sort +
  Dir['./app/mailers/**/*.rb'].sort +
+ Dir['./app/validators/**/*.rb'].sort +
  Dir['./app/models/sequel_model.rb'].sort +
  Dir['./app/models/**/*.rb'].sort +
  Dir['./app/jobs/**/*.rb'].sort +

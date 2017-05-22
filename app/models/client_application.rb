@@ -2,12 +2,6 @@ class ClientApplication < Sequel::Model
   many_to_one :user
   one_to_many :access_tokens
 
-  def validate
-    super
-    validates_presence %i[name user_id]
-    validates_unique :client_id
-  end
-
   def before_create
     generate_tokens
     super

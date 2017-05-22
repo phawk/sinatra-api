@@ -26,6 +26,7 @@ gem 'postmark'
 gem 'jwt'
 gem 'swagger-blocks' # API Docs
 gem 'jsonapi-serializers'
+gem 'dry-validation'
 
 # Extra dependencies
 gem 'http'
