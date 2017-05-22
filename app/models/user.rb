@@ -1,7 +1,4 @@
 require "app/models/signin_token"
-require "active_support/core_ext/integer/time"
-require "securerandom"
-require "jwt"
 
 class User < Sequel::Model
   attr_reader :password
