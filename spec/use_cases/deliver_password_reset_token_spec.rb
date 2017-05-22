@@ -1,5 +1,4 @@
 require "spec_helper"
-require "app/use_cases/deliver_password_reset_token"
 
 RSpec.describe DeliverPasswordResetToken do
   context "when user isn’t found" do
