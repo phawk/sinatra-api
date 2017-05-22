@@ -18,12 +18,7 @@ class User < Sequel::Model
   end
 
   def signin_token(expires: 24.hours.from_now)
-    payload = {
-      "user_id" => id,
-      "expires" => expires
-    }
-
-    JWT.encode(payload, ENV["JWT_SECRET_KEY"], "HS512")
+    SigninToken.new.create(user_id: id, exp: expires.to_i)
   end
 
   def reset_password
