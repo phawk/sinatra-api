@@ -1,9 +1,7 @@
-require "app/models/signin_token"
+require "password_hasher"
 
 class User < Sequel::Model
   attr_reader :password
-
-  include BCrypt
 
   searchable_columns :name, :email
 
@@ -19,9 +17,9 @@ class User < Sequel::Model
     save
   end
 
-  def password=(new_password)
-    @password = new_password
-    self.password_digest = Password.create(new_password) if new_password
+  def password=(plaintext)
+    @password = plaintext
+    self.password_digest = PasswordHasher.new.hash_plaintext(plaintext)
   end
 
   def email=(email)

@@ -35,11 +35,11 @@ RSpec.describe User, type: :model do
     it { expect(subject).to respond_to(:updated_at) }
   end
 
-  describe "#password" do
-    it "uses bcrypt" do
+  describe "#password=" do
+    it "creates a password_digest" do
       user = User.new(email: "bob@bob.com", password: "superduper")
-      user.password = "hunter2"
-      verification = PasswordVerifier.new(user.password_digest).verify("hunter2")
+      expect(user.password_digest).not_to be_nil
+      verification = PasswordVerifier.new(user.password_digest).verify("superduper")
       expect(verification).to be true
     end
   end
