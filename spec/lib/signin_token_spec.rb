@@ -1,6 +1,6 @@
 require "jwt"
 require "fast_helper"
-require "app/models/signin_token"
+require "signin_token"
 require "active_support/core_ext/integer/time"
 require "securerandom"
 

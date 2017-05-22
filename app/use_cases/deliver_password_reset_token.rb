@@ -1,3 +1,5 @@
+require "signin_token"
+
 class DeliverPasswordResetToken
   def call(email)
     user = User.first(email: email)

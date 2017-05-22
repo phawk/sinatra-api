@@ -1,4 +1,5 @@
 require "token_failure_app"
+require "signin_token"
 
 module Api
   module Routes
