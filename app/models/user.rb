@@ -19,12 +19,6 @@ class User < Sequel::Model
     save
   end
 
-  def authenticate(password)
-    return false unless password_digest
-    digest = Password.new(password_digest)
-    digest == password
-  end
-
   def password=(new_password)
     @password = new_password
     self.password_digest = Password.create(new_password) if new_password

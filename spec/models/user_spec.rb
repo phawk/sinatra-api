@@ -1,4 +1,5 @@
 require "spec_helper"
+require "password_verifier"
 
 RSpec.describe User, type: :model do
   subject { build_stubbed(:user) }
@@ -34,19 +35,12 @@ RSpec.describe User, type: :model do
     it { expect(subject).to respond_to(:updated_at) }
   end
 
-  describe "#authenticate" do
-    it "checks passwords match" do
-      expect(User.new.authenticate("password")).to be(false)
-      expect(User.new(password: "hunter2").authenticate("password")).to be(false)
-      expect(User.new(password: "hunter2").authenticate("hunter2")).to be(true)
-    end
-  end
-
   describe "#password" do
     it "uses bcrypt" do
       user = User.new(email: "bob@bob.com", password: "superduper")
       user.password = "hunter2"
-      expect(user.authenticate("hunter2")).to be true
+      verification = PasswordVerifier.new(user.password_digest).verify("hunter2")
+      expect(verification).to be true
     end
   end
 
