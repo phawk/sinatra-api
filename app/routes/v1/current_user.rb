@@ -31,8 +31,10 @@ module Api
         post "/reset_password" do
           ensure_client_secret!
 
+          user = User.first(email: params[:email])
+
           # TODO: refactor to DeliverPasswordResetToken use case
-          if user = User.first(email: params[:email])
+          if user
             signin_token = SigninToken.new.create(user_id: user.id, exp: 24.hours.from_now.to_i)
             Api::Mailers::User.new.reset_password(user, signin_token)
           end
