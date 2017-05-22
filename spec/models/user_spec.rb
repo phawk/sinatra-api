@@ -50,17 +50,6 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe "#reset_password" do
-    subject { User.new(name: "Jimmy", email: "jimmy@example.org") }
-
-    it "sends a password reset email" do
-      subject.reset_password
-      expect(last_email.subject).to match(/Password reset/)
-      expect(last_email.to.first).to eq(subject.email)
-      expect(last_email.html_part.body.to_s).to match(%r{\/users\/reset_password\/})
-    end
-  end
-
   describe "#update_password" do
     subject { User.new(name: "Jimmy", email: "jimmy@eatsworld.com") }
 

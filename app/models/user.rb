@@ -17,14 +17,6 @@ class User < Sequel::Model
     name || email
   end
 
-  def signin_token(expires: 24.hours.from_now)
-    SigninToken.new.create(user_id: id, exp: expires.to_i)
-  end
-
-  def reset_password
-    ::Api::Mailers::User.new.reset_password(self, signin_token)
-  end
-
   def update_password(password)
     self.password = password
     save
