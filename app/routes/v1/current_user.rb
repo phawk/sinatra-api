@@ -31,7 +31,13 @@ module Api
         post "/reset_password" do
           ensure_client_secret!
 
-          User.first(email: params[:email])&.reset_password
+          user = User.first(email: params[:email])
+
+          # TODO: refactor to DeliverPasswordResetToken use case
+          if user
+            signin_token = SigninToken.new.create(user_id: user.id, exp: 24.hours.from_now.to_i)
+            Api::Mailers::User.new.reset_password(user, signin_token)
+          end
 
           json(data: { message: "Password reset email sent" })
         end
@@ -57,8 +63,9 @@ module Api
 
           password_params = validate!(PasswordValidator)
 
-          user = User.find_by_token(params[:reset_token])
-          halt_not_found("No user found for reset token") if user.nil?
+          payload = SigninToken.new.parse(params[:reset_token])
+
+          user = User.with_pk!(payload["user_id"])
 
           user.update_password(password_params)
           json(data: { message: "Password has been reset" })
