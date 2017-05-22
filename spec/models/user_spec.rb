@@ -35,6 +35,12 @@ RSpec.describe User, type: :model do
     it { expect(subject).to respond_to(:updated_at) }
   end
 
+  describe "#email=" do
+    it "downcases" do
+      expect(User.new(email: "Bob@Example.Org").email).to eq("bob@example.org")
+    end
+  end
+
   describe "#password=" do
     it "creates a password_digest" do
       user = User.new(email: "bob@bob.com", password: "superduper")
