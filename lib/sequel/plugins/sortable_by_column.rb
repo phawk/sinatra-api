@@ -11,7 +11,6 @@ module Sequel
 
       module DatasetMethods
         def sort_by_column(column, sort_order = nil)
-
           return order(:created_at) if column.blank?
 
           ensure_supported_column!(column)
