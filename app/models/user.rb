@@ -6,6 +6,7 @@ class User < Sequel::Model
   include BCrypt
 
   searchable_columns :name, :email
+  sortable_columns :name, :email, :created_at, :updated_at
 
   one_to_many :client_applications
   one_to_many :access_tokens
