@@ -25,6 +25,19 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe ".sort_by_column" do
+    let(:user) { create(:user) }
+
+    it "finds things" do
+      sql = User.sort_by_column(:created_at).sql
+      expect(sql).to match(/ORDER BY "created_at"/)
+
+      expect do
+        User.sort_by_column(:password_digest)
+      end.to raise_error(Sequel::Plugins::SortableByColumn::BadRequest, /not permitted/)
+    end
+  end
+
   describe "#fields" do
     it { expect(subject).to respond_to(:name) }
     it { expect(subject).to respond_to(:email) }
