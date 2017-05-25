@@ -1,3 +1,5 @@
+require "password_verifier"
+
 module Api
   module Routes
     module OAuth
@@ -22,7 +24,9 @@ module Api
 
           user = User.first(email: username)
 
-          if user && user.authenticate(params[:password])
+          verifier = PasswordVerifier.new(user&.password_digest)
+
+          if verifier.verify(params[:password])
             token = AccessToken.for_client(current_client)
             token.user = user
             token.save
