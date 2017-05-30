@@ -12,6 +12,11 @@ require "json"
 require "bundler"
 Bundler.require :default, ENV["APP_ENV"].to_sym
 
+require "active_support/core_ext/object/blank" # blank? and present?
+require "active_support/core_ext/integer/time" # 1.week.ago etc
+require "active_support/core_ext/hash/slice" # params.slice(:one, :other)
+require "active_support/core_ext/hash/conversions" # params.symbolize_keys
+
 # Load dev env vars
 Dotenv.load if %w[development test].include? ENV["APP_ENV"]
 

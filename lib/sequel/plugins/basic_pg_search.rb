@@ -26,7 +26,9 @@ module Sequel
 
         def fts_param(str)
           # Escape search chars and searches partial words
-          String(str).gsub(/[^a-zA-Z0-9\s\@\.]/, "") + ":*"
+          safe = String(str).gsub(/[^a-zA-Z0-9\s\@\.]/, " ")
+          safe = safe.split(" ").map { |v| "\"#{v}\"" }.join("|")
+          "#{safe}:*"
         end
       end
     end

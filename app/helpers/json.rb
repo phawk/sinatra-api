@@ -34,6 +34,12 @@ module Api
       def params
         super.with_indifferent_access
       end
+
+      def true_value?(value)
+        return false unless value
+        return false if ["false", "0", 0].include?(value)
+        true
+      end
     end
   end
 end
