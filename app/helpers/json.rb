@@ -10,7 +10,10 @@ module Api
       end
 
       def serialize(resource, opts = {})
-        if resource.is_a?(Sequel::Dataset) || (resource.is_a?(Array) && resource[0].is_a?(Sequel::Model))
+        # Calling #all ensures eager loading works before serialization
+        resource = resource.all if resource.is_a?(Sequel::Dataset)
+
+        if resource.is_a?(Array) && resource[0].is_a?(Sequel::Model)
           JSONAPI::Serializer.serialize(resource.to_a, opts.merge(is_collection: true))
         elsif resource.is_a?(Sequel::Model)
           JSONAPI::Serializer.serialize(resource, opts.merge(skip_collection_check: true))
