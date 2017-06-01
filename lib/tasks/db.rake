@@ -60,6 +60,10 @@ namespace :db do
 
     Sequel::Migrator.run(DB, "db/migrations", target: version.to_i)
 
+    if ENV["APP_ENV"] == "development"
+      system("sequel -d #{ENV['DATABASE_URL']} > #{@root_dir}/db/schema.rb")
+    end
+
     Rake::Task["db:version"].execute
   end
 
