@@ -20,7 +20,7 @@ module Api
         before { content_type(:json) }
 
         use Warden::Manager do |manager|
-          manager.default_strategies :access_token
+          manager.default_strategies :jwt
           manager.failure_app = ::TokenFailureApp # lib/token_failure_app.rb
         end
       end

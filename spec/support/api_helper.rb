@@ -1,13 +1,11 @@
 require "json"
 require "base64"
 require "rack/test"
+require "current_user"
 
 module ApiHelper
   include Rack::Test::Methods
   include Warden::Test::Helpers
-
-  FakeToken = Struct.new(:user)
-  FakeClientToken = Struct.new(:client_application)
 
   def app
     # Load entire Rack application stack
@@ -26,25 +24,14 @@ module ApiHelper
     response_json
   end
 
-  def authenticate_as(user)
-    login_as FakeToken.new(user)
-    user
+  def authenticate_as(user_id)
+    login_as CurrentUser.new(user_id)
+    user_id
   end
 
-  def authenticate_client(client = nil)
-    client ||= build_stubbed(:client_application)
-    login_as FakeClientToken.new(client), strategy: :client_secret
-    client
-  end
-
-  def token_header(user)
-    access_token = create(:access_token, user: user)
-    { "HTTP_AUTHORIZATION" => "Bearer #{access_token.token}" }
-  end
-
-  def basic_header(username, password)
-    auth = Base64.strict_encode64("#{username}:#{password}")
-    { "HTTP_AUTHORIZATION" => "Basic #{auth}" }
+  def token_header(user_id)
+    token = build_jwt(user_id: user_id)
+    { "HTTP_AUTHORIZATION" => "Bearer #{token}" }
   end
 
   # Response helpers
@@ -55,10 +42,6 @@ module ApiHelper
 
   # JSON helpers
 
-  def json_attrs
-    response_json["data"]["attributes"]
-  end
-
   def response_json
     JSON.parse(last_response.body)
   end
@@ -66,10 +49,16 @@ module ApiHelper
   def json(hash)
     JSON.dump(hash)
   end
+
+  # Token helpers
+
+  def build_jwt(payload)
+    JWT.encode(payload, ENV["JWT_SECRET_KEY"], "HS512")
+  end
 end
 
 RSpec.configure do |config|
-  config.include ApiHelper, type: :api # apply to all specs for apis folder
+  config.include ApiHelper, type: :api
   config.around(:each) do |example|
     Warden.test_mode!
     example.run

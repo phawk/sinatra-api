@@ -29,4 +29,5 @@ end
 
 map("/sidekiq") { run Sidekiq::Web }
 map("/auth") { run UserAuth::Api }
+map("/private") { run Api::Routes::V1::Private }
 map("/") { run Api::Routes::Main }
