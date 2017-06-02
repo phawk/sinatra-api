@@ -22,11 +22,8 @@ Warden::Strategies.add(:jwt) do
     end
 
     payload = SigninToken.new.parse(token_str)
-
-    if payload.nil?
-      throw(:warden, message: "Auth token is invalid or expired")
-    else
-      success!(CurrentUser.new(payload["user_id"]))
-    end
+    success!(CurrentUser.new(payload["user_id"]))
+  rescue SigninToken::ParseError => e
+    throw(:warden, message: "Auth token error: #{e.message}")
   end
 end
