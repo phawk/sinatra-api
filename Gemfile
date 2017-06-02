@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.0'
+ruby '2.4.1'
 
 # Core framework dependencies
 gem 'activesupport', require: 'active_support'
@@ -19,7 +19,6 @@ gem 'redis', '~> 3.3.3'
 gem 'redis-namespace'
 gem 'sidekiq'
 gem 'puma' # app server
-gem 'bcrypt'
 gem 'warden' # authentication
 gem 'mail'
 gem 'postmark'
@@ -27,6 +26,9 @@ gem 'jwt'
 gem 'swagger-blocks' # API Docs
 gem 'jsonapi-serializers'
 gem 'dry-validation'
+
+# Services
+gem 'user-auth', git: 'https://github.com/dawsonandrews/services-user-auth'
 
 # Extra dependencies
 gem 'http'

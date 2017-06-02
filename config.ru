@@ -2,6 +2,7 @@ require_relative "./lib/rack/cloud_flare_middleware"
 require_relative "./lib/rack/health_check"
 require_relative "./lib/exception_handling"
 require_relative "./config/boot"
+require "user_auth/api"
 require "sidekiq/web"
 require "rack/ssl"
 require "rack-timeout"
@@ -27,7 +28,5 @@ use Rack::Cors do
 end
 
 map("/sidekiq") { run Sidekiq::Web }
-map("/oauth/token") { run Api::Routes::OAuth::Token }
-map("/v1/user") { run Api::Routes::V1::CurrentUser }
-map("/v1/users") { run Api::Routes::V1::Users }
+map("/auth") { run UserAuth::Api }
 map("/") { run Api::Routes::Main }

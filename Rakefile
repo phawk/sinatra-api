@@ -1,3 +1,6 @@
+require "bundler/setup"
+require "user_auth/rake_tasks"
+
 # Add current path and lib to the load path
 $: << File.expand_path('../', __FILE__)
 $: << File.expand_path('../lib', __FILE__)

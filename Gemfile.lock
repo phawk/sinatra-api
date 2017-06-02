@@ -1,3 +1,19 @@
+GIT
+  remote: https://github.com/dawsonandrews/services-user-auth
+  revision: 9f4fbad5a6e5386040ac978a6a4b260166a15cbf
+  specs:
+    user-auth (0.1.0)
+      activesupport
+      bcrypt
+      dotenv
+      jwt
+      pg (~> 0.20)
+      rack
+      rack-contrib
+      rack-cors
+      sequel (~> 4.44.0)
+      sinatra (~> 2.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -209,7 +225,6 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport
-  bcrypt
   bundler-audit
   dotenv
   dry-validation
@@ -246,10 +261,11 @@ DEPENDENCIES
   swagger-blocks
   terminal-notifier (~> 1.7.1)
   terminal-notifier-guard (~> 1.7.0)
+  user-auth!
   warden
 
 RUBY VERSION
-   ruby 2.4.0p0
+   ruby 2.4.1p111
 
 BUNDLED WITH
-   1.14.6
+   1.15.1
