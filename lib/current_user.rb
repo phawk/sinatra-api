@@ -1,1 +1,1 @@
-CurrentUser < Struct.new(:user_id)
+CurrentUser = Struct.new(:user_id)
