@@ -1,3 +1,4 @@
+require "active_support/core_ext/hash/conversions"
 require "active_support/core_ext/hash/indifferent_access"
 
 module Api
@@ -35,7 +36,7 @@ module Api
       end
 
       def params
-        super.with_indifferent_access
+        super.symbolize_keys.with_indifferent_access
       end
 
       def true_value?(value)
