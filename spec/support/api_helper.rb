@@ -24,13 +24,13 @@ module ApiHelper
     response_json
   end
 
-  def authenticate_as(user_id)
-    login_as CurrentUser.new(user_id)
+  def authenticate_as(id, email: "test@example.org")
+    login_as CurrentUser.new(user_id: id, email: email)
     user_id
   end
 
-  def token_header(user_id)
-    token = build_jwt(user_id: user_id)
+  def token_header(user_id, email: "test@example.org")
+    token = build_jwt(user_id: user_id, email: email)
     { "HTTP_AUTHORIZATION" => "Bearer #{token}" }
   end
 

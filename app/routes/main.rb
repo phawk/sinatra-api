@@ -26,10 +26,7 @@ module Api
 
       get "/api-docs.json" do
         JSON.dump(Swagger::Blocks.build_root_json([
-          Api::Routes::Main,
-          Api::Routes::OAuth::Token,
-          Api::Routes::V1::CurrentUser,
-          Api::Routes::V1::Users
+          Api::Routes::Main
         ]))
       end
     end

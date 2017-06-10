@@ -1,1 +1,4 @@
-CurrentUser = Struct.new(:user_id)
+require "ostruct"
+
+class CurrentUser < OpenStruct
+end

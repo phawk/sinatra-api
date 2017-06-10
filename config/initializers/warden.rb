@@ -22,7 +22,7 @@ Warden::Strategies.add(:jwt) do
     end
 
     payload = SigninToken.new.parse(token_str)
-    success!(CurrentUser.new(payload["user_id"]))
+    success!(CurrentUser.new(payload))
   rescue SigninToken::ParseError => e
     throw(:warden, message: "Auth token error: #{e.message}")
   end
