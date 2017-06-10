@@ -14,8 +14,6 @@ UserAuth.configure do |config|
     #     name: "Jane"
     #   }
     # }
-    $logger.info("="*30)
-    $logger.info("TODO SEND EMAIL!!! #{params.inspect}")
-    $logger.info("="*30)
+    UserAuthEmailJob.perform_async(params)
   end
 end
