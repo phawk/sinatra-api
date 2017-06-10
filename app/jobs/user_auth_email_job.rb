@@ -10,8 +10,6 @@ class UserAuthEmailJob
       Api::Mailers::User.new.password_reset(options)
     when "password_updated"
       Api::Mailers::User.new.password_updated(options)
-    else
-      # not supported
     end
   end
 end
