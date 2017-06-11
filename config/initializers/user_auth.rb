@@ -8,8 +8,8 @@ UserAuth.configure do |config|
     # {
     #   template: "user_signup",
     #   to: "email@email.com",
-    #   user_id: 123,
-    #   info: {
+    #   user: {
+    #     user_id: 123,
     #     email: "email@email.com",
     #     name: "Jane"
     #   }

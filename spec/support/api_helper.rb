@@ -1,7 +1,7 @@
 require "json"
 require "base64"
 require "rack/test"
-require "current_user"
+require "ostruct"
 
 module ApiHelper
   include Rack::Test::Methods
@@ -25,7 +25,7 @@ module ApiHelper
   end
 
   def authenticate_as(id, email: "test@example.org")
-    login_as CurrentUser.new(user_id: id, email: email)
+    login_as OpenStruct.new(user_id: id, email: email)
     user_id
   end
 

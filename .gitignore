@@ -13,6 +13,7 @@ Icon
 coverage/
 test_tokens.txt
 spec/examples.txt
+/tmp/
 
 # Ignore bundler config
 /.bundle

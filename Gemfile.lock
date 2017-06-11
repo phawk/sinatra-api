@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/dawsonandrews/services-user-auth
-  revision: 5158924c70b769f7dc0f69215606d7b12b844961
+  revision: 031fa01c7f73c5d70e23fb761c032d82c020d709
   specs:
     user-auth (0.1.0)
       activesupport
