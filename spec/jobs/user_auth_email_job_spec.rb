@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe UserAuthEmailJob do
   let(:fake_mailer) { double(:fake_mailer) }
-  let(:options) { Hash.new }
+  let(:options) { {} }
 
   context "user signups" do
     it "sends an email" do
