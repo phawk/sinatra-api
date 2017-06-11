@@ -29,12 +29,24 @@ module Api
         mail.deliver
       end
 
+      def product_name
+        ENV.fetch("PRODUCT_NAME", "[PRODUCT_NAME]")
+      end
+
+      def signin_url
+        "#{frontend_url}/sign-in"
+      end
+
       def help_page_url
         "#{frontend_url}/help"
       end
 
+      def support_email_address
+        ENV.fetch("SUPPORT_EMAIL_ADDRESS", "support@example.org")
+      end
+
       def frontend_url
-        "https://sinatra-api.herokuapp.com"
+        ENV.fetch("FRONTEND_URL", "https://sinatra-api.herokuapp.com")
       end
 
       private
