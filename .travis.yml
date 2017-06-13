@@ -1,12 +1,14 @@
+sudo: false
 language: ruby
 cache: bundler
+rvm:
+  - 2.4.1
 addons:
   postgresql: '9.4'
 env:
-- TEST_DATABASE_URL=postgres://localhost/travis_ci_test
+- TEST_DATABASE_URL="postgres://localhost/travis_ci_test" JWT_SECRET_KEY=df4eb72858852f57d15d8d6dd53b305e
 before_script:
 - psql -c 'create database travis_ci_test;' -U postgres
 script:
 - bin/rake db:migrate APP_ENV=test
 - bin/rake ci:all
-sudo: false
