@@ -184,7 +184,8 @@ GEM
     sentry-raven (2.4.0)
       faraday (>= 0.7.6, < 1.0)
     sequel (4.44.0)
-    sequel-rake-migrations (0.1.0)
+    sequel-rake-migrations (0.1.1)
+      dotenv
       sequel (~> 4.44.0)
     shellany (0.0.1)
     shotgun (0.9.2)
@@ -240,7 +241,7 @@ DEPENDENCIES
   jwt
   letter_opener
   mail
-  pg
+  pg (~> 0.20.0)
   postmark
   puma
   rack (>= 2.0)
