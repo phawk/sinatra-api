@@ -1,4 +1,5 @@
 require "bundler/setup"
+require "sequel/rake/migrations/tasks"
 require "user_auth/rake_tasks"
 
 # Add current path and lib to the load path

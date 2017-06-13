@@ -62,5 +62,5 @@ $ echo "bin/rake ci:all" > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
 ### Console
 
 ```sh
-$ bin/rake irb
+$ bin/console
 ```
