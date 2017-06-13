@@ -28,7 +28,7 @@ gem 'jsonapi-serializers'
 gem 'dry-validation'
 
 # Services
-gem 'user-auth', git: 'https://github.com/dawsonandrews/services-user-auth'
+gem 'da-user-auth', '~> 0.1.2'
 
 # Extra dependencies
 gem 'http'
