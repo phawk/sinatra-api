@@ -14,7 +14,7 @@ use Rack::Static, root: File.expand_path(__dir__ + "/public"),
 
 use ExceptionHandling
 use Rack::Timeout, service_timeout: 10
-use Rack::Health, :path => '/health'
+use Rack::Health, path: "/health"
 use Rack::CloudflareIp
 use Rack::SSL if ENV["APP_ENV"] == "production"
 use Rack::CanonicalHost, ENV["CANONICAL_HOST"] if ENV["CANONICAL_HOST"]
