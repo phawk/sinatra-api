@@ -137,9 +137,13 @@ GEM
     rack-canonical-host (0.2.2)
       addressable (> 0, < 3)
       rack (>= 1.0.0, < 3)
+    rack-cloudflare_ip (1.0.0)
+      rack
     rack-contrib (1.2.0)
       rack (>= 0.9.1)
     rack-cors (0.4.1)
+    rack-health (0.1.2)
+      rack (>= 1.2.0)
     rack-protection (2.0.0)
       rack
     rack-ssl (1.4.1)
@@ -241,8 +245,10 @@ DEPENDENCIES
   puma
   rack (>= 2.0)
   rack-canonical-host
+  rack-cloudflare_ip
   rack-contrib
   rack-cors
+  rack-health
   rack-ssl
   rack-test (~> 0.6.3)
   rack-timeout

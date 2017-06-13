@@ -1,7 +1,6 @@
-require_relative "./lib/rack/cloud_flare_middleware"
-require_relative "./lib/rack/health_check"
 require_relative "./lib/exception_handling"
 require_relative "./config/boot"
+require "rack/cloudflare_ip"
 require "user_auth/api"
 require "sidekiq/web"
 require "rack/ssl"
@@ -15,8 +14,8 @@ use Rack::Static, root: File.expand_path(__dir__ + "/public"),
 
 use ExceptionHandling
 use Rack::Timeout, service_timeout: 10
-use Rack::HealthCheck
-use Rack::CloudFlareMiddleware
+use Rack::Health, :path => '/health'
+use Rack::CloudflareIp
 use Rack::SSL if ENV["APP_ENV"] == "production"
 use Rack::CanonicalHost, ENV["CANONICAL_HOST"] if ENV["CANONICAL_HOST"]
 use Rack::Deflater
