@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.1'
+ruby '2.6.0'
 
 # Core framework dependencies
 gem 'activesupport', require: 'active_support'
@@ -13,11 +13,10 @@ gem 'rack-ssl'
 gem 'rack-health'
 gem 'rack-cloudflare_ip'
 gem 'rake'
-gem 'sinatra', '>= 2.0.0', require: 'sinatra/base'
-gem 'sinatra-contrib', '>= 2.0.0'
+gem 'sinatra', '>= 2.0.2', require: 'sinatra/base'
+gem 'sinatra-contrib', '>= 2.0.2'
 gem 'pg', '~> 0.20.0'
-gem 'sequel', '~> 4.44.0'
-gem 'sequel-rake-migrations'
+gem 'sinatra-activerecord'
 gem 'redis', '~> 3.3.3'
 gem 'redis-namespace'
 gem 'sidekiq'
@@ -29,9 +28,6 @@ gem 'jwt'
 gem 'swagger-blocks' # API Docs
 gem 'jsonapi-serializers'
 gem 'dry-validation'
-
-# Services
-gem 'da-user-auth', '~> 0.1.2'
 
 # Extra dependencies
 gem 'http'

@@ -1,3 +1,4 @@
+Sequel.extension :pg_json_ops
 DB = Sequel.connect(ENV["APP_ENV"] == "test" ? ENV["TEST_DATABASE_URL"] : ENV["DATABASE_URL"], max_connections: Integer(ENV.fetch('MAX_THREADS', 5)) + 1)
 DB.extension :pg_array, :pg_json, :pagination
 DB.loggers << $logger
