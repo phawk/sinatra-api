@@ -2,7 +2,7 @@ require "faker"
 require "securerandom"
 require "active_support/core_ext/integer/time"
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     name { Faker::Name.first_name }
     email { Faker::Internet.email }

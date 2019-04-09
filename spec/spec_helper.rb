@@ -10,7 +10,7 @@ require_relative "../config/boot"
 require "sidekiq/testing"
 
 # Grab the factories
-FactoryGirl.find_definitions
+FactoryBot.find_definitions
 
 # Load the unit helpers
 require_relative "support/api_helper"
@@ -20,7 +20,7 @@ require_relative "support/file_helper"
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # config.include TestFixtureHelper
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
 
   config.before(:suite) do
     # Set mail into test mode
