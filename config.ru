@@ -26,5 +26,6 @@ use Rack::Cors do
 end
 
 map("/sidekiq") { run Sidekiq::Web }
+map("/auth") { run Api::Routes::Auth }
 map("/private") { run Api::Routes::V1::Private }
 map("/") { run Api::Routes::Main }

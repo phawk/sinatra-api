@@ -12,9 +12,9 @@ module Api
 
       def serialize(resource, opts = {})
         if resource.is_a?(ActiveRecord::Relation) && resource.respond_to?(:map)
-          JSONAPI::Serializer.serialize(resource, opts.merge(is_collection: true))
+          opts[:serializer].render_as_json(resource, opts.merge(root: :data))
         elsif resource.is_a?(ActiveRecord::Base)
-          JSONAPI::Serializer.serialize(resource, opts)
+          "#{resource.class.name}Serializer".constantize.render_as_json(resource, opts.merge(root: :data))
         elsif resource.is_a?(Hash)
           resource.merge(opts)
         else

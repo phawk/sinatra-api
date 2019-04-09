@@ -7,7 +7,6 @@ Bundler.require :default, :test
 
 # Load the application
 require_relative "../config/boot"
-
 require "sidekiq/testing"
 
 # Grab the factories
@@ -20,6 +19,7 @@ require_relative "support/file_helper"
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  # config.include TestFixtureHelper
   config.include FactoryGirl::Syntax::Methods
 
   config.before(:suite) do

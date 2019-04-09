@@ -18,6 +18,7 @@ GEM
     ast (2.4.0)
     backports (3.13.0)
     bcrypt (3.1.12)
+    blueprinter (0.16.0)
     bundler-audit (0.6.1)
       bundler (>= 1.2.0, < 3)
       thor (~> 0.18)
@@ -74,8 +75,6 @@ GEM
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.2)
     json (2.2.0)
-    jsonapi-serializers (1.0.1)
-      activesupport
     jwt (2.1.0)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -186,13 +185,13 @@ DEPENDENCIES
   activerecord (~> 5.2.0)
   activesupport
   bcrypt
+  blueprinter
   bundler-audit
   dotenv
   dry-validation
   factory_girl
   faker (~> 1.7.3)
   http
-  jsonapi-serializers
   jwt
   letter_opener
   mail

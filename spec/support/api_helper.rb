@@ -16,12 +16,12 @@ module ApiHelper
 
   def get_json(path)
     get path
-    response_json
+    json
   end
 
   def post_json(url, data)
-    post(url, json(data), "CONTENT_TYPE" => "application/json")
-    response_json
+    post(url, dump_json(data), "CONTENT_TYPE" => "application/json")
+    json
   end
 
   def authenticate_as(id, email: "test@example.org")
@@ -42,11 +42,11 @@ module ApiHelper
 
   # JSON helpers
 
-  def response_json
-    JSON.parse(last_response.body)
+  def json
+    JSON.parse(last_response.body).symbolize_keys.with_indifferent_access
   end
 
-  def json(hash)
+  def dump_json(hash)
     JSON.dump(hash)
   end
 
