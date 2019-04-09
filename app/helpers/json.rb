@@ -39,6 +39,7 @@ module Api
       def true_value?(value)
         return false unless value
         return false if ["false", "0", 0].include?(value)
+
         true
       end
     end

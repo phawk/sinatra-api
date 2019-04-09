@@ -11,7 +11,7 @@ module Api
       helpers ::Api::Helpers::Auth
       helpers ::Api::Helpers::Json
 
-      set :root, File.expand_path("../../../", __FILE__)
+      set :root, File.expand_path("../..", __dir__)
 
       configure do
         enable :raise_errors

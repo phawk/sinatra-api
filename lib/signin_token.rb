@@ -10,7 +10,7 @@ class SigninToken
   end
 
   def parse(token)
-    JWT.decode(token, @secret, true, { algorithm: "HS512" })[0]
+    JWT.decode(token, @secret, true, algorithm: "HS512")[0]
   rescue JWT::ExpiredSignature
     raise ParseError.new("Token expired")
   rescue JWT::DecodeError

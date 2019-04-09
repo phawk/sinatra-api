@@ -9,6 +9,7 @@ class PasswordVerifier
 
   def verify(plaintext)
     return false unless @bcrypt
+
     @bcrypt == plaintext
   end
 end

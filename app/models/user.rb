@@ -9,12 +9,12 @@ class User < ActiveRecord::Base
     return nil unless Time.now < Time.parse(payload["expires"])
 
     find(payload["user_id"])
-  rescue SigninToken::ParseError => e
+  rescue SigninToken::ParseError
     nil
   end
 
   def self.find_by_token!(token)
-    find_by_token(token) || fail(ActiveRecord::RecordNotFound)
+    find_by_token(token) || raise(ActiveRecord::RecordNotFound)
   end
 
   def signin_token(expires: 24.hours.from_now)

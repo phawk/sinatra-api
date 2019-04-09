@@ -24,11 +24,11 @@ Style/StringLiterals:
   EnforcedStyle: double_quotes
 Style/FrozenStringLiteralComment:
   Enabled: false
-Style/IndentArray:
+Layout/IndentArray:
   EnforcedStyle: consistent
 Style/GlobalVars:
   Enabled: false
-Style/MultilineMethodCallIndentation:
+Layout/MultilineMethodCallIndentation:
   EnforcedStyle: aligned
 Style/Alias:
   EnforcedStyle: prefer_alias_method

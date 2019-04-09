@@ -15,6 +15,7 @@ begin
       Rake::Task["rubocop"].invoke
       Rake::Task["spec"].invoke
       Rake::Task["bundle:audit"].invoke
+      # rubocop:enable Metrics/LineLength
     end
   end
 rescue LoadError
