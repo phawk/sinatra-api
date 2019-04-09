@@ -1,4 +1,3 @@
-require "base64"
 require "signin_token"
 require "ostruct"
 

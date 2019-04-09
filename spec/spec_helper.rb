@@ -34,8 +34,9 @@ RSpec.configure do |config|
   end
 
   config.around(:each) do |example|
-    DB.transaction(rollback: :always, auto_savepoint: true) do
+    ActiveRecord::Base.transaction do
       example.run
+      raise ActiveRecord::Rollback
     end
   end
 end

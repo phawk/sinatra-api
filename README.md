@@ -7,11 +7,11 @@ A starting point for creating REST APIs in sinatra.
 ## Includes
 
 * Sinatra + sinatra contrib
-* Sequel (default: postgres)
-* Warden with basic oauth2 resource owner credentials flow
+* ActiveRecord (default: postgres)
+* Warden with basic JWT token auth
 * Mail (default delivery: postmark)
 * sidekiq for background jobs
-* RSpec, rack-test, factory_girl and faker
+* RSpec, rack-test, factory_bot and faker
 
 ## Getting started
 
@@ -42,16 +42,14 @@ $ open http://localhost:9393
 ### Testing
 
 ```sh
-# Autorun specs when developing
-$ bin/guard
-# One off test run
 $ bin/rspec
 ```
 
-#### Setup git pre-push hook
+#### Setup git hooks
 
 ```sh
 $ echo "bin/rake ci:all" > .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+$ echo "bin/rubocop" > .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 ```
 
 #### Docs on test frameworks

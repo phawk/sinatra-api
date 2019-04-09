@@ -1,7 +1,6 @@
 require_relative "./lib/exception_handling"
 require_relative "./config/boot"
 require "rack/cloudflare_ip"
-require "user_auth/api"
 require "sidekiq/web"
 require "rack/ssl"
 require "rack-timeout"
@@ -27,6 +26,5 @@ use Rack::Cors do
 end
 
 map("/sidekiq") { run Sidekiq::Web }
-map("/auth") { run UserAuth::Api }
 map("/private") { run Api::Routes::V1::Private }
 map("/") { run Api::Routes::Main }

@@ -25,16 +25,12 @@ module Api
         end
       end
 
-      error Sequel::Plugins::SortableByColumn::BadRequest do |e|
-        halt_bad_request(e.message)
-      end
-
-      error Sinatra::NotFound, Sequel::NoMatchingRow do
+      error Sinatra::NotFound, ActiveRecord::RecordNotFound do
         halt_not_found("Endpoint '#{request.path_info}' not found")
       end
 
-      error Sequel::ValidationFailed do |e|
-        halt_unprocessible_entity(e)
+      error ActiveRecord::RecordInvalid do |e|
+        halt_unprocessible_entity(e.record)
       end
 
       error SigninToken::ParseError do |e|

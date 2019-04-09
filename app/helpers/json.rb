@@ -11,13 +11,10 @@ module Api
       end
 
       def serialize(resource, opts = {})
-        # Calling #all ensures eager loading works before serialization
-        resource = resource.all if resource.is_a?(Sequel::Dataset)
-
-        if resource.is_a?(Array)
-          JSONAPI::Serializer.serialize(resource.to_a, opts.merge(is_collection: true))
-        elsif resource.is_a?(Sequel::Model)
-          JSONAPI::Serializer.serialize(resource, opts.merge(skip_collection_check: true))
+        if resource.is_a?(ActiveRecord::Relation) && resource.respond_to?(:map)
+          JSONAPI::Serializer.serialize(resource, opts.merge(is_collection: true))
+        elsif resource.is_a?(ActiveRecord::Base)
+          JSONAPI::Serializer.serialize(resource, opts)
         elsif resource.is_a?(Hash)
           resource.merge(opts)
         else
@@ -27,11 +24,11 @@ module Api
 
       def page_meta(object, extra_meta = {})
         {
-          "current-page" => object.current_page,
-          "next-page" => object.next_page,
-          "prev-page" => object.prev_page,
-          "total-pages" => object.page_count,
-          "total-count" => object.pagination_record_count
+          current_page: object.current_page,
+          next_page: object.next_page,
+          prev_page: object.prev_page,
+          total_pages: object.total_pages,
+          total_count: object.total_count
         }.merge(extra_meta)
       end
 

@@ -17,11 +17,13 @@ gem 'sinatra', '>= 2.0.2', require: 'sinatra/base'
 gem 'sinatra-contrib', '>= 2.0.2'
 gem 'pg', '~> 0.20.0'
 gem 'sinatra-activerecord'
+gem 'activerecord', '~> 5.2.0'
 gem 'redis', '~> 3.3.3'
 gem 'redis-namespace'
 gem 'sidekiq'
 gem 'puma' # app server
 gem 'warden' # authentication
+gem 'bcrypt'
 gem 'mail'
 gem 'postmark'
 gem 'jwt'
@@ -42,10 +44,6 @@ end
 group :development, :test do
   gem 'dotenv'
   gem 'rspec'
-  gem 'guard'
-  gem 'guard-rspec', require: false
-  gem 'terminal-notifier', '~> 1.7.1'
-  gem 'terminal-notifier-guard', '~> 1.7.0'
   gem 'rubocop', require: false
   gem 'bundler-audit', require: false
 end

@@ -1,33 +1,27 @@
-Sequel.migration do
-  change do
-    create_table(:schema_migrations) do
-      String :filename, :text=>true, :null=>false
-      
-      primary_key [:filename]
-    end
-    
-    create_table(:users, :ignore_index_errors=>true) do
-      primary_key :id
-      String :username, :size=>255
-      String :email, :size=>255, :null=>false
-      String :password_digest, :size=>255, :null=>false
-      String :info, :null=>false
-      DateTime :created_at, :null=>false
-      DateTime :updated_at, :null=>false
-      
-      index [:email], :unique=>true
-      index [:username], :unique=>true
-    end
-    
-    create_table(:refresh_tokens, :ignore_index_errors=>true) do
-      primary_key :id
-      foreign_key :user_id, :users, :null=>false, :key=>[:id]
-      String :token, :size=>64, :null=>false
-      DateTime :revoked_at
-      DateTime :created_at, :null=>false
-      DateTime :updated_at, :null=>false
-      
-      index [:token], :unique=>true
-    end
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
+#
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# you'll amass, the slower it'll run and the greater likelihood for issues).
+#
+# It's strongly recommended that you check this file into your version control system.
+
+ActiveRecord::Schema.define(version: 2019_04_09_082036) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
+
 end
