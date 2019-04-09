@@ -4,7 +4,7 @@ module Api
       swagger_path "/auth/sign_in" do
         operation :post do
           key :description, "Returns an access token and the current user"
-          key :tags, %w(auth)
+          key :tags, %w[auth]
           parameter name: :username, in: :formData, type: :string, required: true
           parameter name: :password, in: :formData, type: :string, required: true
           response(401) { key :description, "Unauthorized" }
