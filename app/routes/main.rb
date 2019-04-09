@@ -6,7 +6,7 @@ module Api
         info do
           key :version, "1.0.0"
           key :title, "Sinatra API"
-          key :description, "Sinatra API with oAuth and user endpoints"
+          key :description, "Sinatra API with auth and user endpoints"
         end
         security_definition :access_token do
           key :type, :apiKey
@@ -16,7 +16,7 @@ module Api
       end
 
       get "/" do
-        json(hello: "Api")
+        json(hello: "API")
       end
 
       get "/mailer/preview" do
@@ -26,7 +26,8 @@ module Api
 
       get "/api-docs.json" do
         JSON.dump(Swagger::Blocks.build_root_json([
-          Api::Routes::Main
+          Api::Routes::Main,
+          Api::Routes::Auth
         ]))
       end
     end

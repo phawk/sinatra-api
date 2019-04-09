@@ -27,7 +27,7 @@ gem 'bcrypt'
 gem 'mail'
 gem 'postmark'
 gem 'jwt'
-gem 'swagger-blocks' # API Docs
+gem 'swagger-blocks', '= 2.0.0' # API Docs
 gem 'blueprinter'
 gem 'dry-validation'
 
