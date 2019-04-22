@@ -21,7 +21,7 @@ gem 'activerecord', '~> 5.2.0'
 gem 'redis', '~> 3.3.3'
 gem 'redis-namespace'
 gem 'sidekiq'
-gem 'puma' # app server
+gem 'iodine' # app server
 gem 'warden' # authentication
 gem 'bcrypt'
 gem 'mail'
