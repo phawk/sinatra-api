@@ -3,11 +3,10 @@ require "spec_helper"
 RSpec.describe User, type: :model do
   subject { User.first }
 
-  # it { is_expected.to validate_presence_of(:email) }
-  # it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
-  # it { is_expected.to allow_value("pete@example.org").for(:email) }
-  # it { is_expected.not_to allow_value("pete.org").for(:email) }
-  # it { is_expected.to validate_presence_of(:password).on(:create) }
+  it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
+  it { is_expected.to allow_value("pete@example.org").for(:email) }
+  it { is_expected.not_to allow_value("pete.org").for(:email) }
 
   describe ".find_by_token" do
     let(:valid_jwt) { build_jwt({ "user_id" => 1, "exp" => 24.hours.from_now.to_i }) }
@@ -40,6 +39,18 @@ RSpec.describe User, type: :model do
   describe "#signin_token" do
     it "generations a JWT" do
       expect(User.new(id: 12).signin_token).not_to be_nil
+    end
+  end
+
+  describe "email=" do
+    it "downcases where possible" do
+      user = User.new(email: " Pete@example.org ")
+      expect(user.email).to eq("pete@example.org")
+    end
+
+    it "allows setting back to nil" do
+      subject.email = nil
+      expect(subject.email).to be_nil
     end
   end
 

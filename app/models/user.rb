@@ -3,6 +3,13 @@ require "password_verifier"
 require "signin_token"
 
 class User < ActiveRecord::Base
+  attr_reader :password
+
+  validates :name, presence: true
+  validates :email, presence: true, email: true
+  validates_uniqueness_of :email, case_sensitive: false
+  validates :password, length: { minimum: 8 }, if: lambda { password.present? }
+
   def self.find_by_token(token)
     payload = SigninToken.new.parse(token)
 
@@ -20,6 +27,10 @@ class User < ActiveRecord::Base
       "user_id" => id,
       "expires" => expires
     )
+  end
+
+  def email=(val)
+    super(val&.downcase&.strip)
   end
 
   def password=(plaintext)
