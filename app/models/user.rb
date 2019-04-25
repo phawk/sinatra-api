@@ -6,8 +6,6 @@ class User < ActiveRecord::Base
   def self.find_by_token(token)
     payload = SigninToken.new.parse(token)
 
-    return nil unless Time.now < Time.parse(payload["expires"])
-
     find(payload["user_id"])
   rescue SigninToken::ParseError
     nil

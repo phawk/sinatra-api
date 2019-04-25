@@ -30,6 +30,9 @@ $ bin/rake db:create
 # Run initial migrations
 $ bin/rake db:migrate
 $ bin/rake db:migrate APP_ENV=test
+
+# Create new migration
+$ bin/rake db:create_migration NAME=create_competitions
 ```
 
 ### Running
@@ -42,6 +45,7 @@ $ open http://localhost:9393
 ### Testing
 
 ```sh
+$ APP_ENV=test bin/rake db:fixtures:load # run this when making changes to fixtures
 $ bin/rspec
 ```
 

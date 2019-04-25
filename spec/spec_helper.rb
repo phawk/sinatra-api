@@ -9,19 +9,21 @@ Bundler.require :default, :test
 require_relative "../config/boot"
 require "sidekiq/testing"
 
-# Grab the factories
-FactoryBot.find_definitions
-
 # Load the unit helpers
 require_relative "support/api_helper"
 require_relative "support/mail_helper"
 require_relative "support/file_helper"
 
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :active_record
+    with.library :active_model
+  end
+end
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  # config.include TestFixtureHelper
-  config.include FactoryBot::Syntax::Methods
-
   config.before(:suite) do
     # Set mail into test mode
     Mail.defaults do

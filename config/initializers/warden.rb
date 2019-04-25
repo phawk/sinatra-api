@@ -20,9 +20,16 @@ Warden::Strategies.add(:jwt) do
       token_str = env["HTTP_AUTHORIZATION"].sub(/^Bearer/, "").strip
     end
 
-    payload = SigninToken.new.parse(token_str)
-    success!(OpenStruct.new(payload))
+    if (user = User.find_by_token(token_str))
+      success!(user)
+    else
+      fail!("Could not log in")
+    end
   rescue SigninToken::ParseError => e
     throw(:warden, message: "Auth token error: #{e.message}")
+  end
+
+  def store?
+    false
   end
 end

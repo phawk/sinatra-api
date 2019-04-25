@@ -1,7 +1,7 @@
 require "spec_helper"
 
 RSpec.describe User, type: :model do
-  subject { create(:user) }
+  subject { User.first }
 
   # it { is_expected.to validate_presence_of(:email) }
   # it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
@@ -10,8 +10,8 @@ RSpec.describe User, type: :model do
   # it { is_expected.to validate_presence_of(:password).on(:create) }
 
   describe ".find_by_token" do
-    let(:valid_jwt) { build_jwt({ "user_id" => 1, "expires" => 24.hours.from_now }) }
-    let(:expired_jwt) { build_jwt({ "user_id" => 1, "expires" => 5.minutes.ago }) }
+    let(:valid_jwt) { build_jwt({ "user_id" => 1, "exp" => 24.hours.from_now.to_i }) }
+    let(:expired_jwt) { build_jwt({ "user_id" => 1, "exp" => 5.minutes.ago.to_i }) }
 
     describe "decode error" do
       it { expect(User.find_by_token("gibberish")).to be_nil }

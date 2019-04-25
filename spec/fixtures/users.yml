@@ -1,0 +1,4 @@
+pete:
+  name: Pete
+  email: pete@phawk.co.uk
+  password_digest: <%= PasswordHasher.new.hash_plaintext "hunter2" %>
