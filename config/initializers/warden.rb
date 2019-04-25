@@ -8,6 +8,10 @@ Warden::Manager.before_failure do |env,opts|
   env["REQUEST_METHOD"] = "POST"
 end
 
+Warden::Manager.after_authentication do |user,auth,opts|
+  user.update(last_login: Time.now)
+end
+
 Warden::Strategies.add(:jwt) do
   def valid?
     env["HTTP_AUTHORIZATION"] || params["access_token"]
